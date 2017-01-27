@@ -158,6 +158,11 @@ body > div {
     }
 
 */
+#cargando {
+    background-color: black;
+    opacity: 0.5;
+}
+
 #cargando > div {
     z-index: 4;
     position: absolute;
