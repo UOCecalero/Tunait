@@ -34,163 +34,6 @@
         <link rel="stylesheet" type="text/css" href="css/overrides.css" />
         <title> LinxApp </title>
     </head>
-    
-    <!--
-
-    <body>
-        
-        <div id="caja">
-            
-            <div id="menu_lateral">
-                <header class="cabecera">MENU</header>
-                <nav id="menu">
-                    
-                    <table>
-            
-                        <tr>
-                            <th colspan="3">Manage ports</th>
-                        </tr>
-                        
-                        <tr>
-                            <td><select name="port" id="opciones"></select> </td>
-                            <td colspan="2"><input type="button" value="Add button" onclick= "addbutton()"></input></td>
-                        </tr>
-                        
-                        <tr>
-                            <td><select name="port" id="removes"></select> </td>
-                            <td colspan="2"><input type="button" value="Remove button" onclick="removebutton()"></input></td>
-                        </tr>
-                        
-                        <tr>
-                            
-                            <th colspan="3">Add maps</th>
-                        
-                        </tr>
-                        <!-- 
-                         <tr>
-                             <td colspan="3">
-                                 <input type="button" value="Search..." onclick="carrete()"> </p>
-                                 <input type="button" value="Add" onclick='loadPlano("planos2")'></input>
-                                 <input type="file" value="Search..." id="planos2"> </p> <BR></td>
-                            </tr>
-                            
-                        </tr>
-
-                        
-                        
-                             <tr>
-                                 
-                                 <th colspan="3">Manage maps</th>
-                             
-                             </tr>
-                            
-                        <tr>
-                            <td><select name="port" id="mapas_sel"></select> </td>
-                            <td><input type="button" value="Show" onclick="switchMap()"></input></td>
-                            <td><input type="button" value="Delete" onclick="delMap()"></input></td>
-                        </tr>
-                        
-                    </table>
-                    
-                </nav> 
-                
-            </div> -->
-
-            
-
-            <!--
-            
-            <div id="settings">
-                <header class="cabecera">SETTINGS</header>
-                <nav id="menu">
-                    
-                    <table> <form name="settings_form">
-                        <tr>
-                            <td> Refresh frequency </td>
-                            <td><input type="range" name="frecr" id="frecr" min="1" max="60" value="10"
-                                 onchange="setRefresh(this.value)" oninput="setRefresh(this.value)"> </input> </td> </tr>
-                        
-                            <tr> <td> Reload Device </td>
-                             <td> <input type="button" value="Reload" onclick="reloadDevice()"></input></td> </tr>
-                            
-                            
-                            
-                            
-                     
-                    </form> </table>
-                    
-                </nav>
-                    
-            </div> -->
-            
-            <!--
-            
-            <div id="menu_principal">
-                <header class="cabecera">
-                    <div id="margen">
-                    </div>
-					<a href="javascript: menu('derecha');"><img class="btniz" src="img/botonmenu.png"  alt="menubtn" height="30" width="30"> </a>
-					<img class="btncnt"src="img/logoopen.png" alt="Opendomo"  height="30" width="150" >
-                        <a href="javascript: menu('izquierda');"><img class="btnder"src="img/settings.png"  alt="settingsbtn" height="30" width="30"> </a>
-                        
-                        </header>
-                
-                
-                <div id="cuerpo">
-                    
-                    
-                    <section id="loginbox">
-                        <form name="login_form">
-                            
-                            <!-- Las varaibles user, password y URL se definen internamente de momento 
-                             
-                             
-                             <p> User:
-                             <input type="text" name="user"  id="user" placeholder=" nombre de usuario "  required> </p>
-                             
-                             <p> Password:
-Tonielpolac0
-             <input type="password" name="password" id="password" placeholder= "password" required> </p>
-                             
-                             <p> URL:
-                             <input type="text" name="url" id="url" required> </p>
-                            
-                            
-                            <p> Image:
-                            <input type="button" name="planos" value="Load & START" onclick="carrete()"> </p> 
-                                
-                            <!---<input type="file" name="planos" value="download" id="planos"> </p> <BR>
-                             
-                                <p><input type="button" name="botonlogin"
-                                    value="Login" onclick="logar()"> </p> 
-                                    
-                         </form>
-                    </section>
-                    
-                </div>
-                <footer id="pie">
-                    
-                </footer>
-                
-            </div>
-
-            -->
-
-
-
-
-         <!--   
-            <div id="cargando">
-                
-                <div>
-                    <img src="img/ajax-loader2.gif" alt="Barra de carga" height="60" width="60">
-                        </div>
-                
-            </div>
-        </div>
-
-        -->
-
         <body>
             
         
@@ -206,10 +49,10 @@ Tonielpolac0
                         <H1>SETTINGS</H1>
                     </div>
                 <div class="row cuerpo"></div>
-                    <div class="col-cs-12">
+                    <div class="col-xs-12">
                         <p> Setting 1</p>
                     </div>
-                    <div class="col-cs-12">
+                    <div class="col-xs-12">
                         <p>Setting 2</p>
                     </div>
                 <div class="row pie"></div>
@@ -227,14 +70,25 @@ Tonielpolac0
                     </dic>
                 </div>
                 <div class="row cuerpo">
-                    <div class="col-xs-12"> Opción 1 </div>
-                    <div class="col-xs-12"> Opción 2 </div>
-                    <div class="col-xs-12"> Opción 3 </div>
-                    <div class="col-xs-12"> Opción 4 </div>
-                    <div class="col-xs-12"> Opción 5 </div>
+                    <div class="col-xs-12" id="menu1"> 
+                        <p>Perfil </p>
+                    </div>
+                    <div class="col-xs-12" id="menu2"> 
+                        <p>Posición</p>
+                    </div>
+                    <div class="col-xs-12" id="menu3"> 
+                        <p>Opción 3</p> 
+                    </div>
+                    <div class="col-xs-12" id="menu4"> 
+                        <p>Opción 4</p> 
+                    </div>
+                    <div class="col-xs-12" id="menu5"> 
+                        <p>Opción 5</p>
+                    </div>
                 </div>
             </div>
         </div>
+
 
         <!-- ****** Pantalla principal ******************* -->
 
@@ -252,6 +106,76 @@ Tonielpolac0
                     </div>
                 <div class="row cuerpo"></div>
                 <div class="row" id="pie"></div>
+            </div>
+        </div>
+
+        <!-- ****** Pantalla1 Perfil +++++++++******************* -->
+        
+        <div class="option page totalleft" id="pantalla1">
+        
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-xs-12">
+                        <img src="img/profile.jpg" alt="Profile photo" class="img-circle" id="picture">
+                    </div>
+
+                    <div class="col-xs-12"> 
+                        <div>Nombre</div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div>Apellidos</div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div>Descripción:</div>
+                    </div>
+                    
+                    <div class="col-xs-12">
+                        <div id="photo-frame"> </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+
+         <!-- ****** Pantalla2 Posición +++++++++******************* -->
+        
+        <div class="option page totalleft" id="pantalla2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button class="btn btn-primary" id="button1">Start!</button>
+                    </div>
+
+                    <div id="map"></div>
+                    <!--
+                    <div class="col-xs-12">
+                        <p></p>
+                    </div>
+                    <div class="col-xs-12">
+                        <p></p>
+                    </div>
+                    <div class="col-xs-12">
+                        <p></p>
+                    </div>
+                    <div class="col-xs-12">
+                        <p></p>
+                    </div> -->
+                    
+                </div>
+            </div>
+        </div>
+
+
+         <!-- ****** Pantalla3 xxxxxxxxx +++++++++******************* -->
+        
+        <div class="option page totalleft" id="pantalla3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12" id="up-margin" ></div>
+                    
+                </div>
             </div>
         </div>
 
@@ -280,8 +204,12 @@ Tonielpolac0
         <!--<script type="text/javascript" src="js/zepto.min.js"></script> -->
         <!--<script src="js/jquery-3.1.1.min.js"></script> -->
         <script type="text/javascript" src="js/fastclick.js"></script>
-        <script type="text/javascript" src="js/functions.js"></script>
-        <script type="text/javascript" src="js/iscroll-zoom.js"></script>
+        <!--<script type="text/javascript" src="js/iscroll-zoom.js"></script> -->
+        
+        <!-- Recuerda restringir la API_KEY antes de ser usada en una aplicación y crear una nueva si fuese necesario. La que hay es de prueba (Calve de API 1 Linx prueba) -->
+        <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7u2LAV2qzKdjsETh3m_WKa9kvgdlcWfw&callback=app.initMap">
+        </script>
         
         <!--<script type="text/javascript" src="js/range-touch.min.js"></script>-->
         <script type="text/javascript" src="js/index.js"></script>

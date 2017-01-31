@@ -1,15 +1,21 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.linxtech.linxapp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <feature name="Camera">
+        <param name="android-package" value="org.apache.cordova.camera.CameraLauncher" />
+    </feature>
     <feature name="Whitelist">
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="Geolocation">
+        <param name="android-package" value="org.apache.cordova.geolocation.Geolocation" />
+    </feature>
     <name>Linxapp</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        Linx Aplicaciones - Aplicación standrard
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="educalerorovira@gmail.com" href="http://cordova.io">
+        Eduard Calero Rovira
     </author>
     <content src="index.html" />
     <access origin="*" />

@@ -49,10 +49,10 @@
                         <H1>SETTINGS</H1>
                     </div>
                 <div class="row cuerpo"></div>
-                    <div class="col-cs-12">
+                    <div class="col-xs-12">
                         <p> Setting 1</p>
                     </div>
-                    <div class="col-cs-12">
+                    <div class="col-xs-12">
                         <p>Setting 2</p>
                     </div>
                 <div class="row pie"></div>
@@ -70,14 +70,25 @@
                     </dic>
                 </div>
                 <div class="row cuerpo">
-                    <div class="col-xs-12" id="menu-perfil"> Perfil </div>
-                    <div class="col-xs-12"> Opción 2 </div>
-                    <div class="col-xs-12"> Opción 3 </div>
-                    <div class="col-xs-12"> Opción 4 </div>
-                    <div class="col-xs-12"> Opción 5 </div>
+                    <div class="col-xs-12" id="menu1"> 
+                        <p>Perfil </p>
+                    </div>
+                    <div class="col-xs-12" id="menu2"> 
+                        <p>Posición</p>
+                    </div>
+                    <div class="col-xs-12" id="menu3"> 
+                        <p>Opción 3</p> 
+                    </div>
+                    <div class="col-xs-12" id="menu4"> 
+                        <p>Opción 4</p> 
+                    </div>
+                    <div class="col-xs-12" id="menu5"> 
+                        <p>Opción 5</p>
+                    </div>
                 </div>
             </div>
         </div>
+
 
         <!-- ****** Pantalla principal ******************* -->
 
@@ -95,6 +106,76 @@
                     </div>
                 <div class="row cuerpo"></div>
                 <div class="row" id="pie"></div>
+            </div>
+        </div>
+
+        <!-- ****** Pantalla1 Perfil +++++++++******************* -->
+        
+        <div class="option page totalleft" id="pantalla1">
+        
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-xs-12">
+                        <img src="img/profile.jpg" alt="Profile photo" class="img-circle" id="picture">
+                    </div>
+
+                    <div class="col-xs-12"> 
+                        <div>Nombre</div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div>Apellidos</div>
+                    </div>
+                    <div class="col-xs-12">
+                        <div>Descripción:</div>
+                    </div>
+                    
+                    <div class="col-xs-12">
+                        <div id="photo-frame"> </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+
+         <!-- ****** Pantalla2 Posición +++++++++******************* -->
+        
+        <div class="option page totalleft" id="pantalla2">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button class="btn btn-primary" id="button1">Start!</button>
+                    </div>
+
+                    <div id="map"></div>
+                    <!--
+                    <div class="col-xs-12">
+                        <p></p>
+                    </div>
+                    <div class="col-xs-12">
+                        <p></p>
+                    </div>
+                    <div class="col-xs-12">
+                        <p></p>
+                    </div>
+                    <div class="col-xs-12">
+                        <p></p>
+                    </div> -->
+                    
+                </div>
+            </div>
+        </div>
+
+
+         <!-- ****** Pantalla3 xxxxxxxxx +++++++++******************* -->
+        
+        <div class="option page totalleft" id="pantalla3">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12" id="up-margin" ></div>
+                    
+                </div>
             </div>
         </div>
 
@@ -123,8 +204,12 @@
         <!--<script type="text/javascript" src="js/zepto.min.js"></script> -->
         <!--<script src="js/jquery-3.1.1.min.js"></script> -->
         <script type="text/javascript" src="js/fastclick.js"></script>
-        <script type="text/javascript" src="js/functions.js"></script>
-        <script type="text/javascript" src="js/iscroll-zoom.js"></script>
+        <!--<script type="text/javascript" src="js/iscroll-zoom.js"></script> -->
+        
+        <!-- Recuerda restringir la API_KEY antes de ser usada en una aplicación y crear una nueva si fuese necesario. La que hay es de prueba (Calve de API 1 Linx prueba) -->
+        <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD7u2LAV2qzKdjsETh3m_WKa9kvgdlcWfw&callback=app.initMap">
+        </script>
         
         <!--<script type="text/javascript" src="js/range-touch.min.js"></script>-->
         <script type="text/javascript" src="js/index.js"></script>

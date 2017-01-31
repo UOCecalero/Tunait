@@ -114,26 +114,7 @@ log("sending credentials... "+" user: "+user+" password: "+password+" URL: "+url
     
     response = REQ("lsc+");
     
-    response.onreadystatechange = function (){
-
-    //Se muestra el resultado en la parte inferior de la pantalla
-    log(response.readyState+" "+response.statusText+" \n");
-
-if (response.readyState == 4){
-    
-    //Se retira el gif de carga
-    cargando.className= 'page totalleft';
-    
-
-    if (response.status == 200)  {
-
-    createMenu(response.responseText);
-    response = REQ("ver+");
-    
-    log(response.responseText+" \n");
-
-    //Se carga el plano seleccionado pasando la id del input
-    //loadPlano("planos");
+    F
 
 
 

@@ -17,8 +17,10 @@ var app = {
         pie = document.querySelector('#pie');
         cuerpo = document.querySelector('#cuerpo');
         loginbox = document.querySelector('#loginbox');
-        botoniz = document.querySelector('.btniz');
-        botonder = document.querySelector('.btnder');
+        
+
+        // The server url
+        // url = 'http://www.example.com' 
         estado="menuprincipal";
 
         this.menu();
@@ -47,8 +49,6 @@ var app = {
                 estado="menuprincipal";
                 }
             
-            // Si pulsamos el botón settings entramos en el elseif
-            
         } else if(opcion=="izquierda"){
 
             if(estado=="menuprincipal"){
@@ -68,19 +68,155 @@ var app = {
         
 
     bindEvents: function() {
-        botonder.addEventListener('click', function(){ app.menu('izquierda'); });
-        botoniz.addEventListener('click', function(){ app.menu('derecha'); });
         document.addEventListener('deviceready', this.onDeviceReady, false);
-        //document.addEventListener('load', this.onLoad, false); 
 
     },
 
+
     onDeviceReady: function() {
-        /**pictureSource=navigator.camera.PictureSourceType;
-        destinationType=navigator.camera.DestinationType;**/
+        //Plugins
+        console.log("Camera plugin working "+navigator.camera);
+        console.log("Geolocation plugin working "+navigator.geolocation);
+
+        //Button listeners
+        document.querySelector('.btnder').addEventListener('click', function(){app.menu('izquierda');}, false);
+        document.querySelector('.btniz').addEventListener('click', function(){app.menu('derecha');}, false);
+        document.querySelector('#picture').addEventListener('click', app.openCamera,false );
+        document.querySelector("#menu1").addEventListener('click', function(){app.muestra('#pantalla1');});
+        document.querySelector("#menu2").addEventListener('click', function(){app.muestra('#pantalla2');});
+        document.querySelector("#button1").addEventListener('click',app.geoLocalization, false);
+    },
+
+
+    //Esta función muestra opciones (DEL MENÚ DE LA IZQUIERDA) en la pantalla principal.
+    muestra: function(opcion){
+
+
+        var child = document.querySelector(opcion);
+        child.className = 'option page center';
+
+        //Si tiene un pantalla insertado lo quita
+        if (menuprincipal.getElementsByClassName('row cuerpo')[0].children.length){
+            
+            var oldchild = menuprincipal.getElementsByClassName('row cuerpo')[0].firstChild;
+
+            document.body.appendChild(oldchild);
+            if (child != oldchild){
+            oldchild.className = "option page totalleft";
+            }
+        }
+        menuprincipal.getElementsByClassName('row cuerpo')[0].appendChild(child);
+
+        //De momento solo esta pensado para botones del menu (no settings)
+        app.menu('derecha');
+
+    },
+
+    //Al revés que la anterior
+    esconde: function(opción){
+
+        //document.querySelector().className = 'page totalleft';
+    },
+
+    //Esta función quita/pone el bucle de carga en función de si esta puesto o quitado
+    loading: function(){
+
+        if (cargando.className == 'page totalleft') {
+
+            cargando.className = 'page center';
+
+        }else if (cargando.className == 'page center') {
+
+            cargando.className = 'page totalleft'
+
+        }else{
+            console.log('Error con el bucle de cargado');
+        }
+    },
+
+    setOptions: function(srcType) {
+    
+    var options = {
+            // Some common settings are 20, 50, and 100
+            quality: 50,
+            destinationType: Camera.DestinationType.FILE_URI,
+            // In this app, dynamically set the picture source, Camera or photo gallery
+            sourceType: srcType,
+            encodingType: Camera.EncodingType.JPEG,
+            mediaType: Camera.MediaType.PICTURE,
+            allowEdit: true,
+            correctOrientation: true  //Corrects Android orientation quirks
+        }
+        return options;
+    },
+
+    openCamera: function(selection) {
+
+        console.log(selection.button);
+
+        var srcType = Camera.PictureSourceType.PHOTOLIBRARY;
+        var options = app.setOptions(srcType);
+
+        navigator.camera.getPicture(function cameraSuccess(imageUri) {
+
+            console.log('Photolibrary Sucess');
+            document.querySelector('#pantalla1').getElementsByTagName('img')[0].src = imageUri;
+
+        }, function cameraError(error) {
+            console.log("Unable to obtain picture: " + error, "app");
+
+        }, options);
+    },
+
+    initMap: function() {
+                  map = new google.maps.Map(document.getElementById('map'), {
+                    center: {lat: 41.4103908, lng: 2.1941609},
+                    zoom: 8
+                  });
+                }, 
+
+
+    geoLocalization: function(){
+
+
+
+        navigator.geolocation.getCurrentPosition(
+            function geolocationSuccess(position){
+
+            /*
+              var resultado =  
+              'Latitude: '          + position.coords.latitude          + '\n' +
+              'Longitude: '         + position.coords.longitude         + '\n' +
+              'Altitude: '          + position.coords.altitude          + '\n' +
+              'Accuracy: '          + position.coords.accuracy          + '\n' +
+              'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+              'Heading: '           + position.coords.heading           + '\n' +
+              'Speed: '             + position.coords.speed             + '\n' +
+              'Timestamp: '         + position.timestamp                + '\n';
+
+            */
+
+        var myLatLng = {lat: position.coords.latitude, lng: position.coords.longitude};
+
+        map.panTo(myLatLng);
+
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            title: '¡Esamos aqui!'
+          });
+
+
+
+        },
+            function geolocationError(){
+                console.log("GeoLocalization error: " + error );
+
+        });
+
+
     }
 
-    
 
 }
 

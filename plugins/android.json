@@ -7,9 +7,22 @@
         "files": {}
     },
     "installed_plugins": {
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "com.linxtech.linxapp"
+        },
         "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.linxtech.linxapp"
+        },
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "com.linxtech.linxapp"
+        },
+        "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.linxtech.linxapp"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.linxtech.linxapp"
+        }
+    }
 }
