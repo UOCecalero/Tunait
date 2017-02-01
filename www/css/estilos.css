@@ -114,9 +114,11 @@ body {
 /* Pantalla2 */
 
 #map {
-      width: 400px;
+
+      width: 90%;
       height: 400px;
-      margin:  auto;
+      margin: auto;
+      margin-top: 5%;
     }
 
 /* Estilos para iscroll-zoom*/

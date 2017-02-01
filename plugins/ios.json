@@ -19,7 +19,7 @@
             "PACKAGE_NAME": "com.linxtech.linxapp"
         },
         "cordova-plugin-geolocation": {
-            "GEOLOCATION_USAGE_DESCRIPTION": "find other close users",
+            "GEOLOCATION_USAGE_DESCRIPTION": " ",
             "PACKAGE_NAME": "com.linxtech.linxapp"
         }
     },

@@ -12,13 +12,14 @@
     </feature>
     <name>Linxapp</name>
     <description>
-        Linx Aplicaciones - Aplicación standrard
+        Linx Aplicaciones - Tunait prueba
     </description>
     <author email="educalerorovira@gmail.com" href="http://cordova.io">
         Eduard Calero Rovira
     </author>
     <content src="index.html" />
     <access origin="*" />
+    <allow-navigation href="http://maps.google.com" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />

@@ -169,11 +169,15 @@ var app = {
     },
 
     initMap: function() {
-                  map = new google.maps.Map(document.getElementById('map'), {
-                    center: {lat: 41.4103908, lng: 2.1941609},
-                    zoom: 8
-                  });
-                }, 
+
+
+            map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 41.4103908, lng: 2.1941609},
+            zoom: 8 
+            });
+
+        
+        }, 
 
 
     geoLocalization: function(){
@@ -209,8 +213,8 @@ var app = {
 
 
         },
-            function geolocationError(){
-                console.log("GeoLocalization error: " + error );
+            function geolocationError(error){
+                console.log("GeoLocalization error: " + error.code + " " + error.message + "\n" );
 
         });
 

@@ -38,7 +38,7 @@ module.exports.metadata =
     "cordova-plugin-compat": "1.1.0",
     "cordova-plugin-camera": "2.3.1",
     "cordova-plugin-console": "1.0.5",
-    "cordova-plugin-geolocation": "2.4.1"
+    "cordova-plugin-geolocation": "2.4.2-dev"
 }
 // BOTTOM OF METADATA
 });
