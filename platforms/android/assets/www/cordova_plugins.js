@@ -1,6 +1,14 @@
 cordova.define('cordova/plugin_list', function(require, exports, module) {
 module.exports = [
     {
+        "id": "com.wikitude.phonegap.WikitudePlugin.WikitudePlugin",
+        "file": "plugins/com.wikitude.phonegap.WikitudePlugin/www/WikitudePlugin.js",
+        "pluginId": "com.wikitude.phonegap.WikitudePlugin",
+        "clobbers": [
+            "WikitudePlugin"
+        ]
+    },
+    {
         "id": "cordova-plugin-camera.Camera",
         "file": "plugins/cordova-plugin-camera/www/CameraConstants.js",
         "pluginId": "cordova-plugin-camera",
@@ -45,16 +53,26 @@ module.exports = [
         "file": "plugins/cordova-plugin-geolocation/www/PositionError.js",
         "pluginId": "cordova-plugin-geolocation",
         "runs": true
+    },
+    {
+        "id": "cordova-plugin-statusbar.statusbar",
+        "file": "plugins/cordova-plugin-statusbar/www/statusbar.js",
+        "pluginId": "cordova-plugin-statusbar",
+        "clobbers": [
+            "window.StatusBar"
+        ]
     }
 ];
 module.exports.metadata = 
 // TOP OF METADATA
 {
+    "com.wikitude.phonegap.WikitudePlugin": "6.0.0",
     "cordova-plugin-compat": "1.1.0",
     "cordova-plugin-camera": "2.3.1",
-    "cordova-plugin-whitelist": "1.3.1",
     "cordova-plugin-console": "1.0.5",
-    "cordova-plugin-geolocation": "2.4.2-dev"
+    "cordova-plugin-geolocation": "2.4.2-dev",
+    "cordova-plugin-statusbar": "2.2.1",
+    "cordova-plugin-whitelist": "1.3.1"
 };
 // BOTTOM OF METADATA
 });

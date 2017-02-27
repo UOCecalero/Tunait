@@ -6,6 +6,14 @@
 //Declaración del objecto app
 var app = {
 
+    //Wikitude AR setup settings:
+        requiredFeatures: [ "2d_tracking", "geo" ],
+        arExperienceUrl: "www/experience/index.html",
+        isDeviceSupported: false,
+        startupConfiguration:
+        {
+            "camera_position": "back"
+        },
 
     initialize: function() {
 
@@ -17,6 +25,9 @@ var app = {
         pie = document.querySelector('#pie');
         cuerpo = document.querySelector('#cuerpo');
         loginbox = document.querySelector('#loginbox');
+        
+
+
         
 
         // The server url
@@ -77,6 +88,7 @@ var app = {
         //Plugins
         console.log("Camera plugin working "+navigator.camera);
         console.log("Geolocation plugin working "+navigator.geolocation);
+        
 
         //Button listeners
         document.querySelector('.btnder').addEventListener('click', function(){app.menu('izquierda');}, false);
@@ -84,9 +96,57 @@ var app = {
         document.querySelector('#picture').addEventListener('click', app.openCamera,false );
         document.querySelector("#menu1").addEventListener('click', function(){app.muestra('#pantalla1');});
         document.querySelector("#menu2").addEventListener('click', function(){app.muestra('#pantalla2');});
+        document.querySelector("#menu3").addEventListener('click', app.launchWikitude);
         document.querySelector("#button1").addEventListener('click',app.geoLocalization, false);
     },
 
+    
+    /*********************** Wikitude ***************************************************/
+    
+    launchWikitude: function(){
+        app.wikitudePlugin = cordova.require("com.wikitude.phonegap.WikitudePlugin.WikitudePlugin");
+        app.wikitudePlugin.isDeviceSupported(app.onDeviceSupported, app.onDeviceNotSupported, app.requiredFeatures);
+    },
+
+    // If the wikitude Augmented reality plugin is supported
+
+    onDeviceSupported: function() {
+            console.log("Wikitude device supported \n");
+
+        if ( cordova.platformId == "android" ) {
+            app.wikitudePlugin.setBackButtonCallback(app.onBackButton);
+        }
+
+        app.wikitudePlugin.setOnUrlInvokeCallback(app.onURLInvoked);
+        
+        app.wikitudePlugin.loadARchitectWorld(
+            app.onARExperienceLoadedSuccessful,
+            app.onARExperienceLoadError,
+            app.arExperienceUrl,
+            app.requiredFeatures,
+            app.startupConfiguration
+            );
+
+    },
+
+    //If the wikitude reality pligin is NOT supported
+    onDeviceNotSupported: function(errorMessage) {
+        console.log("ERROR: "+ errorMessage + ". This device doesn't support Wikitude AR plugin." );
+    },
+
+    // Callback if your AR experience loaded successful
+    onARExperienceLoadedSuccessful: function(loadedURL) {
+        console.log("AR experience load successful! \n");
+    },
+
+    // Callback if your AR experience did not load successful
+    onARExperienceLoadError: function(errorMessage) {
+        console.log('Loading AR web view failed: ' + errorMessage + "\n");
+    },
+
+
+
+/****************************************************************************************************/
 
     //Esta función muestra opciones (DEL MENÚ DE LA IZQUIERDA) en la pantalla principal.
     muestra: function(opcion){
@@ -154,7 +214,7 @@ var app = {
 
         console.log(selection.button);
 
-        var srcType = Camera.PictureSourceType.PHOTOLIBRARY;
+        var srcType = Camera.PictureSourceType.CAMERA;
         var options = app.setOptions(srcType);
 
         navigator.camera.getPicture(function cameraSuccess(imageUri) {

@@ -7,7 +7,7 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-whitelist": {
+        "com.wikitude.phonegap.WikitudePlugin": {
             "PACKAGE_NAME": "com.linxtech.linxapp"
         },
         "cordova-plugin-camera": {
@@ -20,6 +20,12 @@
         },
         "cordova-plugin-geolocation": {
             "GEOLOCATION_USAGE_DESCRIPTION": " ",
+            "PACKAGE_NAME": "com.linxtech.linxapp"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.linxtech.linxapp"
+        },
+        "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.linxtech.linxapp"
         }
     },

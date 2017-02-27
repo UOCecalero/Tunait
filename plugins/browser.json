@@ -18,6 +18,12 @@
         },
         "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.linxtech.linxapp"
+        },
+        "com.wikitude.phonegap.WikitudePlugin": {
+            "PACKAGE_NAME": "com.linxtech.linxapp"
+        },
+        "cordova-plugin-statusbar": {
+            "PACKAGE_NAME": "com.linxtech.linxapp"
         }
     },
     "dependent_plugins": {
