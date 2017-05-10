@@ -41,6 +41,14 @@ module.exports = [
         ]
     },
     {
+        "id": "cordova-plugin-facebook4.FacebookConnectPlugin",
+        "file": "plugins/cordova-plugin-facebook4/www/facebook-native.js",
+        "pluginId": "cordova-plugin-facebook4",
+        "clobbers": [
+            "facebookConnectPlugin"
+        ]
+    },
+    {
         "id": "cordova-plugin-geolocation.geolocation",
         "file": "plugins/cordova-plugin-geolocation/www/android/geolocation.js",
         "pluginId": "cordova-plugin-geolocation",
@@ -70,6 +78,7 @@ module.exports.metadata =
     "cordova-plugin-compat": "1.1.0",
     "cordova-plugin-camera": "2.3.1",
     "cordova-plugin-console": "1.0.5",
+    "cordova-plugin-facebook4": "1.7.4",
     "cordova-plugin-geolocation": "2.4.2-dev",
     "cordova-plugin-statusbar": "2.2.1",
     "cordova-plugin-whitelist": "1.3.1"

@@ -51,6 +51,14 @@ module.exports = [
         "id": "cordova-plugin-statusbar.StatusBarProxy",
         "pluginId": "cordova-plugin-statusbar",
         "runs": true
+    },
+    {
+        "file": "plugins/cordova-plugin-facebook4/www/facebook-browser.js",
+        "id": "cordova-plugin-facebook4.FacebookConnectPluginBrowser",
+        "pluginId": "cordova-plugin-facebook4",
+        "clobbers": [
+            "facebookConnectPlugin"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -62,7 +70,8 @@ module.exports.metadata =
     "cordova-plugin-console": "1.0.5",
     "cordova-plugin-geolocation": "2.4.2-dev",
     "com.wikitude.phonegap.WikitudePlugin": "6.0.0",
-    "cordova-plugin-statusbar": "2.2.1"
+    "cordova-plugin-statusbar": "2.2.1",
+    "cordova-plugin-facebook4": "1.7.4"
 }
 // BOTTOM OF METADATA
 });
