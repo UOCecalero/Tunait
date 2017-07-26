@@ -5,19 +5,122 @@
 
 //Declaración del objecto app
 var app = {
+ 
 
-    //Wikitude AR setup settings:
-        requiredFeatures: [ "2d_tracking", "geo" ],
-        arExperienceUrl: "www/experience/index.html",
-        isDeviceSupported: false,
-        startupConfiguration:
-        {
-            "camera_position": "back"
+    //facebookPermissions: ["public_profile", "email", "user_friends", "user_birthday", "user_likes"],
+    facebookPermissions: ["public_profile", "email", "user_friends"],
+        
+    /*************************************** Función Menu. Mueve las pantallas de la app **************************/
+
+    menu: function(opcion) {
+            
+            // Si pulsamos en el botón de "menu" entramos en el if
+            if(opcion=="derecha"){
+                if(estado=="menuprincipal"){
+                    menuprincipal.className = "page transition right";
+                    settings.className= "page transition right";
+                    estado="menulateral";
+
+                    } else if(estado=="menulateral"){
+                    menuprincipal.className = "page transition center";
+                    settings.className = "page transition center";
+                    estado="menuprincipal";
+                    }
+                
+            } else if(opcion=="izquierda"){
+
+                if(estado=="menuprincipal"){
+                    menuprincipal.className= "page transition left";
+                    menulateral.className ="page transition left";
+                    estado="settings"
+
+                    } else if(estado=="settings"){
+                    menuprincipal.className ="page transition center";
+                    menulateral.className = "page transition center";
+                    estado="menuprincipal";
+                    }
+                
+            }
         },
 
-    //Facebook permissions
 
-        facebookPermissions: ["public_profile", "user_friends", "user_birthday", "user_likes"],
+      /*************************************** Función HttpRequest ***************************************/
+
+    http: function(mode, cmd, body, async, options){
+        
+        var req = new XMLHttpRequest();
+
+        //async = true > asíncrono (continúa); false > síncrono (espera la respuesta). Por defecto se espera respuesta
+        if (!async){ var async = false; };
+
+        switch(mode){
+            case "g": mode = "GET";
+            break;
+
+            case "p": mode = "POST";
+            break;
+
+            case "u": mode = "UPLOAD";
+            break;
+
+            case "d": mode = "DELETE";
+            break;
+
+            default: console.error ("No se ha definido correctamente el modo GET/POST/UPLOAD/DELETE \n");
+
+
+        }
+        
+        req.open(mode, url+cmd, async);
+        req.setRequestHeader("Accept", "Applcation/json");
+
+        switch(options){
+            case "auth":
+                req.setRequestHeader("Authorization", "Bearer "+accessToken);
+            break;
+
+        }
+
+        //Convierte body en una cadenapara poder enchufarla en la petición http
+        body = Object.keys(body).map(function(key){ return encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]); }).join('&');
+
+        //Se manda la petición del recurso a través del objeto req.
+        req.send(body);
+
+            if (async == false){
+
+
+                    req.onreadystatechange = function(){
+
+                        if (r.readyState == 4 && r.status == 200){
+                            
+                        return req;
+                        }
+                        
+                    }   
+            }
+
+            if (async == true){
+
+                return req;
+
+            /* Si se usa la función de forma asíncrona, se devuelve el objeto 'req'. Con este objeto entonces podemos hacer:
+                
+                req.onreadystatechange = function(){
+                        
+                        if (req.readyState == 4 && req.status == 200){
+
+                            ...lo que queremos hacer }
+
+                Es decir que va disparando el onradystatechange cada vez que cambia de estado
+
+            */
+
+            }
+
+
+        
+    },
 
 
     initialize: function() {
@@ -34,9 +137,9 @@ var app = {
     
 
 
-        // The server url
-        // url = 'http://www.example.com' 
-        estado="menuprincipal";
+        // Inicializamos variables
+        url = 'http://localhost:8000/api/';
+        estado = "menuprincipal";
 
         
         //Inicializamos la posición las pantallas
@@ -49,49 +152,21 @@ var app = {
 
 
         this.bindEvents();
-    },
+    },   
 
-
-    menu: function(opcion) {
-        
-        // Si pulsamos en el botón de "menu" entramos en el if
-        if(opcion=="derecha"){
-            if(estado=="menuprincipal"){
-                menuprincipal.className = "page transition right";
-                settings.className= "page transition right";
-                estado="menulateral";
-
-                } else if(estado=="menulateral"){
-                menuprincipal.className = "page transition center";
-                settings.className = "page transition center";
-                estado="menuprincipal";
-                }
-            
-        } else if(opcion=="izquierda"){
-
-            if(estado=="menuprincipal"){
-                menuprincipal.className= "page transition left";
-                menulateral.className ="page transition left";
-                estado="settings"
-
-                } else if(estado=="settings"){
-                menuprincipal.className ="page transition center";
-                menulateral.className = "page transition center";
-                estado="menuprincipal";
-                }
-            
-        }
-    },
-
-        
+    /************************************************************************************************/
 
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
-
     },
 
 
     onDeviceReady: function() {
+        
+        //Inicialización de la database
+        app.databaseSetup();
+
+
         //Plugins
         console.log("Camera plugin working "+navigator.camera);
         console.log("Geolocation plugin working "+navigator.geolocation);
@@ -108,85 +183,235 @@ var app = {
         document.querySelector("#button1").addEventListener('click', app.geoLocalization, false);
         document.querySelector("#login-button").addEventListener('click', app.login, false);
 
-        //Mira si hay datos guardados de session
-        //this.setup();
+        //Hace el setup de la aplciación
+        app.setup();
     },
 
-    /** Función que comprueba si hay datos de session para cargarlos y saltarse la landing
+/************************* Función inicialización de la base de datos de la DB *****************************/
+
+databaseSetup: function(){
+
+    var db = window.sqlitePlugin.openDatabase({ name: 'my.db', location: 'default' }, function (db) {
+
+        sql.initDatabase(db);
+
+    }, function (error) {
+        console.error('Open database ERROR: ' + JSON.stringify(error));
+    });
+
+        sql.closeDatabase(db);
+},
+
+/************************************* Facebok Login *************************************************************/
+
+    FBlogin: function(){
+
+
+        facebookConnectPlugin.login( app.facebookPermissions, this.onFBSuccess, this.onFBFailure);
+    },
+
+
+/********************************** Función de arranque de la aplicación ****************************************/
 
     setup: function(){
-    
 
 
-    }, **/
-
-    /** Esta función se conecta al servidor y actualiza los datos de la aplicación
-    refresh: function(uid){
-
-        
-
-
-    }, **/
-
-    /** Esta función crea (si no existe) o actualiza los datos de un usuario
-    upload: function(data){
-    
-    }
-
-    /******************************* Facebok Login *****************************************/
-
-    login: function(){
-
-
-        facebookConnectPlugin.login( app.facebookPermissions, app.onLoginSuccess, app.onLoginFailure);
-    },
-
-    onLoginSuccess: function(response){
-
-        console.log(" Status: " + response.status + "\n");
-        console.log(" session_key: " + response.authResponse.session_key + "\n");
-        console.log(" accessToken: " + response.authResponse.accessToken + "\n");
-        console.log(" expiresIn: " + response.authResponse.expiresIn + "\n");
-        console.log(" sig: " + response.authResponse.sig + "\n");
-        console.log(" secret: " + response.authResponse.secret + "\n");
-        console.log(" userID: " + response.authResponse.userID + "\n");
-
-        /*
-        if (response.status === 'connected') {
-            // the user is logged in and has authenticated your
-            // app, and response.authResponse supplies
-            // the user's ID, a valid access token, a signed
-            // request, and the time the access token 
-            // and signed request each expire
-            var uid = response.authResponse.userID;
-            var accessToken = response.authResponse.accessToken;
-            app.getUserData();
-        
-        } else if (response.status === 'not_authorized') {
-            // the user is logged in to Facebook, 
-            // but has not authenticated your app
-        } else {
-            // the user isn't logged in to Facebook.
-        } */
-
-        app.getUserData();
+        facebookConnectPlugin.getLoginStatus(this.onFBSuccess, this.onFBFailure);
 
     },
 
-    getUserData: function(){
+    onFBSuccess: function(response){
+
+
+            switch(response.status) {
+
+                case "connected":
+                    console.log(JSON.stringify(response));
+                    var db = window.sqlitePlugin.openDatabase({ name: 'my.db', location: 'default' }, 
+
+                        function (db) {
+                        
+                        this.onConnected(db,response);
+
+                        }, function (error) {  console.error('Open database ERROR: ' + JSON.stringify(error));
+
+                        });
+
+                    sql.closeDatabase(db);
+
+                break;
+
+                case "not_authorized":
+                    console.log(response);
+                    this.onNotAutorized(response);
+                break;
+
+                default:
+                    console.log(response);
+                    this.onNotAutorized(response);
+                };
+    },
+
+    onFBFailure: function(error){
+
+            console.log('Login failed: ' + error + "\n"); 
+    },
+
+
+    onConnected: function(db,response){
+
+    
+    //  Si response.status == connected response.authResponse contiene: 
+    // response.authResponse.session_key;
+    // response.authResponse.accessToken;
+    // response.authResponse.expiresIn;
+    // response.authResponse.sig;
+    // ??? response.authResponse.secret;
+    // response.authResponse.userID;
+                  
+    //Comprueba si el usuario existe. Si existe devuelve la ID sinó devuelve un 0.
+    var exists = this.userExists(response.authResponse);
+
+    //Si existe, la ID es un entero positivo. Recuperamos los tokens. Si no los tenemos, generamos unos de nuevo.
+    if (exists > 0){
+
+        try{
+
+            var apptoken = sql.checkTokens(db,response.authResponse.userID);
+        }
+
+        catch (error){
+
+            console.log('No se ha podido recuperar el token o no hay token. '+ error + '\n' );
+            var user = app.newUser();
+            var apptoken = app.requestTokens(user.email, response.authResponse.userID);
+            //apptokens = JSON.parse(apptokens);
+            app.saveTokens(db,apptoken,response.authResponse.userID);
+
+
+            /** apptokens seria un JSON del tipo:
+                {
+                    "token_type”:"Bearer”,
+                    "expires_in":3155673600,
+                    "access_token":"eyJ0eXAiOiJKV1QiL....”,
+                    "refresh_token":"XslU/K6lFZShiGxF1dPyC4ztIXBx9W1g…”
+                
+                } **/
+
+        }          
+
+
+    
+    //Si no existe hay que copiar los datos de FB en local, crear usuario, generar y guarar tokens y subir los datos al sistema
+    } else {
+
+
+        var user = app.newUser();
+        app.userToDB(db,user);
+        app.register(user);
+        var apptoken = app.requestTokens(userObject.email, response.authResponse.userID);
+        app.saveTokens(apptokens,response.authResponse.userID);
+        
+        //Este upload en plan masivo no tiene sentido dado que los datos que había que subir de facebook son relativos al perfil y ya han sido subidos al registrar al usuario
+        //app.upload(db,apptoken);
+        
+        
+
+
+            }
+
+    app.download(db,apptoken);
+    app.refresh(null);
+                    
+
+    },
+
+    onNotAutorized: function(response){
+
+        this.FBlogin();
+    },
+
+
+
+/******************************* Comprueba si el usuario existe en el sistema. Si existe devuelve el amil *********************************************/
+
+    userExists: function(authResponse){
+            
+            var mode = "get";
+            var cmd = "user/exists"+authResponse.FBid;
+            var async = "false";
+            var options = "auth";
+
+            try{ 
+
+                var response = http(mode, cmd, body, async);
+                return response;
+
+                }
+            
+            catch(error) { console.log('Error al contactar con el servidor '+ error + '\n' );}
+       
+    },
+
+/******************************* Pide los tokens  *****************************************************************************/
+
+    requestTokens: function(grantuser, grantpassword){
+
+        var mode = "post";
+        var cmd = "oauth/token";
+        var async = "false";
+        //var options = "";
+        var request = new Object();
+            request.grant_type = "password";
+            request.client_id = 1;
+            request.client_secret = "u5MBHqf6fV04R0xuCKbzYTgUn8b2PkQBq8otzulo";
+            request.username = grantuser;
+            request.password = grantpassword;
+            request.scope = "*";
+            request = JSON.stringify(request);
+
+
+        var response = app.http(mode, cmd, request, async);
+        console.log(response);
+        
+        return response;
+
+    },
+
+
+/************* Crea un nuevo objeto/variable usuario a nivel local de el contenido de Facebook **********************/
+
+    newUser: function(){
 
                 //facebookConnectPlugin.api(String requestPath, Array permissions, Function success, Function failure)
-                facebookConnectPlugin.api("me?fields=first_name,last_name,picture.height(480)", app.facebookPermissions,
+                facebookConnectPlugin.api("me?fields=first_name,last_name,gender,picture.height(480),email,user_birthdate", app.facebookPermissions,
                       function onSuccess (result) {
 
-                        var nombre = document.querySelector("#name").innerHTML=result.first_name;
-                        var apellidos = document.querySelector("#surname").innerHTML=result.last_name;
-                        //var description = document.querySelector("#description").innerHTML+= " "+ result.+" .";
-                        var foto = document.querySelector("#picture").src=result.picture.data.url;
+                        var userObject = new Object();
 
+                        userObject.id = null;
+                        userObject.FBid = result.id;
+                        userObject.name = result.first_name;
+                        userObject.surnames = result.last_name;
+                        userObject.gender = result.gender;
+                        userObject.email = result.email;
+                        //userObject.password = app.newPWD(); //Esta función pide password.
+                        userObject.password = result.id;
+                        userObject.created_at = time(); 
+                        userObject.updated_at = time();
+                        userObject.photo = result.picture.data.url;  //ATENCIÓN QUE ESTAMOS PASANDO LA URL 
+                        userObject.birthdate = result.birthday;
+                        userObject.job = null;
+                        userObject.studies = null;
+                        userObject.ranking = null; //Aqui tiene que haber una función que extraiga el valor medio
+                        userObject.aceptar = 0;
+                        userObject.rechazar = 0;
+                        userObject.saludar = 0;
+                        userObject.destacado_ini = null;
+                        userObject.destacado_fin = null;
+                        userObject.location = null; //Función que ha de extraer la localización actual.
 
-                        //app.upload(JSON.strinfy(result));
-                        landing.className='page totalleft';
+                        return userObject;
 
 
                       }, function onError (error) {
@@ -196,62 +421,140 @@ var app = {
                 );
     },
 
+    register: function(userObject){
 
+                var mode = "post";
+                var cmd = "register/";
+                
+                var body = JSON.stringify(userObject);
+                var async = "false";
+                //var options = "";
+
+                var response = http(mode, cmd, body, async);
 
         
-
-    onLoginFailure: function(errorMessage){
-
-        console.log('Login failed: ' + errorMessage + "\n");
     },
 
 
-
-    /****************************************************************************************/
-    
-    /*********************** Wikitude ***************************************************/
-    
-    launchWikitude: function(){
-        app.wikitudePlugin = cordova.require("com.wikitude.phonegap.WikitudePlugin.WikitudePlugin");
-        app.wikitudePlugin.isDeviceSupported(app.onDeviceSupported, app.onDeviceNotSupported, app.requiredFeatures);
-    },
-
-    // If the wikitude Augmented reality plugin is supported
-
-    onDeviceSupported: function() {
-            console.log("Wikitude device supported \n");
-
-        if ( cordova.platformId == "android" ) {
-            app.wikitudePlugin.setBackButtonCallback(app.onBackButton);
-        }
-
-        app.wikitudePlugin.setOnUrlInvokeCallback(app.onURLInvoked);
+    /*********** Esta función se conecta al servidor y baja los datos del servidor a la aplicación *******************************/
+    download: function(db,token){
         
-        app.wikitudePlugin.loadARchitectWorld(
-            app.onARExperienceLoadedSuccessful,
-            app.onARExperienceLoadError,
-            app.arExperienceUrl,
-            app.requiredFeatures,
-            app.startupConfiguration
-            );
+            //inicializamos variables
+            var mode = "get";
+            var async = "false";
+            var options = "auth";
+
+            //Bajamos los datos del usuario
+            var cmd = "user/"+authResponse.FBid;
+            var userObject = http(mode, cmd, body, async);
+
+
+            //Bajamos los Datos de la empresa (si hay)
+            var cmd = "user/"+userObject.id+"/empresa";
+            var empresaObject = http(mode, cmd, body, async);
+
+            //Bajamos los Eventos de usuario si hay
+            var cmd = "user/"+userObject.id+"/evento";
+            var eventosObject = http(mode, cmd, body, async);
+
+            //Bajamos los Matches (si hay)
+            var cmd = "user/"+userObject.id+"/match";
+            var matchesObject = http(mode, cmd, body, async);
+
+            //Bajamos los Bloqueados (si hay)
+            var cmd = "user/"+userObject.id+"/bloqueado";
+            var bloqueadosObject = http(mode, cmd, body, async);
+
+
+            //Abrimos conexión a la database
+            //var db = window.sqlitePlugin.openDatabase({ name: 'my.db', location: 'default' }, function (db, object) {
+
+            
+            //Vaciamos las tablas locales de la database
+            app.delTablesDB(db);
+
+
+            //Actualizamos los datos en la base de datos
+            sql.addUserToDB(db,userObject);
+            sql.addEmpresaToDB(db,empresaObject);
+            sql.addEventosToDB(db,eventosObject);
+            sql.addMatchesToDB(db,matchessObject);
+            sql.addBloqueadosToDB(db,bloqueadosObject);
+
+
+            // }, function (error) {
+            
+            // console.log('Open database ERROR: ' + JSON.stringify(error));
+            
+            // });
+
+            app.closeDatabase(db);
 
     },
 
-    //If the wikitude reality pligin is NOT supported
-    onDeviceNotSupported: function(errorMessage) {
-        console.log("ERROR: "+ errorMessage + ". This device doesn't support Wikitude AR plugin." );
+    /****** Esta función se conecta al servidor y sube los datos locales NECESARIOS de la aplicación al servidor *****/
+    //NOTA: Esta función como upload masivo de toda la DB local no tiene sentido dado que los cambios se harán sobre el servidor y luego ser actualizará la database local.
+
+    upload: function(db,token){
+
+
+//             var userObject = sql.extractUserFromDB();
+//             var empresasArray = sql.extractEmpresaFromDB();
+//             var EventosArray = sql.extractEventosFromDB();
+//             var MatchesArray = sql.extractMatchesFromDB();
+//             var BloqueadosArray = sql.extractBloqueadosFromDB();
+
+//             var mode = "post";
+//             var async = "false";
+//             var options = "auth";
+// .
+     
+
+
     },
 
-    // Callback if your AR experience loaded successful
-    onARExperienceLoadedSuccessful: function(loadedURL) {
-        console.log("AR experience load successful! \n");
+
+
+    /** Refresca el frontend de la aplicación con los datos en memoria local. Si le pasamos un objeto, solo refresa dicho objeto. **/
+    refresh: function(object){
+
+    document.querySelector("#name").innerHTML=user.name;
+    document.querySelector("#surname").innerHTML=user.surnames;
+    //document.querySelector("#description").innerHTML+= " "+ result.+" .";
+    document.querySelector("#picture").src=user.photo;
+
     },
 
-    // Callback if your AR experience did not load successful
-    onARExperienceLoadError: function(errorMessage) {
-        console.log('Loading AR web view failed: ' + errorMessage + "\n");
-    },
+     /************** Guarda en memoria local del dispositivo  *******************************************/
+    //Si la operacion no se realiza con éxito devuelve un 0
+    // localsave: function(object, type){
 
+    
+
+
+
+
+
+
+
+
+    // },
+
+    /************************ Recupera de la memoria local del dispositivo *******************************/
+    //Si la operacion no se realiza con éxito devuelve un 0
+    // localload: function(object){
+    
+
+
+    
+
+
+
+    
+
+
+    // },
+  
 
 
 /****************************************************************************************************/

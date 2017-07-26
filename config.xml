@@ -31,8 +31,8 @@
         <variable name="APP_ID" value="643164375870720" />
         <variable name="APP_NAME" value="Tunait" />
     </plugin>
-    <!-- Statusbar cordova plugin configuration -->
     <preference name="StatusBarBackgroundColor" value="black" />
     <preference name="StatusBarStyle" value="blackopaque" />
     <preference name="StatusBarOverlaysWebView" value="false" />
+    <plugin name="cordova-sqlite-storage" spec="https://github.com/litehelpers/Cordova-sqlite-storage.git" />
 </widget>

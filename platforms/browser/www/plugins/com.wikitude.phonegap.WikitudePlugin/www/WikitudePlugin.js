@@ -10,7 +10,7 @@ cordova.define("com.wikitude.phonegap.WikitudePlugin.WikitudePlugin", function(r
 		 *  You can obtain a free trial key at http =//www.wikitude.com/developer/licenses .
 		 */
 
-		this._sdkKey = "ENTER-YOUR-KEY-HERE";
+		this._sdkKey = "UjvJ3SCVeptp2f1IND4lnXRxYYdEb6l2RaWLef1mWo4cGbC+0it7EcRs0N0ZMiahNAeCsetoV9rG2JtVcZh5NR7vdo3n8YoYJK96lgTrJLT5hRZ1KSGkvfifONEaRgc21/qIgwua0CJf+pCUAv6pFY2nC3ItjZCJE157mc+nucpTYWx0ZWRfXycgScsi/8sLHpNtrAzlFs+Sq4aErNfWMlB0owDzYdG1ZksQaDfwJH+bK0vBS46DRcZbNy+W++ZDd0PyUmsweo4mrCk0YpNItSEUBIryN6yNI4DC/MAzG5tDtNWoLC+CfMsv/CYI6xIyQgDiUC1Y/tfXQrS/yrsj5zXsldqWytkWBA67YY/XPp0gecSDtQW3v1zPfun/nCD7C0YnUg62Xh0IPZHys4rVFoNOsx+TayKodRlRP4Dtx2GyYEEqCJg4bb3I28MRuHNwrfbFPuFakMDhV8VdvU1q0tPflv72vrU4v7/hd1jXfhBBJs1IjchavInAM1sCHg+2lebxlotMaEUZwjV/6zLbIgL2EjPJAQpdMnyR4QnxUzwetpYc7sW4uGwJCFheicAZxiHhJgjs64oBbP+7tHhj1oh7+G9/ScJwiKxmk97kW/kZckQCLfy8LdNCgLt6PidwkmFM3PapSHjY3BJ6AaLCH0+ZM23ZNkYEGulLvs06/PU=";
 		/**
 		 *  The Wikitude SDK can run in different modes.
 		 *      * Geo means, that objects are placed at latitude/longitude positions.

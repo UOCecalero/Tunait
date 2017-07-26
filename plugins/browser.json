@@ -7,7 +7,7 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-whitelist": {
+        "com.wikitude.phonegap.WikitudePlugin": {
             "PACKAGE_NAME": "com.linxtech.linxapp"
         },
         "cordova-plugin-camera": {
@@ -16,18 +16,21 @@
         "cordova-plugin-console": {
             "PACKAGE_NAME": "com.linxtech.linxapp"
         },
-        "cordova-plugin-geolocation": {
+        "cordova-plugin-facebook4": {
+            "APP_ID": "643164375870720",
+            "APP_NAME": "Tunait",
             "PACKAGE_NAME": "com.linxtech.linxapp"
         },
-        "com.wikitude.phonegap.WikitudePlugin": {
+        "cordova-plugin-geolocation": {
             "PACKAGE_NAME": "com.linxtech.linxapp"
         },
         "cordova-plugin-statusbar": {
             "PACKAGE_NAME": "com.linxtech.linxapp"
         },
-        "cordova-plugin-facebook4": {
-            "APP_ID": "643164375870720",
-            "APP_NAME": "Tunait",
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.linxtech.linxapp"
+        },
+        "cordova-sqlite-storage": {
             "PACKAGE_NAME": "com.linxtech.linxapp"
         }
     },
