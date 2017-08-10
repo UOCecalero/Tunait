@@ -31,27 +31,117 @@ function CE(t,c,i){
 }
 
 
+/*************************************** Función Menu. Mueve las pantallas de la app **************************/
+
+function menu(opcion) {
+        
+        // Si pulsamos en el botón de "menu" entramos en el if
+        if(opcion=="derecha"){
+            if(estado=="menuprincipal"){
+                menuprincipal.className = "page transition right";
+                settings.className= "page transition right";
+                estado="menulateral";
+
+                } else if(estado=="menulateral"){
+                menuprincipal.className = "page transition center";
+                settings.className = "page transition center";
+                estado="menuprincipal";
+                }
+            
+        } else if(opcion=="izquierda"){
+
+            if(estado=="menuprincipal"){
+                menuprincipal.className= "page transition left";
+                menulateral.className ="page transition left";
+                estado="settings"
+
+                } else if(estado=="settings"){
+                menuprincipal.className ="page transition center";
+                menulateral.className = "page transition center";
+                estado="menuprincipal";
+                }
+            
+        }
+    }
 
 
+  /*************************************** Función HttpRequest ***************************************/
 
-//Función request
-function REQ(cmd){
-var req = new XMLHttpRequest();
+function http(mode, cmd, body, async, options){
+    
+    var req = new XMLHttpRequest();
 
-//true > asíncrono (continúa); false > síncrono (espera la respuesta);
-req.open("GET", url+cmd, true);
+    //async = true > asíncrono (continúa); false > síncrono (espera la respuesta). Por defecto se espera respuesta
+    if (!async){ var async = false; };
 
-//Se añaden las siguientes cabeceras que permiten al navegador no ser afectado por la política del mismo orígen y enviar las credenciales.
+    switch(mode){
+        case "g": mode = "GET";
+        break;
 
-req.setRequestHeader("Access-Control-Allow-Origin", url);
-//req.setRequestHeader("Access-Control-Allow-Credentials", "true");
-req.setRequestHeader("Authorization", "Basic " + btoa(user + ":" + password));
+        case "p": mode = "POST";
+        break;
 
+        case "u": mode = "UPLOAD";
+        break;
+
+        case "d": mode = "DELETE";
+        break;
+
+        default: console.error: "No se ha definido correctamente el modo GET/POST/UPLOAD/DELETE";
+
+
+    }
+    
+    req.open(mode, url+cmd, async);
+    req.setRequestHeader("Accept", "Applcation/json");
+
+    switch(options){
+        case "auth":
+            req.setRequestHeader("Authorization", "Bearer "+accessToken);
+        break;
+
+    }
+
+    //Convierte body en una cadenapara poder enchufarla en la petición http
+    body = Object.keys(body).map(function(key){ return encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]); }).join('&');
 
     //Se manda la petición del recurso a través del objeto req.
-    req.send(null);
-    return req;
-}
+    req.send(body);
+
+        if (async == false){
+
+
+                req.onreadystatechange = function(){
+
+                    if (r.readyState == 4 && r.status == 200){
+                        
+                    return req;
+                    }
+                    
+                }   
+        }
+
+        if (async == true){
+
+            return req;
+
+        /* Si se usa la función de forma asíncrona, se devuelve el objeto 'req'. Con este objeto entonces podemos hacer:
+            
+            req.onreadystatechange = function(){
+                    
+                    if (req.readyState == 4 && req.status == 200){
+
+                        ...lo que queremos hacer }
+
+            Es decir que va disparando el onradystatechange cada vez que cambia de estado
+
+        */
+
+        }
+
+
+    
+    }
 
 /*
 //Cargar imágenes

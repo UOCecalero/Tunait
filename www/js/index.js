@@ -5,6 +5,127 @@
 
 //Declaración del objecto app
 var app = {
+ 
+
+    //facebookPermissions: ["public_profile", "email", "user_friends", "user_birthday", "user_likes"],
+    facebookPermissions: ["public_profile","email","user_friends"],
+        
+    /*************************************** Función Menu. Mueve las pantallas de la app **************************/
+
+    menu: function(opcion) {
+            
+            // Si pulsamos en el botón de "menu" entramos en el if
+            if(opcion=="derecha"){
+                if(estado=="menuprincipal"){
+                    menuprincipal.className = "page transition right";
+                    settings.className= "page transition right";
+                    estado="menulateral";
+
+                    } else if(estado=="menulateral"){
+                    menuprincipal.className = "page transition center";
+                    settings.className = "page transition center";
+                    estado="menuprincipal";
+                    }
+                
+            } else if(opcion=="izquierda"){
+
+                if(estado=="menuprincipal"){
+                    menuprincipal.className= "page transition left";
+                    menulateral.className ="page transition left";
+                    estado="settings"
+
+                    } else if(estado=="settings"){
+                    menuprincipal.className ="page transition center";
+                    menulateral.className = "page transition center";
+                    estado="menuprincipal";
+                    }
+                
+            }
+        },
+
+
+      /*************************************** Función HttpRequest ***************************************/
+
+    http: function(mode, cmd, body, options){
+
+        return new Promise(function(resolve, reject){
+
+            try{
+
+                req = new XMLHttpRequest();
+
+                switch(mode){
+
+                    case "g": mode = "GET";
+                    break;
+
+                    case "p": mode = "POST";
+                    break;
+
+                    case "u": mode = "UPLOAD";
+                    break;
+
+                    case "d": mode = "DELETE";
+                    break;
+
+                    default: console.log ("No se ha definido correctamente el modo GET/POST/UPLOAD/DELETE \n");
+
+
+                }
+                
+                req.open(mode, url+cmd, true);
+                req.setRequestHeader("Accept", "Application/json");
+                req.setRequestHeader("Content-Type", "Application/json; charset=UTF-8");
+
+                switch(options){
+
+                    case "auth":
+                        req.setRequestHeader("Authorization", "Bearer "+accessToken);
+                    break;
+
+                    default: console.log ("No se han definido opciones \n");
+
+                }
+
+                console.log('HTTP '+ mode +' '+ cmd +' '+ body );
+                console.log("Esperando respuesta HTTP... \n");
+
+
+                            req.onreadystatechange = function(){
+
+                            
+
+                                if (req.readyState == 4){
+
+                                    if (req.status == 200){
+
+                                    console.log('HTTP Response '+req.status+' '+req.statusText+' '+req.responseText+' \n');
+                                    resolve(req.responseText);
+
+                                    } else{
+
+
+                                        //reject('HTTP Error '+req.status+' '+req.statusText+' '+req.responseText+' \n');
+                                        reject(response)
+
+                                    }
+                            }   
+                    }
+
+
+                //Se manda la petición del recurso a través del objeto req.
+                req.send(body);
+
+            }
+
+            catch(error){
+
+                throw error;
+            }
+
+        })        
+        
+    },
 
 
     initialize: function() {
@@ -17,79 +138,577 @@ var app = {
         pie = document.querySelector('#pie');
         cuerpo = document.querySelector('#cuerpo');
         loginbox = document.querySelector('#loginbox');
-        botoniz = document.querySelector('.btniz');
-        botonder = document.querySelector('.btnder');
-        // The server url
-        // url = 'http://www.example.com' 
-        estado="menuprincipal";
+        landing = document.querySelector('#landing');
+    
 
-        this.menu();
 
+        // Inicializamos variables
+        //url = 'http://localhost:8000/';
+        url = 'http://192.168.1.3:60000/'
+        //url = 'http://10.222.248.16:60000/'
+        estado = "menuprincipal";
+        
+
+        
+        //Inicializamos la posición las pantallas
         settings.className= 'page center';
         menulateral.className= 'page center';
         menuprincipal.className= 'page center';
+        landing.className= 'page center';
         cargando.className= 'page totalleft';
+        //Las pantallas adicionaes de tipo 'option' que se pintan encima de la pricipal se inicializan en el código html
 
 
         this.bindEvents();
-    },
+    },   
 
-    menu: function(opcion) {
-        
-        // Si pulsamos en el botón de "menu" entramos en el if
-        if(opcion=="derecha"){
-            if(estado=="menuprincipal"){
-                menuprincipal.className = "page transition right";
-                settings.className= "page transition right";
-                estado="menulateral";
-
-                } else if(estado=="menulateral"){
-                menuprincipal.className = "page transition center";
-                settings.className = "page transition center";
-                estado="menuprincipal";
-                }
-            
-        } else if(opcion=="izquierda"){
-
-            if(estado=="menuprincipal"){
-                menuprincipal.className= "page transition left";
-                menulateral.className ="page transition left";
-                estado="settings"
-
-                } else if(estado=="settings"){
-                menuprincipal.className ="page transition center";
-                menulateral.className = "page transition center";
-                estado="menuprincipal";
-                }
-            
-        }
-    },
-
-        
+    /************************************************************************************************/
 
     bindEvents: function() {
-        botonder.addEventListener('click', function(){app.menu('izquierda');});
-        botoniz.addEventListener('click', function(){app.menu('derecha');});
-        document.querySelector("#menu-perfil").addEventListener('click', function(){app.muestra('perfil');});
-        document.addEventListener('deviceready', this.onDeviceReady, false);
-        //document.addEventListener('load', this.onLoad, false); 
-
+        document.addEventListener('deviceready', app.onDeviceReady, false);
     },
+
 
     onDeviceReady: function() {
-        /**pictureSource=navigator.camera.PictureSourceType;
-        destinationType=navigator.camera.DestinationType;**/
+        
+        //Inicialización de la database
+        app.databaseSetup();
+
+
+        //Plugins
+        console.log("Camera plugin working "+ JSON.stringify(navigator.camera));
+        console.log("Geolocation plugin working "+ JSON.stringify(navigator.geolocation));
+
+        
+
+        //Button listeners
+        document.querySelector('.btnder').addEventListener('click', function(){app.menu('izquierda');}, false);
+        document.querySelector('.btniz').addEventListener('click', function(){app.menu('derecha');}, false);
+        document.querySelector('#picture').addEventListener('click', app.openCamera,false );
+        document.querySelector("#menu1").addEventListener('click', function(){app.muestra('#pantalla1');});
+        document.querySelector("#menu2").addEventListener('click', function(){app.muestra('#pantalla2');});
+        document.querySelector("#menu3").addEventListener('click', app.launchWikitude, false);
+        document.querySelector("#button1").addEventListener('click', app.geoLocalization, false);
+        document.querySelector("#login-button").addEventListener('click', app.login, false);
+
+        //Hace el setup de la aplciación
+        app.setup();
+    },
+
+/************************* Función inicialización de la base de datos de la DB *****************************/
+
+databaseSetup: function(){
+
+     db = window.sqlitePlugin.openDatabase({ name: 'my.db', location: 'default' }, function (db) {
+
+        sql.initDatabase(db);
+
+    }, function (error) {
+        console.error('Open database ERROR: ' + error);
+    });
+
+        //sql.closeDatabase(db);
+},
+
+/************************************* Facebok Login *************************************************************/
+
+    FBlogin: function(){
+
+
+        facebookConnectPlugin.login( app.facebookPermissions, app.onFBSuccess, app.onFBFailure);
     },
 
 
-    //Esta función carga escenarios en la pantalla principal
-    muestra: function(escenario){
+/********************************** Función de arranque de la aplicación ****************************************/
 
-        //carga el cuerpo de la pantalla principal
-        var mainscreen = document.querySelector('#menu-principal').getElementsByClassName('row cuerpo')[0];
-        app.cargar('options/profile','mainscreen');
+    setup: function(){
 
 
+        facebookConnectPlugin.getLoginStatus(app.onFBSuccess, app.onFBFailure);
+
+    },
+
+    onFBSuccess: function(response){
+
+
+            switch(response.status) {
+
+                case "connected":
+                    console.log(response);
+                    app.onConnected(response);
+                break;
+
+                case "not_authorized":
+                    console.log(response);
+                    app.onNotAutorized(response);
+                break;
+
+                default:
+                    console.log(response);
+                    app.onNotAutorized(response);
+                };
+    },
+
+    onFBFailure: function(error){
+
+            console.log('Login failed: ' + error + "\n"); 
+    },
+
+
+    onConnected: function(response){
+                
+    //Comprueba si el usuario existe. Si existe devuelve el email sinó devuelve un 0.
+    app.userExists(response.authResponse)
+        .then(function(usersCounter){
+        
+            //Si existe el usuario
+            if (usersCounter > 0){
+                
+                landing.className= 'page totalleft';
+                console.log('User exists!'+'\n');
+
+                var ifok = sql.checkTokens(response.authResponse.userID, db)
+                    
+                    .catch(function(error){
+
+                        console.log('Error. No se ha podido recuperar el token: '+ error + '\n' );
+
+                        var requestPath = "me?fields=id,first_name,last_name,gender,picture.height(480),email,birthday";
+
+                        facebookConnectPlugin.api( requestPath, app.facebookPermissions,
+
+                        //Si funciona facebookConnectPlugin
+                        function(result){
+
+
+                                app.requestTokens(result.email, result.id)
+                                    .then( function(tokens){ return sql.saveTokens( result.id, usersCounter, tokens, db); })
+                                    .then( function(tokens){ return app.download( tokens, db); })
+                                    .then( function(option){ app.refresh(option); })
+
+                                    .catch( function(e){ console.log(e); })
+
+                                    },
+
+                            //Si falla facebookConnectPlugin
+                            function(error){
+
+                                console.log("Error al recuperar datos de Facebook: ", error);
+
+                            });
+
+
+                    })
+
+                ifok.then( function(token){ return app.download(token, db); }) //Devuelve una promesa que se pasa al then siguiente
+                    .then( function(option){ return app.refresh(option); })
+                    .catch(function(e){ console.log(e);})
+            }
+
+            //Si no existe usuario damos de alta un usuario nuevo desde 0.
+            else {
+            
+            console.log("Este es usuario no existe en nuestro sistema \n");
+
+            var requestPath = "me?fields=id,first_name,last_name,gender,picture.height(480),email,birthday";
+
+                    //facebookConnectPlugin.api(String requestPath, Array permissions, Function success, Function failure)
+                    facebookConnectPlugin.api(requestPath,app.facebookPermissions,function(result){
+
+
+                        app.newUser(result)
+                            .then(function(newUserObject){ return app.register(newUserObject) }) //newUserObject aún no tiene id
+                            .then(function(userObject){ return sql.addUserToDB(userObject, db) })
+                            // .then(function(user){ return app.register(user) })
+                            .then(function(userObject){ 
+
+                                Promise.all([userObject, app.requestTokens(userObject.email, userObject.FBid)]) 
+
+                                .then(function([userObject, tokens]){ return sql.saveTokens(userObject.FBid, userObject.id, tokens, db) })
+                                .then(function(tokens){ return app.download(tokens, db) })
+                                .then( function(option){ app.refresh(option); })
+
+                            })
+
+                            .catch(function(error){
+
+                                console.log("Error: ", error);
+                                app.FBlogin();
+
+
+                            })
+                
+                    });
+            }
+        })
+        .catch(function(e){ console.log(e); })
+
+    },
+
+    onNotAutorized: function(response){
+
+        app.FBlogin();
+    },
+
+
+
+/******************************* Comprueba si el usuario existe en el sistema. Si existe devuelve 1 sino devuleve un 0 *********************************************/
+
+    userExists: function(authResponse){
+
+        return new Promise(function(resolve, reject){
+
+            try{
+
+                console.log("Checking if user exists...");
+
+                var mode = "g";
+                var cmd = "api/users/exists/"+authResponse.userID;
+                var options = 0;
+                var body = undefined;
+
+                app.http(mode, cmd, body, options)
+                    .then (function(response){ resolve(response); })
+                    .catch(function(req){ reject('userExists HTTP Error '+req.status+' '+req.statusText+' '+req.responseText+' \n'); })
+                }
+
+                catch(e){ console.log("JAVASCRIPT ERROR "+e.name+" "+e.message); }
+        });
+    },
+
+
+/******* Crea un objeto usuario a partir del objeto extraído de los datos de Facebook. Lo saca por el Callback ******/
+
+    newUser: function(result){
+
+        return new Promise( function(resolve, reject){
+
+            try{
+
+                console.log("Creating new user... ");
+
+                var datetime = new Date();
+                datetime.getSeconds();
+                datetime.getMinutes();
+                datetime.getHours();
+
+                var userObject = new Object();
+
+                                    //userObject.id = null;
+                                    userObject.FBid = result.id;
+                                    userObject.name = result.first_name;
+                                    userObject.surnames = result.last_name;
+                                    userObject.gender = result.gender;
+                                    userObject.email = result.email;
+                                    //userObject.password = app.newPWD(); //Esta función pide password.
+                                    userObject.password = result.id;
+                                    //userObject.created_at =  datetime;
+                                    //userObject.updated_at = datetime;
+                                    userObject.photo = result.picture.data.url;  //ATENCIÓN QUE ESTAMOS PASANDO LA URL 
+                                    userObject.birthdate = result.birthday;
+                                    userObject.job = null;
+                                    userObject.studies = null;
+                                    userObject.ranking = null; //Aqui tiene que haber una función que extraiga el valor medio
+                                    userObject.aceptar = 0;
+                                    userObject.rechazar = 0;
+                                    userObject.saludar = 0;
+                                    userObject.destacado_ini = null;
+                                    userObject.destacado_fin = null;
+                                    userObject.location = null; //Función que ha de extraer la localización actual.
+
+                                    //console.log(JSON.stringify(userObject));
+                                    console.log(userObject);
+                                    resolve(userObject);
+
+
+        }
+
+        catch(e){ reject("JAVASCRIPT ERROR "+e.name+" "+e.message); }
+
+        });
+
+        
+    },
+
+
+/******************************* Da de alta el usuario en el sistema  *************************************************/
+
+register: function(userObject){
+
+    return new Promise(function(resolve,reject) {
+
+        try{
+
+            console.log("Registering user...");
+
+                var mode = "p";
+                var cmd = "api/register/";
+                var options = 0;
+                var body = JSON.stringify(userObject);
+                
+                app.http(mode, cmd, body, options)
+
+                    .then( function(response){ resolve(response); })  
+                    .catch(function(req){ reject('HTTP Error '+req.status+' '+req.statusText+' '+req.responseText+' \n') })
+
+        }
+
+        catch(e){ reject("JAVASCRIPT ERROR "+e.name+" "+e.message); }
+    });
+
+
+                
+
+    
+    },
+
+
+/******************************* Pide los tokens  *****************************************************************************/
+
+    requestTokens: function(grantuser, grantpassword){
+
+        return new Promise(function(resolve, reject){
+
+            try{
+
+                console.log("Requesting tokens...");
+
+                var mode = "p";
+                var cmd = "oauth/token/";
+                var options = 0;
+                var request = new Object();
+                    request.grant_type = "password";
+                    request.client_id = 1;
+                    request.client_secret = "u5MBHqf6fV04R0xuCKbzYTgUn8b2PkQBq8otzulo";
+                    request.username = grantuser;
+                    request.password = grantpassword;
+                    request.scope = "*";
+                    request = JSON.stringify(request);
+
+                    app.http(mode, cmd, request, options)
+                        
+                        .then(function(response){ resolve(response); })
+                        .catch( function(req){ reject('HTTP Error '+req.status+' '+req.statusText+' '+req.responseText+' \n')})
+
+            }
+
+            catch(e){ reject("JAVASCRIPT ERROR "+e.name+" "+e.message); }
+
+        });
+
+    },
+
+
+
+    /*********** Esta función se conecta al servidor y baja los datos del servidor a la aplicación *******************************/
+    download: function(tokenObject, db){
+
+
+
+            //inicializamos variables
+            accessToken = tokenObject.access_token;
+            var userid = tokenObject.id;
+            var mode = "g";
+            var options = "auth";
+            var body = undefined;
+
+
+                    return new Promise(function(resolve, reject){
+
+                    try{
+
+                    //Vaciamos las tablas locales de la database
+                    sql.delTablesDB(db)
+                        .then( function(){
+                            
+                            console.log(" Downloading data from server database... ");
+                            
+                            //Bajamos los datos del usuario
+                            var cmd = "api/user/"+userid;
+                            return app.http(mode, cmd, body, options);
+                        })
+                                    
+                        .then( function(userObject){ return sql.addUserToDB(userObject, db); })
+                        .then( function(resp){ 
+
+                            //Bajamos los Datos de la empresa (si hay)
+                            var cmd = "api/user/"+userid+"/empresa";
+                            return app.http(mode, cmd, body, options);
+
+                        })
+                        
+                        .then(function(empresaObject){ return sql.addEmpresaToDB(empresaObject, db);})
+                        .then( function(resp){
+
+                            //Bajamos los Eventos de usuario si hay
+                            var cmd = "api/user/"+userid+"/evento";
+                            return app.http(mode, cmd, body, options);
+
+                        })
+                        
+                        .then( function(eventosObject){ return sql.addEventosToDB(eventosObject, db); })
+                        .then( function(resp){
+
+                            //Bajamos los Matches (si hay)
+                            var cmd = "api/user/"+userid+"/match";
+                            return app.http(mode, cmd, body, options);
+
+                        })
+                            
+                        .then( function(matchesObject){ return sql.addMatchesToDB(matchesObject, db); })
+                        .then(function(resp){
+                                        
+                            //Bajamos los Bloqueados (si hay)
+                            var cmd = "api/user/"+userid+"/bloqueado";
+                            return app.http(mode, cmd, body, options);
+
+                        })
+                        
+                        .then( function(bloqueadosObject){ return sql.addBloqueadosToDB(bloqueadosObject, db); })
+                        .then( function(resp){
+
+                            delete accessToken;
+                                
+                            resolve("all");
+                        })
+                        
+                        .catch(function(e){ reject(e); })
+
+                        }
+
+                        catch(e){ reject("JAVASCRIPT ERROR "+e.name+" "+e.message); }
+                    });
+
+    },
+
+    /****** Esta función se conecta al servidor y sube los datos locales NECESARIOS de la aplicación al servidor *****/
+    //NOTA: Esta función como upload masivo de toda la DB local no tiene sentido dado que los cambios se harán sobre el servidor y luego ser actualizará la database local.
+
+    upload: function(db,token){
+
+
+//             var userObject = sql.extractUserFromDB();
+//             var empresasArray = sql.extractEmpresaFromDB();
+//             var EventosArray = sql.extractEventosFromDB();
+//             var MatchesArray = sql.extractMatchesFromDB();
+//             var BloqueadosArray = sql.extractBloqueadosFromDB();
+
+//             var mode = "post";
+//             var options = "auth";
+// .
+     
+
+
+    },
+
+
+
+    /** Refresca el frontend de la aplicación con los datos en memoria local. Si le pasamos un objeto, solo refresa dicho objeto. **/
+    refresh: function(option){
+
+    return new Promise(function(resolve,reject){
+
+    console.log("Refreshing the application...")
+
+        switch(option){
+
+            console.log("Option : "+option);
+
+            case "all":
+
+
+            case "perfil": 
+
+                sql.extractUserFromDB(db)
+                    .then(function(user){
+
+                    document.querySelector("#name").innerHTML=user.name;
+                    document.querySelector("#surname").innerHTML=user.surnames;
+                    //document.querySelector("#description").innerHTML+= " "+ result.+" .";
+                    document.querySelector("#picture").src=user.photo;
+                })
+
+            break;
+            
+
+            default: reject("No se ha reconocido la opción de refresco correctamente. \n");
+
+            console.log(" App READY");
+            resolve()
+        }
+
+
+    })
+    
+
+
+
+
+
+    },
+
+     /************** Guarda en memoria local del dispositivo  *******************************************/
+    //Si la operacion no se realiza con éxito devuelve un 0
+    // localsave: function(object, type){
+
+    
+
+
+
+
+
+
+
+
+    // },
+
+    /************************ Recupera de la memoria local del dispositivo *******************************/
+    //Si la operacion no se realiza con éxito devuelve un 0
+    // localload: function(object){
+    
+
+
+    
+
+
+
+    
+
+
+    // },
+  
+
+
+/****************************************************************************************************/
+
+    //Esta función muestra opciones (DEL MENÚ DE LA IZQUIERDA) en la pantalla principal.
+    muestra: function(opcion){
+
+
+        var child = document.querySelector(opcion);
+        child.className = 'option page center';
+
+        //Si tiene un pantalla insertado lo quita
+        if (menuprincipal.getElementsByClassName('row cuerpo')[0].children.length){
+            
+            var oldchild = menuprincipal.getElementsByClassName('row cuerpo')[0].firstChild;
+
+            document.body.appendChild(oldchild);
+            if (child != oldchild){
+            oldchild.className = "option page totalleft";
+            }
+        }
+        menuprincipal.getElementsByClassName('row cuerpo')[0].appendChild(child);
+
+        //De momento solo esta pensado para botones del menu (no settings)
+        app.menu('derecha');
+
+    },
+
+    //Al revés que la anterior
+    esconde: function(opción){
+
+        //document.querySelector().className = 'page totalleft';
     },
 
     //Esta función quita/pone el bucle de carga en función de si esta puesto o quitado
@@ -104,61 +723,98 @@ var app = {
             cargando.className = 'page totalleft'
 
         }else{
+
             console.log('Error con el bucle de cargado');
         }
     },
 
-    //Esta función carga un contenido html en un objeto dado del DOM
-    cargar: function(resource, target){
-
-        this.loading();
-        var data = httpRequest(resource);
-        target.innerHTML = data;
-        this.loading();
-
+    setOptions: function(srcType) {
+    
+    var options = {
+            // Some common settings are 20, 50, and 100
+            quality: 50,
+            destinationType: Camera.DestinationType.FILE_URI,
+            // In this app, dynamically set the picture source, Camera or photo gallery
+            sourceType: srcType,
+            encodingType: Camera.EncodingType.JPEG,
+            mediaType: Camera.MediaType.PICTURE,
+            allowEdit: true,
+            correctOrientation: true  //Corrects Android orientation quirks
+        }
+        return options;
     },
 
+    openCamera: function(selection) {
 
-    //Le pasamos un recurso URL/URI y nos devuelve su contenido en plaintext
-    httpRequest: function(resource){
+        console.log(selection.button);
 
-        //XmlhttpRequest Constructor -> Construye la petición http
-        var xhr = new XMLHttpRequest();
+        var srcType = Camera.PictureSourceType.CAMERA;
+        var options = app.setOptions(srcType);
 
-        //true > asíncrono (continúa); false > síncrono (espera la respuesta);
-        xhr.open("GET", resource, false);
+        navigator.camera.getPicture(function cameraSuccess(imageUri) {
 
-        //Se añaden cabeceras -> See (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers)
-        //req.setRequestHeader('Access-Control-Allow-Origin', url);
-        //req.setRequestHeader('Access-Control-Allow-Credentials', 'true');
-        //req.setRequestHeader('Vary','Origin');
-        //req.setRequestHeader("Authorization", "Basic " + btoa(user + ":" + password));
+            console.log('Photolibrary Sucess');
+            document.querySelector('#pantalla1').getElementsByTagName('img')[0].src = imageUri;
+
+        }, function cameraError(error) {
+            console.log("Unable to obtain picture: " + error, "app");
+
+        }, options);
+    },
+
+    initMap: function() {
+
+
+            map = new google.maps.Map(document.getElementById('map'), {
+            center: {lat: 41.4103908, lng: 2.1941609},
+            zoom: 8 
+            });
+
         
-        
-        xhr.send(null);
+        }, 
 
-        if (xhr.status == 200)  {
 
-            res = xhr.responseText;
-            return res;
-        
-        } 
+    geoLocalization: function(){
 
-        else {
 
-            console.log('HttpRequest Error: Request failed');
-            return 0;
-        }
+
+        navigator.geolocation.getCurrentPosition(
+            function geolocationSuccess(position){
+
+            /*
+              var resultado =  
+              'Latitude: '          + position.coords.latitude          + '\n' +
+              'Longitude: '         + position.coords.longitude         + '\n' +
+              'Altitude: '          + position.coords.altitude          + '\n' +
+              'Accuracy: '          + position.coords.accuracy          + '\n' +
+              'Altitude Accuracy: ' + position.coords.altitudeAccuracy  + '\n' +
+              'Heading: '           + position.coords.heading           + '\n' +
+              'Speed: '             + position.coords.speed             + '\n' +
+              'Timestamp: '         + position.timestamp                + '\n';
+
+            */
+
+        var myLatLng = {lat: position.coords.latitude, lng: position.coords.longitude};
+
+        map.panTo(myLatLng);
+
+        var marker = new google.maps.Marker({
+            position: myLatLng,
+            map: map,
+            title: '¡Esamos aqui!'
+          });
+
+
+
+        },
+            function geolocationError(error){
+                console.log("GeoLocalization error: " + error.code + " " + error.message + "\n" );
+
+        });
+
+
     }
 
-
-
-
-
-
-    }
-
-    
 
 }
 

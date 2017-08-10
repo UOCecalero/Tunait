@@ -7,16 +7,10 @@ body {
 	position: fixed;
     margin: 0;
     padding: 0;
+    margin-top: 20px;
+    font-size: 2.5em;
 }
 
-
-body > div {
-	position: absolute;
-	width: 100%;
-	height: 100%;	
-	}
-
-#caja {top:15px;}
 
 
 #menu-principal {
@@ -24,9 +18,15 @@ body > div {
    
 	}
 
-#menu-lateral, #settings {
+
+#menu-lateral, #settings, #landing {
     background-color: white;
-}
+} 
+
+#menu-lateral>div>div>div, #settings>div>div>div {
+    
+    border-bottom: thin solid grey;
+} 
 
 
 /* Barra superior principal */
@@ -45,75 +45,6 @@ body > div {
     margin-top: 0;
     text-align: center;
 
-}
-
-/*
-#menu_lateral td, #settings td {
-    
-    padding: 5px;
-    background-color:white;
-    }
-
-#menu_lateral nav{
-    width:100%;
-}
-
-#menu_lateral nav table{
-    width: 85%;
-    margin-left: 2%;
-    font-size: small;
-    
-}
-
-
-
-#settings nav table {
-    width: 100%;
-    margin-left: 15%;
-    font-size: x-small;
-    
-}
-
-#menu {
-    position:absolute;
-    top:50px;
-    left:0;
-    }
-
-.cabecera {
-	position:absolute;
-	top:0px; left:0;
-	background-color:white;
-   width:100%;
-   height: 40px;
-   border-bottom: 10px solid #043E95;
-   text-align: center;
-	}
-
-#cuerpo{
-    position: absolute;
-    top: 50px;
-    left: 0;
-    width: 100%;
-    height: 75%;
-    text-align: center;
-}
-
-.classplano{
-    position: absolute;
-    top:0px; left:0;
-    width: 100%;
-    height: 100%;
-    
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-
-}
-
-
-.classplano.left {
-    -webkit-transform: translate3d(-200%, 0, 0);
-    transform: translate3d(-200%, 0, 0);
 }
 
 /* Estilo de capa central */
@@ -157,6 +88,11 @@ body > div {
     }
 
 */
+#cargando {
+    background-color: black;
+    opacity: 0.5;
+}
+
 #cargando > div {
     z-index: 4;
     position: absolute;
@@ -164,17 +100,26 @@ body > div {
     left: 40%;
     }
 
-/*
-.btniz { float: left; display: none;  }
-.btnder { float: right; display: none; }
-.btncnt { padding-left: 10px; }
-.btn{
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
+/* Pantalla1 */ 
+
+#pantalla1, #pantalla2, #pantalla3, #pantalla4{
+    text-align: center;
 }
 
-a:link {color:black;} */
+#picture{
+    width: 160px;
+    height: 160px;
+}
+
+/* Pantalla2 */
+
+#map {
+
+      width: 90%;
+      height: 400px;
+      margin: auto;
+      margin-top: 5%;
+    }
 
 /* Estilos para iscroll-zoom*/
 
@@ -228,6 +173,11 @@ height: 100%;
 transform: translate3d(0, 0, 0); 
 } 
 
+.option{
+    top: 10%;
+   
+}
+
 
 
 /* Estilo de capa izquierda */
@@ -278,74 +228,6 @@ transition-duration: .15s;
 }
 
 
-/* Estilo interruptor encendido 
-
-.onswitch_o {
-    background: url('../img/iPhoneSwitch.png') no-repeat -224px -39px;
-	width: 64px;
-	height: 23px;
-    position: absolute;
-    z-index:5;
-    
-}
-
-/* Estilo interruptor apagado 
-
-.offswitch_o{
-    
-    background: url('../img/iPhoneSwitch.png') no-repeat -225px -68px;
-	width: 60px;
-	height: 18px;
-    position: absolute;
-    z-index:5;
-    
-}
-
-
-/* Estilo sensor encendido 
-
-.onswitch_i{
-    
-    background: url('../img/light_bulbs_thumb.png') no-repeat -117px -66px;
-	width: 23px;
-	height: 39px;
-    position: absolute;
-    z-index:5;
-}
-
-/* Estilo sensor apagado 
-
-.offswitch_i{
-    
-    background: url('../img/light_bulbs_thumb.png') no-repeat -89px -66px;
-	width: 23px;
-	height: 39px;
-    position: absolute;
-    z-index:5;}
-
-/* Estilo salida analógica 
-
-.analogswitch_o{
-    background-color: whitesmoke;
-    width: 64px;
-	height: 23px;
-    word-wrap: break-word;
-    position: absolute;
-    z-index:5;
-}
-
-
-/*Estilo entrada analógica
-
-.analogswitch_i{
-    background-color: whitesmoke;
-    /*width: 64px;
-	height: 23px;
-    word-wrap: break-word;
-    position: absolute;
-    z-index:5;
-
-} */
 
 
 	
