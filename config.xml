@@ -2,7 +2,7 @@
 <widget id="com.linxtech.linxapp" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Linxapp</name>
     <description>
-        Linx Aplicaciones - Tunait prueba
+        Linx Aplicaciones - Tunait App
     </description>
     <author email="educalerorovira@gmail.com" href="http://cordova.io">
         Eduard Calero Rovira
@@ -34,5 +34,8 @@
     <preference name="StatusBarBackgroundColor" value="black" />
     <preference name="StatusBarStyle" value="blackopaque" />
     <preference name="StatusBarOverlaysWebView" value="false" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="Orientation" value="portrait" />
+    
     <plugin name="cordova-sqlite-storage" spec="https://github.com/litehelpers/Cordova-sqlite-storage.git" />
 </widget>
