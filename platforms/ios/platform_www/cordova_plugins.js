@@ -105,6 +105,14 @@ module.exports = [
         ]
     },
     {
+        "id": "cordova-plugin-stripe.stripe",
+        "file": "plugins/cordova-plugin-stripe/www/CordovaStripe.js",
+        "pluginId": "cordova-plugin-stripe",
+        "clobbers": [
+            "cordova.plugins.stripe"
+        ]
+    },
+    {
         "id": "cordova-sqlite-storage.SQLitePlugin",
         "file": "plugins/cordova-sqlite-storage/www/SQLitePlugin.js",
         "pluginId": "cordova-sqlite-storage",
@@ -123,6 +131,7 @@ module.exports.metadata =
     "cordova-plugin-facebook4": "1.7.4",
     "cordova-plugin-geolocation": "2.4.2-dev",
     "cordova-plugin-statusbar": "2.2.1",
+    "cordova-plugin-stripe": "1.5.3",
     "cordova-plugin-whitelist": "1.3.1",
     "cordova-sqlite-storage": "2.0.4"
 };

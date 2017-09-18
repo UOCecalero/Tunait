@@ -7,50 +7,52 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		002880E82F894950A80CA938 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2B53AD9CE7F540888E0D3B5D /* CoreMotion.framework */; };
-		003B2EB372F64D149CD5336C /* CDVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 406D45AE5B364F858E560DEC /* CDVLogger.m */; };
 		0207DA581B56EA530066E2B4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0207DA571B56EA530066E2B4 /* Images.xcassets */; };
-		130A4E67EF3140D099C1A39C /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C5A217274D64DFFA4F939B8 /* CoreText.framework */; };
+		03E26629D961454F9C1AA0C7 /* WTWikitudePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 09D430D192634126854454BC /* WTWikitudePlugin.m */; };
+		0C103D77263D4D38ACD5A9B4 /* CordovaStripe.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CAE2D4A59DD4301BAEDC983 /* CordovaStripe.m */; };
+		1638FACA4BF54D069798EFEB /* libWikitudeSDK-simulator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9036D6A20644EEAB95BE203 /* libWikitudeSDK-simulator.a */; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
-		2ED97869800447A684BDFA18 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD5BE0381BB54460ADA95564 /* SafariServices.framework */; };
+		1EE099C848364DD6B8C99C57 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F56A5D29A89408DB480901C /* libz.dylib */; };
+		1FA2FFE5F97F43948BCBAB10 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 694083DD2A02412186EE5621 /* CoreText.framework */; };
+		1FD8DAD2A248437CB5E563BC /* CDVCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = AAF88BDEBFE64C34ACE1D29D /* CDVCamera.m */; };
+		26617495B8904BDDBC27DEFE /* FacebookConnectPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 42B860BE7A2A4D3AA2832388 /* FacebookConnectPlugin.m */; };
+		27E93BBA911F41B68E14C5CA /* CDVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = E020B94D16B847D1ADEEBB13 /* CDVLogger.m */; };
+		29189F47CEFB4572AAF731D8 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FEDD01479C84E3A8B6B8FD5 /* OpenGLES.framework */; };
 		301BF552109A68D80062928A /* libCordova.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 301BF535109A57CC0062928A /* libCordova.a */; };
 		302D95F114D2391D003F00A1 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 302D95EF14D2391D003F00A1 /* MainViewController.m */; };
 		302D95F214D2391D003F00A1 /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 302D95F014D2391D003F00A1 /* MainViewController.xib */; };
-		30D03D991A104D079438B9FB /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C5BC2BB730AC48698B8D2BCD /* FBSDKShareKit.framework */; };
-		337C7A786917415F9A5B7DA9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 359655ABF42B4F4C9B57C812 /* UIKit.framework */; };
-		5102870C60344ECF9F73AA9B /* SQLitePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 358989408D384050B533269C /* SQLitePlugin.m */; };
-		527CCA85B7F6462E8674F1DF /* libWikitudeSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F695E69A0FD47B296671A88 /* libWikitudeSDK.a */; };
-		5CB0783EF8C5414BA7BB0C32 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 095965137FA146FC9C00AA18 /* Foundation.framework */; };
-		5D2FD77DEB414E39AD8F4603 /* WTARViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1EEC0B0CEC2A416ABF932565 /* WTARViewController.m */; };
-		61FFFEC6EE6446158490AD90 /* CDVCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AAB4B46DEBA4C3380BD1016 /* CDVCamera.m */; };
+		31D6CF51688140098DFB196C /* SQLitePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 580EF75CF55040E1AEB58574 /* SQLitePlugin.m */; };
+		34B33615BE474B33A865AD93 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = CA6E5932F12844C7BAB25E22 /* sqlite3.c */; settings = {COMPILER_FLAGS = "-DSQLITE_THREADSAFE=1 -DSQLITE_DEFAULT_MEMSTATUS=0 -DSQLITE_OMIT_DECLTYPE -DSQLITE_OMIT_DEPRECATED -DSQLITE_OMIT_PROGRESS_CALLBACK -DSQLITE_OMIT_SHARED_CACHE -DSQLITE_TEMP_STORE=2 -DSQLITE_OMIT_LOAD_EXTENSION -DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_FTS4 -DSQLITE_ENABLE_RTREE -DSQLITE_DEFAULT_PAGE_SIZE=1024 -DSQLITE_DEFAULT_CACHE_SIZE=2000"; }; };
+		3E10797CB97B465083A18ADE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32FEEAD1149A44839705C920 /* CoreLocation.framework */; };
+		425FFAA24CAA4E01AA8B501A /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88DB03E87DA4422E9738CE70 /* Bolts.framework */; };
+		47CC77C969D449A097E125BE /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DD47CAA5CAD43008C9ED4FB /* MediaPlayer.framework */; };
+		54734C5D342E492FAB27D87A /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ABF4453E49A4994812AB5CD /* FBSDKShareKit.framework */; };
+		5AE4FF13F2B0499AB0BE214D /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C7DBFDE416B408A99AE980D /* SafariServices.framework */; };
+		649770EA47E345C1A2447D37 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31918FD9730D4E57BF5448DB /* FBSDKCoreKit.framework */; };
+		66FDE21524CC4BF3BC010B86 /* CDVLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 11C0951CE2BE4D5891249EC5 /* CDVLocation.m */; };
 		6AFF5BF91D6E424B00AB3073 /* CDVLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AFF5BF81D6E424B00AB3073 /* CDVLaunchScreen.storyboard */; };
-		6F25ED544ADA4B8ABE56B349 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C19E666DAA2A4D69AB323D9E /* FBSDKLoginKit.framework */; };
-		7090DFF7FE11479295A7D3D8 /* CDVJpegHeaderWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C13C6563F2E40DE94C7D579 /* CDVJpegHeaderWriter.m */; };
-		7379DC9423724A5CBDCC86A5 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A476E0532CF944E8AFFA768D /* CoreVideo.framework */; };
-		788F53D610CA419094D6CF27 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A11DA72FCE54EB8B97D1EEA /* Bolts.framework */; };
-		7BC80E492FC9454C996CE125 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BF3F83BBD0C4FC4B4821CD5 /* CoreLocation.framework */; };
-		7E6C4A909E94456A88085214 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44F006C8749E43338F301729 /* ImageIO.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		8B3B4E1923F64D2F93EE12AA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 70F4D3C0244F49DDB9D8DDD3 /* AVFoundation.framework */; };
-		96C8497238714E6783966FB7 /* sqlite3.c in Sources */ = {isa = PBXBuildFile; fileRef = 9178744690FE4F579FA4225B /* sqlite3.c */; settings = {COMPILER_FLAGS = "-DSQLITE_THREADSAFE=1 -DSQLITE_DEFAULT_MEMSTATUS=0 -DSQLITE_OMIT_DECLTYPE -DSQLITE_OMIT_DEPRECATED -DSQLITE_OMIT_PROGRESS_CALLBACK -DSQLITE_OMIT_SHARED_CACHE -DSQLITE_TEMP_STORE=2 -DSQLITE_OMIT_LOAD_EXTENSION -DSQLITE_ENABLE_FTS3 -DSQLITE_ENABLE_FTS3_PARENTHESIS -DSQLITE_ENABLE_FTS4 -DSQLITE_ENABLE_RTREE -DSQLITE_DEFAULT_PAGE_SIZE=1024 -DSQLITE_DEFAULT_CACHE_SIZE=2000"; }; };
-		9C5EAEAF5286435DAA0C6A97 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A1BCE9246C549CDAD0806BB /* CFNetwork.framework */; };
-		9D26A823C5BE466893BD259F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7C077ACD805849EE88050282 /* QuartzCore.framework */; };
-		A4385ECA264E4E7A93D8424A /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 26A392023C31434F8E8909CA /* libc++.dylib */; };
-		A59BA5E4030F4650840787C2 /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 55EE27D02D9F4075BE71A541 /* CDVStatusBar.m */; };
-		ABF724A8C5B84F29AB1A746D /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D9C69C1B36C42AF825E557C /* Accelerate.framework */; };
-		B877FE868EA0478A90EABD50 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB7DB89640948D180B862F7 /* FBSDKCoreKit.framework */; };
-		B9AB2CBCCD51416BA5672E05 /* FacebookConnectPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 44DAFA90BB3B4B5D8984CBDD /* FacebookConnectPlugin.m */; };
-		BD9CBBF6FF97487286CB39E6 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A43A232BB634E87A38E4CA7 /* Security.framework */; };
-		C59BFA1326EC40278581011B /* libWikitudeSDK-simulator.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB44F0B3A6AE4E258A6EEFB1 /* libWikitudeSDK-simulator.a */; };
-		CCD9B883EDDD46929318B8C8 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08BAA08A89004375812CDB3D /* MediaPlayer.framework */; };
-		D4387FB4FBD04796BD984B27 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 51F2C80B619040B0ACD39418 /* Photos.framework */; };
-		DBBC795D8C60400EB2C102BA /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5948D1ED0D3420D83297CB3 /* SystemConfiguration.framework */; };
-		E0A9B355D67C43208EAEAE96 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5867D30B0E24F889BC07A0D /* OpenGLES.framework */; };
-		E1DE3538F1FB4766BBAD4CA4 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 12B665816FCB426C9196A1B3 /* CoreMedia.framework */; };
-		E39BFAA8554A4191AA996C80 /* WTWikitudePlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 546CC75CD56F4F21934D381D /* WTWikitudePlugin.m */; };
-		E9FDE1EE222D4C59AA7383A8 /* CDVLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 40D256B22F6F460D94B0184E /* CDVLocation.m */; };
-		FBA18D8CDBBC4A15AC653166 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ED14F4443A5E464E8B6BF8EF /* libz.dylib */; };
-		FC5970609CC4409186EABBE5 /* UIImage+CropScaleOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = B44F41F033F7486A8919E7A0 /* UIImage+CropScaleOrientation.m */; };
+		783A0DEC1AFA4F509FA2FDFE /* UIImage+CropScaleOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB6D701D4BD42B6B4415602 /* UIImage+CropScaleOrientation.m */; };
+		7E48E562FFED4CAC9CF0887E /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A499A12F2E7C469C97FB5600 /* Photos.framework */; };
+		821EAAA934E54F488CCD3567 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 85BA4B26662A413B99DD7CA7 /* libc++.dylib */; };
+		9D2A168529B44A708F7A59B8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB070D7A1B234093991A8E0C /* UIKit.framework */; };
+		9E347CC5AFAB49A08C9B2599 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E746DD165CC149479018CF8C /* CoreMedia.framework */; };
+		A03FE170F7244CB38A9368F5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A6338B778E040DB861804D1 /* QuartzCore.framework */; };
+		AC87B4F5CB134B33ADDDE8C1 /* WTARViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D369D7236B547BCA26A05EA /* WTARViewController.m */; };
+		B31A76CB230E424ABEDCDAE2 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 254B5314B257422398969F88 /* CoreMotion.framework */; };
+		B6C61672655C4680998094F2 /* libWikitudeSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32F4334A45434FE0A19B1294 /* libWikitudeSDK.a */; };
+		BC210CC59B314ECEBB3942EC /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7043B77EF56548179444A5BD /* CFNetwork.framework */; };
+		BDD60181D44040D2AE1F6369 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8A894370D40495D9444C511 /* SystemConfiguration.framework */; };
+		BE3CFCBAD807423EAB4DFE78 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 715D8A79560F403191DC78B6 /* Foundation.framework */; };
+		C0AF313C8B734773A85ABDE8 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B933282189C4324983982FE /* CoreVideo.framework */; };
+		C54A73374FF641A493373D2A /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A3180A302D48469A92C91B55 /* FBSDKLoginKit.framework */; };
+		C96CE41E241A4242A2F51F25 /* Stripe.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F45A1CD143044ECFBC1E7405 /* Stripe.framework */; };
+		CE8B3A3BE7E24B3BB305059D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6406128D9E3F4EDDA15D5F9A /* Security.framework */; };
+		D60FC257EE7F442CBF1AFE33 /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 99AB4713280840E99AE1F5DB /* CDVStatusBar.m */; };
+		DE9470B3A2144D32975D4B66 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A81429A248E49A689C90E81 /* Accelerate.framework */; };
+		E45961CB47B9465D937F9A3F /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5A32D5F552449009058E891 /* ImageIO.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		E69841B230E34056B4249BD8 /* CDVJpegHeaderWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = F7A90D103C7C4BD382BE4697 /* CDVJpegHeaderWriter.m */; };
+		EE35D92761E74303AAB34A7A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 603105661E1B4A66BCE5DF9A /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,25 +74,17 @@
 
 /* Begin PBXFileReference section */
 		0207DA571B56EA530066E2B4 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Linxapp/Images.xcassets; sourceTree = SOURCE_ROOT; };
-		07B6275E5C2348E5B41F49CC /* WTSDKBuildInformation.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = WTSDKBuildInformation.h; path = com.wikitude.phonegap.WikitudePlugin/WTSDKBuildInformation.h; sourceTree = "<group>"; };
-		08BAA08A89004375812CDB3D /* MediaPlayer.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
-		095965137FA146FC9C00AA18 /* Foundation.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		0A43A232BB634E87A38E4CA7 /* Security.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		0A8D6CBB8D7049F387918C99 /* CDVCamera.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVCamera.h; path = "cordova-plugin-camera/CDVCamera.h"; sourceTree = "<group>"; };
-		0AAB4B46DEBA4C3380BD1016 /* CDVCamera.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVCamera.m; path = "cordova-plugin-camera/CDVCamera.m"; sourceTree = "<group>"; };
-		0BF3F83BBD0C4FC4B4821CD5 /* CoreLocation.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		0F695E69A0FD47B296671A88 /* libWikitudeSDK.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; name = libWikitudeSDK.a; path = Linxapp/Plugins/com.wikitude.phonegap.WikitudePlugin/libWikitudeSDK.a; sourceTree = "<group>"; };
-		12B665816FCB426C9196A1B3 /* CoreMedia.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		1AB7DB89640948D180B862F7 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "Linxapp/Plugins/cordova-plugin-facebook4/FBSDKCoreKit.framework"; sourceTree = "<group>"; };
+		09D430D192634126854454BC /* WTWikitudePlugin.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = WTWikitudePlugin.m; path = com.wikitude.phonegap.WikitudePlugin/WTWikitudePlugin.m; sourceTree = "<group>"; };
+		0C7DBFDE416B408A99AE980D /* SafariServices.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
+		0D369D7236B547BCA26A05EA /* WTARViewController.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = WTARViewController.m; path = com.wikitude.phonegap.WikitudePlugin/WTARViewController.m; sourceTree = "<group>"; };
+		11C0951CE2BE4D5891249EC5 /* CDVLocation.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVLocation.m; path = "cordova-plugin-geolocation/CDVLocation.m"; sourceTree = "<group>"; };
+		1A6338B778E040DB861804D1 /* QuartzCore.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		1D6058910D05DD3D006BFB54 /* Linxapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Linxapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		1D9C69C1B36C42AF825E557C /* Accelerate.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		1EEC0B0CEC2A416ABF932565 /* WTARViewController.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = WTARViewController.m; path = com.wikitude.phonegap.WikitudePlugin/WTARViewController.m; sourceTree = "<group>"; };
-		26A392023C31434F8E8909CA /* libc++.dylib */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		254B5314B257422398969F88 /* CoreMotion.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		27B36A2CA68E4571AF8C0612 /* WTArchitectView.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = WTArchitectView.h; path = com.wikitude.phonegap.WikitudePlugin/WTArchitectView.h; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		2A1BCE9246C549CDAD0806BB /* CFNetwork.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
-		2B53AD9CE7F540888E0D3B5D /* CoreMotion.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CordovaLib.xcodeproj; path = CordovaLib/CordovaLib.xcodeproj; sourceTree = "<group>"; };
 		301BF56E109A69640062928A /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = SOURCE_ROOT; };
 		302D95EE14D2391D003F00A1 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
@@ -99,56 +93,67 @@
 		3047A50F1AB8059700498E2A /* build-debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "build-debug.xcconfig"; path = "cordova/build-debug.xcconfig"; sourceTree = SOURCE_ROOT; };
 		3047A5101AB8059700498E2A /* build-release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = "build-release.xcconfig"; path = "cordova/build-release.xcconfig"; sourceTree = SOURCE_ROOT; };
 		3047A5111AB8059700498E2A /* build.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = build.xcconfig; path = cordova/build.xcconfig; sourceTree = SOURCE_ROOT; };
-		3209F743D54F487DB2E77A6B /* WTAuthorizationRequestManager.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = WTAuthorizationRequestManager.h; path = com.wikitude.phonegap.WikitudePlugin/WTAuthorizationRequestManager.h; sourceTree = "<group>"; };
+		31918FD9730D4E57BF5448DB /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "Linxapp/Plugins/cordova-plugin-facebook4/FBSDKCoreKit.framework"; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* Linxapp-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Linxapp-Prefix.pch"; sourceTree = "<group>"; };
-		358989408D384050B533269C /* SQLitePlugin.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = SQLitePlugin.m; path = "cordova-sqlite-storage/SQLitePlugin.m"; sourceTree = "<group>"; };
-		359655ABF42B4F4C9B57C812 /* UIKit.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		3C13C6563F2E40DE94C7D579 /* CDVJpegHeaderWriter.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVJpegHeaderWriter.m; path = "cordova-plugin-camera/CDVJpegHeaderWriter.m"; sourceTree = "<group>"; };
-		3C5A217274D64DFFA4F939B8 /* CoreText.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
-		406D45AE5B364F858E560DEC /* CDVLogger.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVLogger.m; path = "cordova-plugin-console/CDVLogger.m"; sourceTree = "<group>"; };
-		40D256B22F6F460D94B0184E /* CDVLocation.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVLocation.m; path = "cordova-plugin-geolocation/CDVLocation.m"; sourceTree = "<group>"; };
-		420927CFFC4042F88ED37219 /* SQLitePlugin.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = SQLitePlugin.h; path = "cordova-sqlite-storage/SQLitePlugin.h"; sourceTree = "<group>"; };
-		44DAFA90BB3B4B5D8984CBDD /* FacebookConnectPlugin.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = FacebookConnectPlugin.m; path = "cordova-plugin-facebook4/FacebookConnectPlugin.m"; sourceTree = "<group>"; };
-		44F006C8749E43338F301729 /* ImageIO.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
-		48639F632AF34592B9A91E74 /* WTNavigation.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = WTNavigation.h; path = com.wikitude.phonegap.WikitudePlugin/WTNavigation.h; sourceTree = "<group>"; };
-		49A04E581D864830A88B9BA8 /* WTWikitudeTypes.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = WTWikitudeTypes.h; path = com.wikitude.phonegap.WikitudePlugin/WTWikitudeTypes.h; sourceTree = "<group>"; };
-		51F2C80B619040B0ACD39418 /* Photos.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
-		546CC75CD56F4F21934D381D /* WTWikitudePlugin.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = WTWikitudePlugin.m; path = com.wikitude.phonegap.WikitudePlugin/WTWikitudePlugin.m; sourceTree = "<group>"; };
-		55EE27D02D9F4075BE71A541 /* CDVStatusBar.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVStatusBar.m; path = "cordova-plugin-statusbar/CDVStatusBar.m"; sourceTree = "<group>"; };
-		57BBEB869D7049A28FB06BA3 /* WTWikitudePlugin.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = WTWikitudePlugin.h; path = com.wikitude.phonegap.WikitudePlugin/WTWikitudePlugin.h; sourceTree = "<group>"; };
-		5F373051C05A4C81916D2649 /* CDVLogger.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVLogger.h; path = "cordova-plugin-console/CDVLogger.h"; sourceTree = "<group>"; };
-		628F92D251FC4FA1823E7CC5 /* UIImage+CropScaleOrientation.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "UIImage+CropScaleOrientation.h"; path = "cordova-plugin-camera/UIImage+CropScaleOrientation.h"; sourceTree = "<group>"; };
-		6877E597070147738ED85EBB /* WTArchitectViewDebugDelegate.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = WTArchitectViewDebugDelegate.h; path = com.wikitude.phonegap.WikitudePlugin/WTArchitectViewDebugDelegate.h; sourceTree = "<group>"; };
+		32F4334A45434FE0A19B1294 /* libWikitudeSDK.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; name = libWikitudeSDK.a; path = Linxapp/Plugins/com.wikitude.phonegap.WikitudePlugin/libWikitudeSDK.a; sourceTree = "<group>"; };
+		32FEEAD1149A44839705C920 /* CoreLocation.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		3F56A5D29A89408DB480901C /* libz.dylib */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		410976C7925D442F84D23826 /* CDVCamera.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVCamera.h; path = "cordova-plugin-camera/CDVCamera.h"; sourceTree = "<group>"; };
+		42B860BE7A2A4D3AA2832388 /* FacebookConnectPlugin.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = FacebookConnectPlugin.m; path = "cordova-plugin-facebook4/FacebookConnectPlugin.m"; sourceTree = "<group>"; };
+		4CEEC893E6E5417D9C89E41C /* CDVLogger.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVLogger.h; path = "cordova-plugin-console/CDVLogger.h"; sourceTree = "<group>"; };
+		4EB6D701D4BD42B6B4415602 /* UIImage+CropScaleOrientation.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = "UIImage+CropScaleOrientation.m"; path = "cordova-plugin-camera/UIImage+CropScaleOrientation.m"; sourceTree = "<group>"; };
+		50AC353CB362438A941BA899 /* WikitudeSDK.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = WikitudeSDK.h; path = com.wikitude.phonegap.WikitudePlugin/WikitudeSDK.h; sourceTree = "<group>"; };
+		55DD1175B62F4E7E95E26AA6 /* CDVExif.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVExif.h; path = "cordova-plugin-camera/CDVExif.h"; sourceTree = "<group>"; };
+		561D3AFC2D244186B22B0B95 /* WTWikitudePlugin.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = WTWikitudePlugin.h; path = com.wikitude.phonegap.WikitudePlugin/WTWikitudePlugin.h; sourceTree = "<group>"; };
+		580EF75CF55040E1AEB58574 /* SQLitePlugin.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = SQLitePlugin.m; path = "cordova-sqlite-storage/SQLitePlugin.m"; sourceTree = "<group>"; };
+		5F38EDA400144AC0ABE67BAD /* WTWikitudeTypes.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = WTWikitudeTypes.h; path = com.wikitude.phonegap.WikitudePlugin/WTWikitudeTypes.h; sourceTree = "<group>"; };
+		5FEDD01479C84E3A8B6B8FD5 /* OpenGLES.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		603105661E1B4A66BCE5DF9A /* AVFoundation.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		6406128D9E3F4EDDA15D5F9A /* Security.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		694083DD2A02412186EE5621 /* CoreText.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		69453EE7B92B4CFB9E7C5AA3 /* CordovaStripe.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CordovaStripe.h; path = "cordova-plugin-stripe/CordovaStripe.h"; sourceTree = "<group>"; };
 		6AFF5BF81D6E424B00AB3073 /* CDVLaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = CDVLaunchScreen.storyboard; path = Linxapp/CDVLaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
-		70F4D3C0244F49DDB9D8DDD3 /* AVFoundation.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		78590FAE68784A729420E83F /* FacebookConnectPlugin.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = FacebookConnectPlugin.h; path = "cordova-plugin-facebook4/FacebookConnectPlugin.h"; sourceTree = "<group>"; };
-		7C077ACD805849EE88050282 /* QuartzCore.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		6B933282189C4324983982FE /* CoreVideo.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		6CAE2D4A59DD4301BAEDC983 /* CordovaStripe.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CordovaStripe.m; path = "cordova-plugin-stripe/CordovaStripe.m"; sourceTree = "<group>"; };
+		6DD47CAA5CAD43008C9ED4FB /* MediaPlayer.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		7043B77EF56548179444A5BD /* CFNetwork.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		715D8A79560F403191DC78B6 /* Foundation.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		72D5C9C4B9CB41719679168F /* FacebookConnectPlugin.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = FacebookConnectPlugin.h; path = "cordova-plugin-facebook4/FacebookConnectPlugin.h"; sourceTree = "<group>"; };
+		7ABF4453E49A4994812AB5CD /* FBSDKShareKit.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = "Linxapp/Plugins/cordova-plugin-facebook4/FBSDKShareKit.framework"; sourceTree = "<group>"; };
+		7BF2C81F520F43E7894E0F2C /* sqlite3.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = sqlite3.h; path = "cordova-sqlite-storage/sqlite3.h"; sourceTree = "<group>"; };
+		8064660C2EE247038B561FFE /* WTArchitectStartupConfiguration.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = WTArchitectStartupConfiguration.h; path = com.wikitude.phonegap.WikitudePlugin/WTArchitectStartupConfiguration.h; sourceTree = "<group>"; };
+		85BA4B26662A413B99DD7CA7 /* libc++.dylib */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		88DB03E87DA4422E9738CE70 /* Bolts.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = "Linxapp/Plugins/cordova-plugin-facebook4/Bolts.framework"; sourceTree = "<group>"; };
+		89A1E4B60D6341FD912E2609 /* WTAuthorizationRequestManager.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = WTAuthorizationRequestManager.h; path = com.wikitude.phonegap.WikitudePlugin/WTAuthorizationRequestManager.h; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Linxapp-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Linxapp-Info.plist"; path = "Linxapp/Linxapp-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = SOURCE_ROOT; };
-		9178744690FE4F579FA4225B /* sqlite3.c */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = sqlite3.c; path = "cordova-sqlite-storage/sqlite3.c"; sourceTree = "<group>"; };
-		9852B8916A21452F98E7F125 /* WTArchitectView.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = WTArchitectView.h; path = com.wikitude.phonegap.WikitudePlugin/WTArchitectView.h; sourceTree = "<group>"; };
-		9A11DA72FCE54EB8B97D1EEA /* Bolts.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = "Linxapp/Plugins/cordova-plugin-facebook4/Bolts.framework"; sourceTree = "<group>"; };
-		A476E0532CF944E8AFFA768D /* CoreVideo.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
-		AB44F0B3A6AE4E258A6EEFB1 /* libWikitudeSDK-simulator.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; name = "libWikitudeSDK-simulator.a"; path = "Linxapp/Plugins/com.wikitude.phonegap.WikitudePlugin/libWikitudeSDK-simulator.a"; sourceTree = "<group>"; };
-		B44F41F033F7486A8919E7A0 /* UIImage+CropScaleOrientation.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = "UIImage+CropScaleOrientation.m"; path = "cordova-plugin-camera/UIImage+CropScaleOrientation.m"; sourceTree = "<group>"; };
-		BA2CABED8049461394C0E8FD /* WTStartupConfiguration.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = WTStartupConfiguration.h; path = com.wikitude.phonegap.WikitudePlugin/WTStartupConfiguration.h; sourceTree = "<group>"; };
-		BB92139CECFF4B6BACF4188E /* sqlite3.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = sqlite3.h; path = "cordova-sqlite-storage/sqlite3.h"; sourceTree = "<group>"; };
-		BCF9C759B1D84FF7A6C8105F /* WTARViewController.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = WTARViewController.h; path = com.wikitude.phonegap.WikitudePlugin/WTARViewController.h; sourceTree = "<group>"; };
-		BED5CB89A2BB414199712F55 /* CDVLocation.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVLocation.h; path = "cordova-plugin-geolocation/CDVLocation.h"; sourceTree = "<group>"; };
-		C19E666DAA2A4D69AB323D9E /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = "Linxapp/Plugins/cordova-plugin-facebook4/FBSDKLoginKit.framework"; sourceTree = "<group>"; };
-		C442CF1A2577477297D9F0B8 /* WTArchitectStartupConfiguration.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = WTArchitectStartupConfiguration.h; path = com.wikitude.phonegap.WikitudePlugin/WTArchitectStartupConfiguration.h; sourceTree = "<group>"; };
-		C5BC2BB730AC48698B8D2BCD /* FBSDKShareKit.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = "Linxapp/Plugins/cordova-plugin-facebook4/FBSDKShareKit.framework"; sourceTree = "<group>"; };
-		D5867D30B0E24F889BC07A0D /* OpenGLES.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
-		E50C910D36F14CCF9C63170A /* WikitudeSDK.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = WikitudeSDK.h; path = com.wikitude.phonegap.WikitudePlugin/WikitudeSDK.h; sourceTree = "<group>"; };
-		E679A1B1AE5B46ED9CD8C6E8 /* CDVExif.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVExif.h; path = "cordova-plugin-camera/CDVExif.h"; sourceTree = "<group>"; };
+		953C6846F38C4DC592B5B733 /* CDVLocation.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVLocation.h; path = "cordova-plugin-geolocation/CDVLocation.h"; sourceTree = "<group>"; };
+		972DD43687094614B2A05B21 /* WTSDKBuildInformation.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = WTSDKBuildInformation.h; path = com.wikitude.phonegap.WikitudePlugin/WTSDKBuildInformation.h; sourceTree = "<group>"; };
+		99AB4713280840E99AE1F5DB /* CDVStatusBar.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVStatusBar.m; path = "cordova-plugin-statusbar/CDVStatusBar.m"; sourceTree = "<group>"; };
+		9A81429A248E49A689C90E81 /* Accelerate.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		9DC4C2E00A3042038A0CC393 /* SQLitePlugin.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = SQLitePlugin.h; path = "cordova-sqlite-storage/SQLitePlugin.h"; sourceTree = "<group>"; };
+		A0A4370CA9AF4552965F2973 /* WTArchitectViewDebugDelegate.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = WTArchitectViewDebugDelegate.h; path = com.wikitude.phonegap.WikitudePlugin/WTArchitectViewDebugDelegate.h; sourceTree = "<group>"; };
+		A3180A302D48469A92C91B55 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = "Linxapp/Plugins/cordova-plugin-facebook4/FBSDKLoginKit.framework"; sourceTree = "<group>"; };
+		A499A12F2E7C469C97FB5600 /* Photos.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
+		A58A0C9007EF47C2B98FEB50 /* CDVJpegHeaderWriter.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVJpegHeaderWriter.h; path = "cordova-plugin-camera/CDVJpegHeaderWriter.h"; sourceTree = "<group>"; };
+		AAF88BDEBFE64C34ACE1D29D /* CDVCamera.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVCamera.m; path = "cordova-plugin-camera/CDVCamera.m"; sourceTree = "<group>"; };
+		B2BAC2DACE96493BBD9BC742 /* UIImage+CropScaleOrientation.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = "UIImage+CropScaleOrientation.h"; path = "cordova-plugin-camera/UIImage+CropScaleOrientation.h"; sourceTree = "<group>"; };
+		B42550B05B0E4D728AAF935A /* WTNavigation.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = WTNavigation.h; path = com.wikitude.phonegap.WikitudePlugin/WTNavigation.h; sourceTree = "<group>"; };
+		CA6E5932F12844C7BAB25E22 /* sqlite3.c */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = sqlite3.c; path = "cordova-sqlite-storage/sqlite3.c"; sourceTree = "<group>"; };
+		CB070D7A1B234093991A8E0C /* UIKit.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		D8A894370D40495D9444C511 /* SystemConfiguration.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		D9036D6A20644EEAB95BE203 /* libWikitudeSDK-simulator.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; name = "libWikitudeSDK-simulator.a"; path = "Linxapp/Plugins/com.wikitude.phonegap.WikitudePlugin/libWikitudeSDK-simulator.a"; sourceTree = "<group>"; };
+		DC949CB927E448A89F1F3AD1 /* WTARViewController.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = WTARViewController.h; path = com.wikitude.phonegap.WikitudePlugin/WTARViewController.h; sourceTree = "<group>"; };
+		E020B94D16B847D1ADEEBB13 /* CDVLogger.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVLogger.m; path = "cordova-plugin-console/CDVLogger.m"; sourceTree = "<group>"; };
+		E5A32D5F552449009058E891 /* ImageIO.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		E746DD165CC149479018CF8C /* CoreMedia.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		EB87FDF31871DA8E0020F90C /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; name = www; path = ../../www; sourceTree = "<group>"; };
 		EB87FDF41871DAF40020F90C /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = ../../config.xml; sourceTree = "<group>"; };
-		ED14F4443A5E464E8B6BF8EF /* libz.dylib */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		EC1F450505B34D1E99D3A37C /* WTStartupConfiguration.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = WTStartupConfiguration.h; path = com.wikitude.phonegap.WikitudePlugin/WTStartupConfiguration.h; sourceTree = "<group>"; };
 		ED33DF2A687741AEAF9F8254 /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
-		F5948D1ED0D3420D83297CB3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		F45A1CD143044ECFBC1E7405 /* Stripe.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = Stripe.framework; path = "Linxapp/Plugins/cordova-plugin-stripe/Stripe.framework"; sourceTree = "<group>"; };
+		F7A90D103C7C4BD382BE4697 /* CDVJpegHeaderWriter.m */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.objc; name = CDVJpegHeaderWriter.m; path = "cordova-plugin-camera/CDVJpegHeaderWriter.m"; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = Linxapp/config.xml; sourceTree = "<group>"; };
-		F9BAC85F3DB84EE18DEEC886 /* CDVStatusBar.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVStatusBar.h; path = "cordova-plugin-statusbar/CDVStatusBar.h"; sourceTree = "<group>"; };
-		FD5BE0381BB54460ADA95564 /* SafariServices.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
-		FFEB2717E1E94195A4E6C21D /* CDVJpegHeaderWriter.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVJpegHeaderWriter.h; path = "cordova-plugin-camera/CDVJpegHeaderWriter.h"; sourceTree = "<group>"; };
+		F9C1B6E5EE3A4BE6BA1B6A13 /* CDVStatusBar.h */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = sourcecode.c.h; name = CDVStatusBar.h; path = "cordova-plugin-statusbar/CDVStatusBar.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,32 +162,33 @@
 			buildActionMask = 2147483647;
 			files = (
 				301BF552109A68D80062928A /* libCordova.a in Frameworks */,
-				527CCA85B7F6462E8674F1DF /* libWikitudeSDK.a in Frameworks */,
-				C59BFA1326EC40278581011B /* libWikitudeSDK-simulator.a in Frameworks */,
-				ABF724A8C5B84F29AB1A746D /* Accelerate.framework in Frameworks */,
-				8B3B4E1923F64D2F93EE12AA /* AVFoundation.framework in Frameworks */,
-				9C5EAEAF5286435DAA0C6A97 /* CFNetwork.framework in Frameworks */,
-				7BC80E492FC9454C996CE125 /* CoreLocation.framework in Frameworks */,
-				E1DE3538F1FB4766BBAD4CA4 /* CoreMedia.framework in Frameworks */,
-				002880E82F894950A80CA938 /* CoreMotion.framework in Frameworks */,
-				130A4E67EF3140D099C1A39C /* CoreText.framework in Frameworks */,
-				7379DC9423724A5CBDCC86A5 /* CoreVideo.framework in Frameworks */,
-				5CB0783EF8C5414BA7BB0C32 /* Foundation.framework in Frameworks */,
-				CCD9B883EDDD46929318B8C8 /* MediaPlayer.framework in Frameworks */,
-				E0A9B355D67C43208EAEAE96 /* OpenGLES.framework in Frameworks */,
-				D4387FB4FBD04796BD984B27 /* Photos.framework in Frameworks */,
-				9D26A823C5BE466893BD259F /* QuartzCore.framework in Frameworks */,
-				2ED97869800447A684BDFA18 /* SafariServices.framework in Frameworks */,
-				BD9CBBF6FF97487286CB39E6 /* Security.framework in Frameworks */,
-				DBBC795D8C60400EB2C102BA /* SystemConfiguration.framework in Frameworks */,
-				337C7A786917415F9A5B7DA9 /* UIKit.framework in Frameworks */,
-				A4385ECA264E4E7A93D8424A /* libc++.dylib in Frameworks */,
-				FBA18D8CDBBC4A15AC653166 /* libz.dylib in Frameworks */,
-				7E6C4A909E94456A88085214 /* ImageIO.framework in Frameworks */,
-				788F53D610CA419094D6CF27 /* Bolts.framework in Frameworks */,
-				B877FE868EA0478A90EABD50 /* FBSDKCoreKit.framework in Frameworks */,
-				6F25ED544ADA4B8ABE56B349 /* FBSDKLoginKit.framework in Frameworks */,
-				30D03D991A104D079438B9FB /* FBSDKShareKit.framework in Frameworks */,
+				B6C61672655C4680998094F2 /* libWikitudeSDK.a in Frameworks */,
+				1638FACA4BF54D069798EFEB /* libWikitudeSDK-simulator.a in Frameworks */,
+				DE9470B3A2144D32975D4B66 /* Accelerate.framework in Frameworks */,
+				EE35D92761E74303AAB34A7A /* AVFoundation.framework in Frameworks */,
+				BC210CC59B314ECEBB3942EC /* CFNetwork.framework in Frameworks */,
+				3E10797CB97B465083A18ADE /* CoreLocation.framework in Frameworks */,
+				9E347CC5AFAB49A08C9B2599 /* CoreMedia.framework in Frameworks */,
+				B31A76CB230E424ABEDCDAE2 /* CoreMotion.framework in Frameworks */,
+				1FA2FFE5F97F43948BCBAB10 /* CoreText.framework in Frameworks */,
+				C0AF313C8B734773A85ABDE8 /* CoreVideo.framework in Frameworks */,
+				BE3CFCBAD807423EAB4DFE78 /* Foundation.framework in Frameworks */,
+				47CC77C969D449A097E125BE /* MediaPlayer.framework in Frameworks */,
+				29189F47CEFB4572AAF731D8 /* OpenGLES.framework in Frameworks */,
+				7E48E562FFED4CAC9CF0887E /* Photos.framework in Frameworks */,
+				A03FE170F7244CB38A9368F5 /* QuartzCore.framework in Frameworks */,
+				5AE4FF13F2B0499AB0BE214D /* SafariServices.framework in Frameworks */,
+				CE8B3A3BE7E24B3BB305059D /* Security.framework in Frameworks */,
+				BDD60181D44040D2AE1F6369 /* SystemConfiguration.framework in Frameworks */,
+				9D2A168529B44A708F7A59B8 /* UIKit.framework in Frameworks */,
+				821EAAA934E54F488CCD3567 /* libc++.dylib in Frameworks */,
+				1EE099C848364DD6B8C99C57 /* libz.dylib in Frameworks */,
+				E45961CB47B9465D937F9A3F /* ImageIO.framework in Frameworks */,
+				425FFAA24CAA4E01AA8B501A /* Bolts.framework in Frameworks */,
+				649770EA47E345C1A2447D37 /* FBSDKCoreKit.framework in Frameworks */,
+				C54A73374FF641A493373D2A /* FBSDKLoginKit.framework in Frameworks */,
+				54734C5D342E492FAB27D87A /* FBSDKShareKit.framework in Frameworks */,
+				C96CE41E241A4242A2F51F25 /* Stripe.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,32 +259,33 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0F695E69A0FD47B296671A88 /* libWikitudeSDK.a */,
-				AB44F0B3A6AE4E258A6EEFB1 /* libWikitudeSDK-simulator.a */,
-				1D9C69C1B36C42AF825E557C /* Accelerate.framework */,
-				70F4D3C0244F49DDB9D8DDD3 /* AVFoundation.framework */,
-				2A1BCE9246C549CDAD0806BB /* CFNetwork.framework */,
-				0BF3F83BBD0C4FC4B4821CD5 /* CoreLocation.framework */,
-				12B665816FCB426C9196A1B3 /* CoreMedia.framework */,
-				2B53AD9CE7F540888E0D3B5D /* CoreMotion.framework */,
-				3C5A217274D64DFFA4F939B8 /* CoreText.framework */,
-				A476E0532CF944E8AFFA768D /* CoreVideo.framework */,
-				095965137FA146FC9C00AA18 /* Foundation.framework */,
-				08BAA08A89004375812CDB3D /* MediaPlayer.framework */,
-				D5867D30B0E24F889BC07A0D /* OpenGLES.framework */,
-				51F2C80B619040B0ACD39418 /* Photos.framework */,
-				7C077ACD805849EE88050282 /* QuartzCore.framework */,
-				FD5BE0381BB54460ADA95564 /* SafariServices.framework */,
-				0A43A232BB634E87A38E4CA7 /* Security.framework */,
-				F5948D1ED0D3420D83297CB3 /* SystemConfiguration.framework */,
-				359655ABF42B4F4C9B57C812 /* UIKit.framework */,
-				26A392023C31434F8E8909CA /* libc++.dylib */,
-				ED14F4443A5E464E8B6BF8EF /* libz.dylib */,
-				44F006C8749E43338F301729 /* ImageIO.framework */,
-				9A11DA72FCE54EB8B97D1EEA /* Bolts.framework */,
-				1AB7DB89640948D180B862F7 /* FBSDKCoreKit.framework */,
-				C19E666DAA2A4D69AB323D9E /* FBSDKLoginKit.framework */,
-				C5BC2BB730AC48698B8D2BCD /* FBSDKShareKit.framework */,
+				32F4334A45434FE0A19B1294 /* libWikitudeSDK.a */,
+				D9036D6A20644EEAB95BE203 /* libWikitudeSDK-simulator.a */,
+				9A81429A248E49A689C90E81 /* Accelerate.framework */,
+				603105661E1B4A66BCE5DF9A /* AVFoundation.framework */,
+				7043B77EF56548179444A5BD /* CFNetwork.framework */,
+				32FEEAD1149A44839705C920 /* CoreLocation.framework */,
+				E746DD165CC149479018CF8C /* CoreMedia.framework */,
+				254B5314B257422398969F88 /* CoreMotion.framework */,
+				694083DD2A02412186EE5621 /* CoreText.framework */,
+				6B933282189C4324983982FE /* CoreVideo.framework */,
+				715D8A79560F403191DC78B6 /* Foundation.framework */,
+				6DD47CAA5CAD43008C9ED4FB /* MediaPlayer.framework */,
+				5FEDD01479C84E3A8B6B8FD5 /* OpenGLES.framework */,
+				A499A12F2E7C469C97FB5600 /* Photos.framework */,
+				1A6338B778E040DB861804D1 /* QuartzCore.framework */,
+				0C7DBFDE416B408A99AE980D /* SafariServices.framework */,
+				6406128D9E3F4EDDA15D5F9A /* Security.framework */,
+				D8A894370D40495D9444C511 /* SystemConfiguration.framework */,
+				CB070D7A1B234093991A8E0C /* UIKit.framework */,
+				85BA4B26662A413B99DD7CA7 /* libc++.dylib */,
+				3F56A5D29A89408DB480901C /* libz.dylib */,
+				E5A32D5F552449009058E891 /* ImageIO.framework */,
+				88DB03E87DA4422E9738CE70 /* Bolts.framework */,
+				31918FD9730D4E57BF5448DB /* FBSDKCoreKit.framework */,
+				A3180A302D48469A92C91B55 /* FBSDKLoginKit.framework */,
+				7ABF4453E49A4994812AB5CD /* FBSDKShareKit.framework */,
+				F45A1CD143044ECFBC1E7405 /* Stripe.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -304,38 +311,40 @@
 		307C750510C5A3420062BCA9 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
-				546CC75CD56F4F21934D381D /* WTWikitudePlugin.m */,
-				1EEC0B0CEC2A416ABF932565 /* WTARViewController.m */,
-				57BBEB869D7049A28FB06BA3 /* WTWikitudePlugin.h */,
-				BCF9C759B1D84FF7A6C8105F /* WTARViewController.h */,
-				E50C910D36F14CCF9C63170A /* WikitudeSDK.h */,
-				9852B8916A21452F98E7F125 /* WTArchitectView.h */,
-				48639F632AF34592B9A91E74 /* WTNavigation.h */,
-				BA2CABED8049461394C0E8FD /* WTStartupConfiguration.h */,
-				C442CF1A2577477297D9F0B8 /* WTArchitectStartupConfiguration.h */,
-				07B6275E5C2348E5B41F49CC /* WTSDKBuildInformation.h */,
-				6877E597070147738ED85EBB /* WTArchitectViewDebugDelegate.h */,
-				3209F743D54F487DB2E77A6B /* WTAuthorizationRequestManager.h */,
-				49A04E581D864830A88B9BA8 /* WTWikitudeTypes.h */,
-				B44F41F033F7486A8919E7A0 /* UIImage+CropScaleOrientation.m */,
-				0AAB4B46DEBA4C3380BD1016 /* CDVCamera.m */,
-				3C13C6563F2E40DE94C7D579 /* CDVJpegHeaderWriter.m */,
-				628F92D251FC4FA1823E7CC5 /* UIImage+CropScaleOrientation.h */,
-				0A8D6CBB8D7049F387918C99 /* CDVCamera.h */,
-				FFEB2717E1E94195A4E6C21D /* CDVJpegHeaderWriter.h */,
-				E679A1B1AE5B46ED9CD8C6E8 /* CDVExif.h */,
-				406D45AE5B364F858E560DEC /* CDVLogger.m */,
-				5F373051C05A4C81916D2649 /* CDVLogger.h */,
-				44DAFA90BB3B4B5D8984CBDD /* FacebookConnectPlugin.m */,
-				78590FAE68784A729420E83F /* FacebookConnectPlugin.h */,
-				40D256B22F6F460D94B0184E /* CDVLocation.m */,
-				BED5CB89A2BB414199712F55 /* CDVLocation.h */,
-				55EE27D02D9F4075BE71A541 /* CDVStatusBar.m */,
-				F9BAC85F3DB84EE18DEEC886 /* CDVStatusBar.h */,
-				358989408D384050B533269C /* SQLitePlugin.m */,
-				9178744690FE4F579FA4225B /* sqlite3.c */,
-				420927CFFC4042F88ED37219 /* SQLitePlugin.h */,
-				BB92139CECFF4B6BACF4188E /* sqlite3.h */,
+				09D430D192634126854454BC /* WTWikitudePlugin.m */,
+				0D369D7236B547BCA26A05EA /* WTARViewController.m */,
+				561D3AFC2D244186B22B0B95 /* WTWikitudePlugin.h */,
+				DC949CB927E448A89F1F3AD1 /* WTARViewController.h */,
+				50AC353CB362438A941BA899 /* WikitudeSDK.h */,
+				27B36A2CA68E4571AF8C0612 /* WTArchitectView.h */,
+				B42550B05B0E4D728AAF935A /* WTNavigation.h */,
+				EC1F450505B34D1E99D3A37C /* WTStartupConfiguration.h */,
+				8064660C2EE247038B561FFE /* WTArchitectStartupConfiguration.h */,
+				972DD43687094614B2A05B21 /* WTSDKBuildInformation.h */,
+				A0A4370CA9AF4552965F2973 /* WTArchitectViewDebugDelegate.h */,
+				89A1E4B60D6341FD912E2609 /* WTAuthorizationRequestManager.h */,
+				5F38EDA400144AC0ABE67BAD /* WTWikitudeTypes.h */,
+				4EB6D701D4BD42B6B4415602 /* UIImage+CropScaleOrientation.m */,
+				AAF88BDEBFE64C34ACE1D29D /* CDVCamera.m */,
+				F7A90D103C7C4BD382BE4697 /* CDVJpegHeaderWriter.m */,
+				B2BAC2DACE96493BBD9BC742 /* UIImage+CropScaleOrientation.h */,
+				410976C7925D442F84D23826 /* CDVCamera.h */,
+				A58A0C9007EF47C2B98FEB50 /* CDVJpegHeaderWriter.h */,
+				55DD1175B62F4E7E95E26AA6 /* CDVExif.h */,
+				E020B94D16B847D1ADEEBB13 /* CDVLogger.m */,
+				4CEEC893E6E5417D9C89E41C /* CDVLogger.h */,
+				42B860BE7A2A4D3AA2832388 /* FacebookConnectPlugin.m */,
+				72D5C9C4B9CB41719679168F /* FacebookConnectPlugin.h */,
+				11C0951CE2BE4D5891249EC5 /* CDVLocation.m */,
+				953C6846F38C4DC592B5B733 /* CDVLocation.h */,
+				99AB4713280840E99AE1F5DB /* CDVStatusBar.m */,
+				F9C1B6E5EE3A4BE6BA1B6A13 /* CDVStatusBar.h */,
+				6CAE2D4A59DD4301BAEDC983 /* CordovaStripe.m */,
+				69453EE7B92B4CFB9E7C5AA3 /* CordovaStripe.h */,
+				580EF75CF55040E1AEB58574 /* SQLitePlugin.m */,
+				CA6E5932F12844C7BAB25E22 /* sqlite3.c */,
+				9DC4C2E00A3042038A0CC393 /* SQLitePlugin.h */,
+				7BF2C81F520F43E7894E0F2C /* sqlite3.h */,
 			);
 			name = Plugins;
 			path = Linxapp/Plugins;
@@ -456,17 +465,18 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
-				E39BFAA8554A4191AA996C80 /* WTWikitudePlugin.m in Sources */,
-				5D2FD77DEB414E39AD8F4603 /* WTARViewController.m in Sources */,
-				FC5970609CC4409186EABBE5 /* UIImage+CropScaleOrientation.m in Sources */,
-				61FFFEC6EE6446158490AD90 /* CDVCamera.m in Sources */,
-				7090DFF7FE11479295A7D3D8 /* CDVJpegHeaderWriter.m in Sources */,
-				003B2EB372F64D149CD5336C /* CDVLogger.m in Sources */,
-				B9AB2CBCCD51416BA5672E05 /* FacebookConnectPlugin.m in Sources */,
-				E9FDE1EE222D4C59AA7383A8 /* CDVLocation.m in Sources */,
-				A59BA5E4030F4650840787C2 /* CDVStatusBar.m in Sources */,
-				5102870C60344ECF9F73AA9B /* SQLitePlugin.m in Sources */,
-				96C8497238714E6783966FB7 /* sqlite3.c in Sources */,
+				03E26629D961454F9C1AA0C7 /* WTWikitudePlugin.m in Sources */,
+				AC87B4F5CB134B33ADDDE8C1 /* WTARViewController.m in Sources */,
+				783A0DEC1AFA4F509FA2FDFE /* UIImage+CropScaleOrientation.m in Sources */,
+				1FD8DAD2A248437CB5E563BC /* CDVCamera.m in Sources */,
+				E69841B230E34056B4249BD8 /* CDVJpegHeaderWriter.m in Sources */,
+				27E93BBA911F41B68E14C5CA /* CDVLogger.m in Sources */,
+				26617495B8904BDDBC27DEFE /* FacebookConnectPlugin.m in Sources */,
+				66FDE21524CC4BF3BC010B86 /* CDVLocation.m in Sources */,
+				D60FC257EE7F442CBF1AFE33 /* CDVStatusBar.m in Sources */,
+				0C103D77263D4D38ACD5A9B4 /* CordovaStripe.m in Sources */,
+				31D6CF51688140098DFB196C /* SQLitePlugin.m in Sources */,
+				34B33615BE474B33A865AD93 /* sqlite3.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,6 +508,7 @@
 					"\"Linxapp/Plugins/cordova-plugin-facebook4\"",
 					"\"Linxapp/Plugins/cordova-plugin-facebook4\"",
 					"\"Linxapp/Plugins/cordova-plugin-facebook4\"",
+					"\"Linxapp/Plugins/cordova-plugin-stripe\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -535,6 +546,7 @@
 					"\"Linxapp/Plugins/cordova-plugin-facebook4\"",
 					"\"Linxapp/Plugins/cordova-plugin-facebook4\"",
 					"\"Linxapp/Plugins/cordova-plugin-facebook4\"",
+					"\"Linxapp/Plugins/cordova-plugin-stripe\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Linxapp/Linxapp-Prefix.pch";

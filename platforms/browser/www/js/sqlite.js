@@ -7,9 +7,9 @@ initDatabase: function(db){
 
     db.transaction(function (tx) {  
 
-        tx.executeSql('CREATE TABLE IF NOT EXISTS Tokens ( type VARCHAR, accessToken TINYTEXT PRIMARY KEY, refreshToken TINYTEXT UNIQUE, FBid UNSIGNED BIGINT UNIQUE NOT NULL)');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS Tokens ( type VARCHAR, access_token TINYTEXT PRIMARY KEY, refresh_token TINYTEXT UNIQUE, FBid UNSIGNED BIGINT UNIQUE NOT NULL, id UNISGNED BIGINT UNIQUE NOT NULL)');
         
-        tx.executeSql('CREATE TABLE IF NOT EXISTS User ( id UNSIGNED BIGINT NULL UNIQUE, FBid UNSIGNED BIGINT UNIQUE NOT NULL, name VARCHAR NOT NULL, surnames VARCHAR NOT NULL, gender BOOLEAN NOT NULL, email VARCHAR NOT NULL, password VARCHAR NOT NULL, created_at TIMESTAMP, updated_at TIMESTAMP, photo BLOB NULL, birthday DATE NULL, job VARCHAR(50) NULL, studies VARCHAR(50) NULL, ranking DECIMAL(5,3) NULL, aceptar UNSIGNED BIGINT ZEROFILL NOT NULL, rechazar UNSIGNED BIGINT ZEROFILL NOT NULL, saludar UNSIGNED BIGINT ZEROFILL NOT NULL, destacado_ini TIMESTAMP, destacado_fin TIMESTAMP, location POINT ) ');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS User ( id UNSIGNED BIGINT NULL UNIQUE, FBid UNSIGNED BIGINT UNIQUE NOT NULL, name VARCHAR NOT NULL, surnames VARCHAR NOT NULL, gender BOOLEAN NOT NULL, email VARCHAR NOT NULL, password VARCHAR NULL, created_at TIMESTAMP, updated_at TIMESTAMP, photo BLOB NULL, birthday DATE NULL, job VARCHAR(50) NULL, studies VARCHAR(50) NULL, ranking DECIMAL(5,3) NULL, aceptar UNSIGNED BIGINT ZEROFILL NOT NULL, rechazar UNSIGNED BIGINT ZEROFILL NOT NULL, saludar UNSIGNED BIGINT ZEROFILL NOT NULL, destacado_ini TIMESTAMP, destacado_fin TIMESTAMP, location POINT ) ');
 
                                                      //        id UNSIGNED BIGINT NULL UNIQUE,
                                                      //        FBid UNSIGNED BIGINT UNIQUE NOT NULL,
@@ -17,7 +17,7 @@ initDatabase: function(db){
                                                      //        surnames VARCHAR NOT NULL,
                                                      //        gender BOOLEAN NOT NULL,
                                                      //        email VARCHAR NOT NULL,
-                                                     //        password VARCHAR NOT NULL,
+                                                     //        password VARCHAR NOT NULL, ( El password solo se necesita para obtener el token. )
                                                      //        created_at TIMESTAMP,
                                                      //        updated_at TIMESTAMP,
                                                      //        photo BLOB NULL,
@@ -37,7 +37,7 @@ initDatabase: function(db){
         
     
 
-        tx.executeSql('CREATE TABLE IF NOT EXISTS Empresa ( id UNSIGNED BIGINT NOT NULL UNIQUE, created_at TIMESTAMP NOT NULL, updated_at TIMESTAMP NOT NULL, last_connection TIMESTAMP NOT NULL, name VARCHAR NOT NULL, creator UNSIGNED BIGINT NOT NULL, email VARCHAR NOT NULL, password VARCHAR NOT NULL, web VARCHAR(2048) NULL )');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS Empresa ( id UNSIGNED BIGINT NOT NULL UNIQUE, created_at TIMESTAMP NOT NULL, updated_at TIMESTAMP NOT NULL, last_connection TIMESTAMP NOT NULL, name VARCHAR NOT NULL, creator UNSIGNED BIGINT NOT NULL, email VARCHAR NOT NULL, pwd VARCHAR NULL, web VARCHAR(2048) NULL )');
 
                     //                                         id UNSIGNED BIGINT NOT NULL UNIQUE,
                     //                                         created_at TIMESTAMP NOT NULL,
@@ -46,7 +46,7 @@ initDatabase: function(db){
                     //                                         name VARCHAR NOT NULL,
                     //                                         creator UNSIGNED BIGINT NOT NULL,
                     //                                         email VARCHAR NOT NULL,
-                    //                                         password VARCHAR NOT NULL,
+                    //                                         password VARCHAR NOT NULL, (EL password no se muestra ni se descarga obviamente)
                     //                                         web VARCHAR(2048) NULL
                                                             
                     //                                  )
@@ -77,7 +77,7 @@ initDatabase: function(db){
         
     
 
-        tx.executeSql('CREATE TABLE IF NOT EXISTS Matches (id UNSIGNED BIGINT NOT NULL UNIQUE, FBid UNSIGNED BIGINT UNIQUE NOT NULL, name VARCHAR NOT NULL, surnames VARCHAR NOT NULL, gender BOOLEAN NOT NULL, email VARCHAR NOT NULL, password VARCHAR NOT NULL, created_at TIMESTAMP, updated_at TIMESTAMP, photo BLOB NULL, birthday DATE NULL, job VARCHAR(50) NULL, studies VARCHAR(50) NULL, ranking DECIMAL(5,3) NULL, aceptar UNSIGNED BIGINT ZEROFILL NOT NULL, rechazar UNSIGNED BIGINT ZEROFILL NOT NULL, saludar UNSIGNED BIGINT ZEROFILL NOT NULL, destacado_ini TIMESTAMP, destacado_fin TIMESTAMP, location POINT )');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS Matches (id UNSIGNED BIGINT NOT NULL UNIQUE, FBid UNSIGNED BIGINT UNIQUE NOT NULL, name VARCHAR NOT NULL, surnames VARCHAR NOT NULL, gender BOOLEAN NOT NULL, email VARCHAR NOT NULL, password VARCHAR NULL, created_at TIMESTAMP, updated_at TIMESTAMP, photo BLOB NULL, birthday DATE NULL, job VARCHAR(50) NULL, studies VARCHAR(50) NULL, ranking DECIMAL(5,3) NULL, aceptar UNSIGNED BIGINT ZEROFILL NOT NULL, rechazar UNSIGNED BIGINT ZEROFILL NOT NULL, saludar UNSIGNED BIGINT ZEROFILL NOT NULL, destacado_ini TIMESTAMP, destacado_fin TIMESTAMP, location POINT )');
 
                     //                                         id UNSIGNED BIGINT NOT NULL UNIQUE,
                     //                                         FBid UNSIGNED BIGINT UNIQUE NOT NULL,
@@ -106,7 +106,7 @@ initDatabase: function(db){
         
     
 
-        tx.executeSql('CREATE TABLE IF NOT EXISTS Bloqueados (id UNSIGNED BIGINT NOT NULL UNIQUE, FBid UNSIGNED BIGINT UNIQUE NOT NULL, name VARCHAR NOT NULL, surnames VARCHAR NOT NULL, gender BOOLEAN NOT NULL, email VARCHAR NOT NULL, password VARCHAR NOT NULL, created_at TIMESTAMP, updated_at TIMESTAMP, photo BLOB NULL, birthday DATE NULL, job VARCHAR(50) NULL, studies VARCHAR(50) NULL, ranking DECIMAL(5,3) NULL, aceptar UNSIGNED BIGINT ZEROFILL NOT NULL, rechazar UNSIGNED BIGINT ZEROFILL NOT NULL, saludar UNSIGNED BIGINT ZEROFILL NOT NULL, destacado_ini TIMESTAMP, destacado_fin TIMESTAMP, location POINT )');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS Bloqueados (id UNSIGNED BIGINT NOT NULL UNIQUE, FBid UNSIGNED BIGINT UNIQUE NOT NULL, name VARCHAR NOT NULL, surnames VARCHAR NOT NULL, gender BOOLEAN NOT NULL, email VARCHAR NOT NULL, password VARCHAR NULL, created_at TIMESTAMP, updated_at TIMESTAMP, photo BLOB NULL, birthday DATE NULL, job VARCHAR(50) NULL, studies VARCHAR(50) NULL, ranking DECIMAL(5,3) NULL, aceptar UNSIGNED BIGINT ZEROFILL NOT NULL, rechazar UNSIGNED BIGINT ZEROFILL NOT NULL, saludar UNSIGNED BIGINT ZEROFILL NOT NULL, destacado_ini TIMESTAMP, destacado_fin TIMESTAMP, location POINT )');
 
                     //                                         id UNSIGNED BIGINT NOT NULL UNIQUE,
                     //                                         FBid UNSIGNED BIGINT UNIQUE NOT NULL,
@@ -149,10 +149,10 @@ initDatabase: function(db){
 
 /************************* Función que comprueba si ya existe un usuario en la databse local para añadir o actualizar  *****************************/
 
-userInDB: function(db,object){
+userInDB: function(object, db){
 //object es authResponse de Facebook
 
-		tx.executeSql('SELECT count(*) AS mycount FROM User WHERE FBid = ?', [ object.FBid ], 
+		tx.executeSql('SELECT count(*) FROM User WHERE FBid = ?', [ object.FBid ], 
             //onSucess
             function(tx, rs) {
                 if (rs.rows.item(0).mycount == 0){ 
@@ -175,186 +175,256 @@ userInDB: function(db,object){
 
 /************************* Función de creación de un usuario en la database local  ***********************************************/
 
-addUserToDB: function(db,object){
+addUserToDB: function(object, db){
 
-    // Transactions needed to add a new user
-    db.transaction(function (tx) {
+    return new Promise(function(resolve, reject){
+
+        try{
+
+            if (object){
+
+                object = JSON.parse(object);
+
+                console.log("Adding new user to DataBase...");
+
+                // Transactions needed to add a new user
+                db.transaction(function (tx) {
 
 
-        tx.executeSql('INSERT INTO User VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
-         [object.id,object.FBid,object.name,object.surnames,object.gender,object.email,object.password,object.created_at,object.updated_at,object.photo,object.birthdate,object.job,object.studies,object.ranking,object.aceptar,object.rechazar,object.saludar,object.destacado_ini,object.destacado_fin], 
+                    tx.executeSql('INSERT INTO User VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+                     [object.id,object.FBid,object.name,object.surnames,object.gender,object.email,object.password,object.created_at,object.updated_at,object.photo,object.birthdate,object.job,object.studies,object.ranking,object.aceptar,object.rechazar,object.saludar,object.destacado_ini,object.destacado_fin], 
 
-         function(tx, res) {
-            console.log("insertId: " + res.insertId );
-            console.log("rowsAffected: " + res.rowsAffected);
-        },
+                     function(tx, res) {
+                        console.log("insertId: " + res.insertId );
+                        console.log("rowsAffected: " + res.rowsAffected);
+                    },
 
-        function(tx, error) {
-            console.log('INSERT error: ' + error.message);
-        });
+                    function(tx, error) {
+                        console.log('INSERT error: ' + error.message);
+                    });
 
-    }, function(error) {
-        console.log('transaction error: ' + error.message);
-    }, function() {
-        console.log('transaction ok');
+                }, function(error) {
+                    console.log('transaction error: ' + error.message);
+                    reject(e);
+
+                }, function() {
+
+                    console.log('transaction ok');
+                    resolve(object);
+
+                });
+
+            } else { resolve();}
+
+        } catch(e){ reject(e); }
+
     });
+
+    
+
+
 
 },
 
 
 /************************* Función inserción de empresa en la database local  ***********************************************/
 
-addEmpresaToDB: function(db,object){
+addEmpresaToDB: function(object, db){
 
-    // Transactions needed to add a new user
-    db.transaction(function (tx) {
+    return new Promise(function(resolve, reject){
+
+        if(object){
+
+        object = JSON.parse(object);
+
+                // Transactions needed to add a new user
+                db.transaction(function (tx) {
 
 
-        tx.executeSql('INSERT INTO Empresa VALUES (?,?,?,?,?,?,?,?,?)',
-         [object.id,object.created_at,object.updated_at,object.last_connection,object.name,object.creator,object.email,object.password,object.web], 
+                    tx.executeSql('INSERT INTO Empresa VALUES (?,?,?,?,?,?,?,?,?)',
+                     [object.id,object.created_at,object.updated_at,object.last_connection,object.name,object.creator,object.email,object.pwd,object.web], 
 
-         function(tx, res) {
-            console.log("insertId: " + res.insertId );
-            console.log("rowsAffected: " + res.rowsAffected);
-        },
+                     function(tx, res) {
+                        console.log("insertId: " + res.insertId );
+                        console.log("rowsAffected: " + res.rowsAffected);
+                    },
 
-        function(tx, error) {
-            console.log('INSERT error: ' + error.message);
-        });
+                    function(tx, error) {
+                        console.log('INSERT error: ' + error.message);
+                    });
 
-    }, function(error) {
-        console.log('transaction error: ' + error.message);
-    }, function() {
-        console.log('transaction ok');
-    });
+                }, function(error) {
+                    console.log('transaction error: ' + error.message);
+                    reject(error.message);
+
+                }, function() {
+                    console.log('transaction ok');
+                    resolve();
+                });
+        } else { resolve();}
+    })
 
 },
 
 /************************* Función de relleno de la tabla Eventos en la database local  ***********************************************/
 
-addEventosToDB: function(db,multiObject){
+addEventosToDB: function(multiObject, db){
 
+    return new Promise(function(resolve, reject){
 
-        // Transactions needed to add a new user
-        db.transaction(function (tx) {
+        if (multiObject){
 
-            var count = multiObject.length;
+            // Transactions needed to add a new user
+            db.transaction(function (tx) {
 
-            for (i = 0; i < count; i++) { 
+                multiObject = JSON.parse(multiObject);
 
-            var object = multiObject[i];
+                var count = multiObject.length;
 
+                for (i = 0; i < count; i++) { 
 
+                var object = multiObject[i];
 
-            tx.executeSql('INSERT INTO Eventos VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)',
-             [object.id,object.created_at,object.updated_at,object.creator,object.name,object.photo,object.event_ini,object.event_fin,object.price,object.aforo,object.destacado_ini,object.destacado_fin,object.location], 
+                tx.executeSql('INSERT INTO Eventos VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)',
+                 [object.id,object.created_at,object.updated_at,object.creator,object.nombre,object.photo,object.event_ini,object.event_fin,object.price,object.aforo,object.destacado_ini,object.destacado_fin,object.location], 
 
-             function(tx, res) {
-                console.log("insertId: " + res.insertId );
-                console.log("rowsAffected: " + res.rowsAffected);
-            },
+                 function(tx, res) {
+                    console.log("insertId: " + res.insertId );
+                    console.log("rowsAffected: " + res.rowsAffected);
+                },
 
-            function(tx, error) {
-                console.log('INSERT error: ' + error.message);
+                function(tx, error) {
+                    console.log('INSERT error: ' + error.message);
+                });
+
+                }
+
+            }, function(error) {
+                console.log('transaction error: ' + error.message);
+                reject();
+
+            }, function() {
+                console.log('transaction ok');
+                resolve();
             });
 
-            }
-
-        }, function(error) {
-            console.log('transaction error: ' + error.message);
-        }, function() {
-            console.log('transaction ok');
-        });
-    
-
+        } else { resolve();}
+    })
 },
 
 
 /************************* Función que rellena la tabla Matches en la database local  ***********************************************/
 
 
-addMatchesToDB: function(db,multiObject){
+addMatchesToDB: function(multiObject, db){
+
+    return new Promise(function(resolve, reject){
 
 
-        // Transactions needed to add a new user
-        db.transaction(function (tx) {
+        if (multiObject){
 
-            var count = multiObject.length;
+            // Transactions needed to add a new user
+            db.transaction(function (tx) {
 
-            for (i = 0; i < count; i++) { 
+                multiObject = JSON.parse(multiObject);
 
-            var object = multiObject[i];
+                var count = multiObject.length;
+
+                for (i = 0; i < count; i++) { 
+
+                var object = multiObject[i];
 
 
 
-            tx.executeSql('INSERT INTO Matches VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
-             [object.id,object.FBid,object.name,object.surnames,object.gender,object.email,object.password,object.created_at,object.updated_at,object.photo,object.birthdate,object.job,object.studies,object.ranking,object.aceptar,object.rechazar,object.saludar,object.destacado_ini,object.destacado_fin], 
+                tx.executeSql('INSERT INTO Matches VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+                 [object.id,object.FBid,object.name,object.surnames,object.gender,object.email,object.password,object.created_at,object.updated_at,object.photo,object.birthdate,object.job,object.studies,object.ranking,object.aceptar,object.rechazar,object.saludar,object.destacado_ini,object.destacado_fin], 
 
-             function(tx, res) {
-                console.log("insertId: " + res.insertId );
-                console.log("rowsAffected: " + res.rowsAffected);
-            },
+                 function(tx, res) {
+                    console.log("insertId: " + res.insertId );
+                    console.log("rowsAffected: " + res.rowsAffected);
+                },
 
-            function(tx, error) {
-                console.log('INSERT error: ' + error.message);
+                function(tx, error) {
+                    console.log('INSERT error: ' + error.message);
+                });
+
+                }
+
+            }, function(error) {
+                console.log('transaction error: ' + error.message);
+                reject();
+
+            }, function() {
+                console.log('transaction ok');
+                resolve();
             });
 
-            }
+        } else { resolve(); }
 
-        }, function(error) {
-            console.log('transaction error: ' + error.message);
-        }, function() {
-            console.log('transaction ok');
-        });
-    
+    })
+
 
 },
 
 /************************* Función que rellena la tabla Bloqueados en la database local  ***********************************************/
 
 
-addBloqueadossToDB: function(db,multiObject){
+addBloqueadosToDB: function(multiObject, db){
+
+    return new Promise(function(resolve, reject){
+
+        if( multiObject ){
+
+            // Transactions needed to add a new user
+            db.transaction(function (tx) {
+
+                multiObject = JSON.parse(multiObject);
+
+                var count = multiObject.length;
+
+                for (i = 0; i < count; i++) { 
+
+                var object = multiObject[i];
 
 
-        // Transactions needed to add a new user
-        db.transaction(function (tx) {
 
-            var count = multiObject.length;
+                tx.executeSql('INSERT INTO Bloqueados VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+                 [object.id,object.FBid,object.name,object.surnames,object.gender,object.email,object.password,object.created_at,object.updated_at,object.photo,object.birthdate,object.job,object.studies,object.ranking,object.aceptar,object.rechazar,object.saludar,object.destacado_ini,object.destacado_fin], 
 
-            for (i = 0; i < count; i++) { 
+                 function(tx, res) {
+                    console.log("insertId: " + res.insertId );
+                    console.log("rowsAffected: " + res.rowsAffected);
+                },
 
-            var object = multiObject[i];
+                function(tx, error) {
+                    console.log('INSERT error: ' + error.message);
+                });
 
+                }
 
+            }, function(error) {
+                console.log('transaction error: ' + error.message);
+                reject();
 
-            tx.executeSql('INSERT INTO Bloqueadosa VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
-             [object.id,object.FBid,object.name,object.surnames,object.gender,object.email,object.password,object.created_at,object.updated_at,object.photo,object.birthdate,object.job,object.studies,object.ranking,object.aceptar,object.rechazar,object.saludar,object.destacado_ini,object.destacado_fin], 
-
-             function(tx, res) {
-                console.log("insertId: " + res.insertId );
-                console.log("rowsAffected: " + res.rowsAffected);
-            },
-
-            function(tx, error) {
-                console.log('INSERT error: ' + error.message);
+            }, function() {
+                console.log('transaction ok');
+                resolve();
             });
 
-            }
+        } else { resolve(); }
 
-        }, function(error) {
-            console.log('transaction error: ' + error.message);
-        }, function() {
-            console.log('transaction ok');
-        });
-    
+
+    })
+   
 
 },
 
 /************************* Función para eliminar un usuario de la database local  ***********************************************/
 /** Esta función en principio no tendría sentido dado que cuando cerramos sessión o cerramos la aplicación se debe de borrar toda la DB**/
 
-delUserToDB: function(db,fbid){
+delUserToDB: function(fbid, db){
 
+    return new Promise(function(resolve,reject){
 
         db.transaction(function (tx) {
 
@@ -368,17 +438,23 @@ delUserToDB: function(db,fbid){
                 });
         }, function (error) {
             console.log('transaction error: ' + error.message);
+            reject();
+
         }, function () {
             console.log('transaction ok');
-        });
+            resolve();
+        });    
+    });
+        
 
 },
 
 /************************* Función para eliminar una empresa de la database local  ***********************************************/
 
 
-delEmpresaToDB: function(db,creator){
+delEmpresaToDB: function(creator, db){
 
+    return new Promise(function(resolve,reject){
 
         db.transaction(function (tx) {
 
@@ -392,9 +468,14 @@ delEmpresaToDB: function(db,creator){
                 });
         }, function (error) {
             console.log('transaction error: ' + error.message);
+            reject();
+
         }, function () {
             console.log('transaction ok');
+            resolve();
         });
+
+    });
 
 },
 
@@ -403,6 +484,7 @@ delEmpresaToDB: function(db,creator){
 
 delEventosToDB: function(db){
 
+    return new Promise(function(resolve,reject){
 
         db.transaction(function (tx) {
 
@@ -416,9 +498,18 @@ delEventosToDB: function(db){
                 });
         }, function (error) {
             console.log('transaction error: ' + error.message);
+            reject();
+
         }, function () {
             console.log('transaction ok');
+            resolve();
         });
+
+
+    });
+
+
+        
 
 },
 
@@ -427,141 +518,180 @@ delEventosToDB: function(db){
 
 delTablesDB: function(db){
 
+    return new Promise(function(resolve, reject){
 
         db.transaction(function (tx) {
 
 
-                tx.executeSql("DELETE * FROM User", [], function (tx, res) {
+                tx.executeSql("DELETE FROM User", [], function (tx, res) {
+                    console.log("User table DELETED");
                     console.log("removeId: " + res.insertId);
                     console.log("rowsAffected: " + res.rowsAffected);
                 },
                 function (tx, error) {
-                    console.log('DELETE error: ' + error.message);
+                    console.log('DELETE User error: ' + error.message);
                 });
-                tx.executeSql("DELETE * FROM Empresa", [], function (tx, res) {
+
+
+                tx.executeSql("DELETE FROM Empresa", [], function (tx, res) {
+                    console.log("Empresa table DELETED");
                     console.log("removeId: " + res.insertId);
                     console.log("rowsAffected: " + res.rowsAffected);
                 },
                 function (tx, error) {
-                    console.log('DELETE error: ' + error.message);
+                    console.log('DELETE Empresa error: ' + error.message);
                 });
-                tx.executeSql("DELETE * FROM Eventos", [], function (tx, res) {
+
+
+                tx.executeSql("DELETE FROM Eventos", [], function (tx, res) {
+                    console.log("Eventos table DELETED");
                     console.log("removeId: " + res.insertId);
                     console.log("rowsAffected: " + res.rowsAffected);
                 },
                 function (tx, error) {
-                    console.log('DELETE error: ' + error.message);
+                    console.log('DELETE Eventos error: ' + error.message);
                 });
-                tx.executeSql("DELETE * FROM Macthes", [], function (tx, res) {
+
+
+                tx.executeSql("DELETE FROM Matches", [], function (tx, res) {
+                    console.log("Matches table DELETED");
                     console.log("removeId: " + res.insertId);
                     console.log("rowsAffected: " + res.rowsAffected);
                 },
                 function (tx, error) {
-                    console.log('DELETE error: ' + error.message);
+                    console.log('DELETE Matches error: ' + error.message);
                 });
-                tx.executeSql("DELETE * FROM Bloqueados", [], function (tx, res) {
+
+
+                tx.executeSql("DELETE FROM Bloqueados", [], function (tx, res) {
+                    console.log("Bloqueados table DELETED");
                     console.log("removeId: " + res.insertId);
                     console.log("rowsAffected: " + res.rowsAffected);
                 },
                 function (tx, error) {
-                    console.log('DELETE error: ' + error.message);
+                    console.log('DELETE Bloqueados error: ' + error.message);
                 });
+
+
         }, function (error) {
             console.log('transaction error: ' + error.message);
-        }, function () {
+            reject();
+
+        }, function() {
             console.log('transaction ok');
+            resolve();
         });
+
+    });
 
 },
 
 /**************************** Función extraer los datos de un usuario dado (FBid) de la memoria local ********************************************/
 extractUserFromDB: function(db){
 
+    console.log('Recuperando Usuario...' );
 
-    db.transaction(function (tx) {
+    return new Promise(function(resolve,reject){
 
-        var query = "SELECT * FROM User";
+        db.transaction(function (tx) {
 
-        tx.executeSql(query, [fbid], function (tx, rs) {
+            //var query = 'SELECT * FROM User WHERE FBid = ?'; Solo hay un usuario. Si loguea un nuevo usuario la database se vacía y se llena de nuevo.
+            var query = 'SELECT * FROM User';
 
+            tx.executeSql(query,[], function (tx, rs) {
 
-                var userObject = new object();
-                    userObject.id = rs.rows.item(0).id;
-                    userObject.FBid = rs.rows.item(0).FBid;
-                    userObject.name = rs.rows.item(0).name;
-                    userObject.surnames = rs.rows.item(0).surnames;
-                    userObject.gender = rs.rows.item(0).gender;
-                    userObject.email = rs.rows.item(0).email;
-                    userObject.password = rs.rows.item(0).password;
-                    userObject.created_at = rs.rows.item(0).created_at;
-                    userObject.updated_at = rs.rows.item(0).updated_at;
-                    userObject.photo = rs.rows.item(0).photo;
-                    userObject.birthday = rs.rows.item(0).birthday;
-                    userObject.job = rs.rows.item(0).job;
-                    userObject.studies = rs.rows.item(0).studies;
-                    userObject.ranking = rs.rows.item(0).ranking;
-                    userObject.aceptar = rs.rows.item(0).aceptar;
-                    userObject.rechazar = rs.rows.item(0).rechazar;
-                    userObject.saludar = rs.rows.item(0).saludar;
-                    userObject.destacado_ini = rs.rows.item(0).destacado_ini;
-                    userObject.destacado_fin = rs.rows.item(0).destacado_fin;
-                    userObject.location = rs.rows.item(0).location;
+                    var userObject = new Object();
+
                     
-                    return userObject;
+                        userObject.id = rs.rows.item(0).id;
+                        userObject.FBid = rs.rows.item(0).FBid;
+                        userObject.name = rs.rows.item(0).name;
+                        userObject.surnames = rs.rows.item(0).surnames;
+                        userObject.gender = rs.rows.item(0).gender;
+                        userObject.email = rs.rows.item(0).email;
+                        userObject.password = rs.rows.item(0).password;
+                        userObject.created_at = rs.rows.item(0).created_at;
+                        userObject.updated_at = rs.rows.item(0).updated_at;
+                        userObject.photo = rs.rows.item(0).photo;
+                        userObject.birthday = rs.rows.item(0).birthday;
+                        userObject.job = rs.rows.item(0).job;
+                        userObject.studies = rs.rows.item(0).studies;
+                        userObject.ranking = rs.rows.item(0).ranking;
+                        userObject.aceptar = rs.rows.item(0).aceptar;
+                        userObject.rechazar = rs.rows.item(0).rechazar;
+                        userObject.saludar = rs.rows.item(0).saludar;
+                        userObject.destacado_ini = rs.rows.item(0).destacado_ini;
+                        userObject.destacado_fin = rs.rows.item(0).destacado_fin;
+                        userObject.location = rs.rows.item(0).location;
+                        
+                        resolve(userObject);
 
-        },
-        function (tx, error) {
-            console.log('SELECT error: ' + error.message);
-        });
-    }, function (error) {
+            },
+            function (tx, error) {
+                console.log('SELECT error: ' + error.message);
+            });
+
+        }, function (error) {
         console.log('transaction error: ' + error.message);
-    }, function () {
-        console.log('transaction ok');
-    });
+        reject( );
 
+        }, function () {
+        console.log('transaction ok');
+        
+        
+        });
+
+
+    });
 
 },
 
-/**************************** Función extraer los datos de empresas de la memoria local. Para un creador dado ********************************************/
+/**************************** Función que extrae los datos de empresas de la memoria local. Para un creador dado ********************************************/
 
 extractEmpresasFromDB: function(db){
 
-    db.transaction(function (tx) {
+    return new Promise(function(resolve, reject){
+
+        db.transaction(function (tx) {
 
         var query = "SELECT * FROM Empresa";
 
-        tx.executeSql(query, [], function (tx, rs) {
+            tx.executeSql(query, [], function (tx, rs) {
 
-            var empresasArray = [];
-            //var empresasArray = new Array();
+                var empresasArray = [];
+                //var empresasArray = new Array();
 
-            for(var x = 0; x < rs.rows.length; x++) {
+                for(var x = 0; x < rs.rows.length; x++) {
 
-                var empresaObject = new object();
-                    empresaObject.id = rs.rows.item(x).id;
-                    empresaObject.created_at = rs.rows.item(x).created_at;
-                    empresaObject.last_connection = rs.rows.item(x).last_connection;
-                    empresaObject.name = rs.rows.item(x).name;
-                    empresaObject.creator = rs.rows.item(x).creator;
-                    empresaObject.email = rs.rows.item(x).email;
-                    empresaObject.password = rs.rows.item(x).password;
-                    empresaObject.web = rs.rows.item(x).web;
+                    var empresaObject = new Object();
+                        empresaObject.id = rs.rows.item(x).id;
+                        empresaObject.created_at = rs.rows.item(x).created_at;
+                        empresaObject.last_connection = rs.rows.item(x).last_connection;
+                        empresaObject.name = rs.rows.item(x).name;
+                        empresaObject.creator = rs.rows.item(x).creator;
+                        empresaObject.email = rs.rows.item(x).email;
+                        empresaObject.password = rs.rows.item(x).password;
+                        empresaObject.web = rs.rows.item(x).web;
 
-                    return empresaObject;
+                        empresasArray[x] = empresaObject;                 
+                }
 
-                    empresasArray[x] = empresaObject;
-                
+                resolve(empresasArray);
 
-            }
-        },
-        function (tx, error) {
-            console.log('SELECT error: ' + error.message);
+            },
+            function (tx, error) {
+                console.log('SELECT error: ' + error.message);
+            });
+
+        }, function (error) {
+            console.log('transaction error: ' + error.message);
+            reject();
+
+        }, function () {
+            console.log('transaction ok');
         });
-    }, function (error) {
-        console.log('transaction error: ' + error.message);
-    }, function () {
-        console.log('transaction ok');
     });
+    
 },
 
 
@@ -579,7 +709,7 @@ extractEventosFromDB: function(db){
 
             for(var x = 0; x < rs.rows.length; x++) {
 
-                var eventosObject = new object();
+                var eventosObject = new Object();
                     eventosObject.created_at = rs.rows.item(x).created_at;
                     eventosObject.updated_at = rs.rows.item(x).updated_at;
                     eventosObject.creator = rs.rows.item(x).creator;
@@ -624,7 +754,7 @@ extractMatchesFromDB: function(db){
 
             for(var x = 0; x < rs.rows.length; x++) {
 
-                var matchesObject = new object();
+                var matchesObject = new Object();
                     matchesObject.FBid = rs.rows.item(x).FBid;
                     matchesObject.name = rs.rows.item(x).name;
                     matchesObject.surnames = rs.rows.item(x).surnames;
@@ -673,15 +803,30 @@ extractBloqueadossFromDB: function(db){
 
 /**************************** Función para salvar los tokens en la memoria local **************************************************/
 
-saveTokens: function(db,apptokens,fbid){
+saveTokens: function(fbid, id, apptokens, db){
 
-   // var db = window.sqlitePlugin.openDatabase({ name: 'my.db', location: 'default' }, function (db, object) {
+
+    return new Promise(function(resolve, reject){
+
+        apptokens = JSON.parse(apptokens);
+
+
+        console.log('Saving Tokens...' );
+
+        var tokenObject = new Object();
+            tokenObject.token_type = apptokens.token_type;
+            tokenObject.access_token = apptokens.access_token;
+            tokenObject.refresh_token = apptokens.refresh_token;
+            tokenObject.fbid = fbid;
+            tokenObject.id = id;
 
         // Transactions needed to add a new user
         db.transaction(function (tx) {
 
-            tx.executeSql('INSERT INTO Tokens VALUES (?,?,?,?)',
-             [apptokens.token_type,apptokens.acess_token,apptokens.refresh_token,fbid], 
+                
+
+            tx.executeSql('INSERT INTO Tokens VALUES (?,?,?,?, ?)',
+             [apptokens.token_type,apptokens.access_token,apptokens.refresh_token,fbid,id], 
 
              function(tx, res) {
                 console.log("insertId: " + res.insertId );
@@ -694,19 +839,14 @@ saveTokens: function(db,apptokens,fbid){
 
         }, function(error) {
             console.log('transaction error: ' + error.message);
+            reject();
+
         }, function() {
             console.log('transaction ok');
+            resolve(tokenObject);
         });
 
-  //  }, function (error) {
-            
-   //     console.log('Open database ERROR: ' + JSON.stringify(error));
-            
- //   });
-
-
- //   this.closeDatabase(db);
-
+    })
 
 },
 
@@ -719,7 +859,7 @@ saveTokens: function(db,apptokens,fbid){
 //             tx.executeSql('SELECT * AS mycount FROM Tokens WHERE FBid = ?', [ fbid ], 
 //                 //onSucess
 //                 function(tx, rs) {
-//                     var token = new object();
+//                     var token = new Object();
 //                     token.type = rows.item(0).type;
 //                     token.accessToken = rows.item(0).accessToken;
 //                     token.refreshToken = rows.item(0).refreshToken;
@@ -745,37 +885,45 @@ saveTokens: function(db,apptokens,fbid){
 
 // },
 
-checkTokens: function(db,fbid){
+checkTokens: function(fbid, db){
+
+    return new Promise(function(resolve, reject){
+
+    console.log("Recuperando tokens... ");
 
         db.transaction(function (tx) {
 
-            tx.executeSql('SELECT * AS mycount FROM Tokens WHERE FBid = ?', [ fbid ], 
+            tx.executeSql("SELECT * FROM Tokens WHERE FBid = ?", [ fbid ],
+
                 //onSucess
                 function(tx, rs) {
-                    var token = new object();
+                    var token = new Object();
                     token.type = rs.rows.item(0).type;
-                    token.accessToken = rs.rows.item(0).accessToken;
-                    token.refreshToken = rs.rows.item(0).refreshToken;
+                    token.access_token = rs.rows.item(0).access_token;
+                    token.refresh_token = rs.rows.item(0).refresh_token;
                     token.fbid = rs.rows.item(0).FBid;
-                    return token;
+                    token.id = rs.rows.item(0).id;
+                    resolve(token);
                     
                 }, 
                 //onError
                 function(tx, error) {
                 console.log('SELECT error: ' + error.message);
-                return error;
+
             });  
 
         }, function (error) {
         
         console.log('transaction error: ' + error.message);
+        reject();
         
         }, function () {
         
         console.log('transaction ok');
         
         });
-    
+
+    });  
 
 },
 

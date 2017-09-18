@@ -30,6 +30,9 @@
         "cordova-plugin-statusbar": {
             "PACKAGE_NAME": "com.linxtech.linxapp"
         },
+        "cordova-plugin-stripe": {
+            "PACKAGE_NAME": "com.linxtech.linxapp"
+        },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.linxtech.linxapp"
         },

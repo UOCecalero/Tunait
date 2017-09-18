@@ -14,9 +14,15 @@
     <access origin="https://api.facebook.com" />
     <access origin="https://*.fbcdn.net" />
     <access origin="https://*.akamaihd.net" />
-    <name>Linxapp</name>
     <description>
         Linx Aplicaciones - Tunait prueba
+    </description>
+    <feature name="CordovaStripe">
+        <param name="browser-package" value="CordovaStripe" />
+    </feature>
+    <name>Linxapp</name>
+    <description>
+        Linx Aplicaciones - Tunait App
     </description>
     <author email="educalerorovira@gmail.com" href="http://cordova.io">
         Eduard Calero Rovira
@@ -24,6 +30,7 @@
     <content src="index.html" />
     <access origin="*" />
     <allow-navigation href="http://maps.google.com" />
+    <allow-navigation href="https://js.stripe.com/" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />
@@ -33,4 +40,6 @@
     <preference name="StatusBarBackgroundColor" value="black" />
     <preference name="StatusBarStyle" value="blackopaque" />
     <preference name="StatusBarOverlaysWebView" value="false" />
+    <preference name="DisallowOverscroll" value="true" />
+    <preference name="Orientation" value="portrait" />
 </widget>

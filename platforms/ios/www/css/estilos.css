@@ -26,7 +26,7 @@ body {
 
 
 
-#menu-principal {
+#menu-principal, #eventpage, #payment {
 	background-color: #e8e9e7;
    
 	}
@@ -44,8 +44,14 @@ body {
 
 #menu-lateral>div>div>div, #settings>div>div>div {
     
-    border-bottom: thin solid grey;
-} 
+    border-bottom: 1px solid grey;
+}
+#event-map{
+  height: 150px;
+}
+
+
+
 
 
 /* Barra superior principal */
@@ -101,10 +107,10 @@ body {
 }
 
 #cargando > div {
-    z-index: 4;
+    z-index: 11;
     position: absolute;
     top: 40%;
-    left: 40%;
+    left: 45%;
     }
 
 /* Pantalla 0 (Timeline) */
@@ -118,7 +124,7 @@ body {
     -webkit-overflow-scrolling: touch;
 }
 
-#scroller{
+#scroller, #unordered{
 
     list-style: none;
     padding:  0;
@@ -176,10 +182,6 @@ body {
 }
 
 
-
-
-
-
 /* Pantalla1 */ 
 
 #pantalla0, #pantalla1, #pantalla2, #pantalla3, #pantalla4{
@@ -201,6 +203,219 @@ body {
       margin-top: 5%;
     }
 
+/* Capa de evento eventpage */
+
+#eventpage>div.container{
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    -webkit-overflow-scrolling: touch;
+}
+
+img.cross{
+    width: 30px; /*or your image's width*/
+    height: 30px; /*or your image's height*/
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    z-index: 1;
+
+}
+
+.etitle{
+
+    font: 1em arial, sans-serif;
+}
+
+.elocation{}
+
+.edate{
+
+    font-size: 0.6em;
+    color: rgb(255, 0, 125);
+}
+
+.eartist{
+
+    font-family: VcrOsdMono;
+    font-size: 0.8em;
+}
+
+.emusic{
+
+    font-size: 0.5em;
+
+}
+
+.edescription{
+
+    font-size:0.7em;
+    color: grey;
+
+
+}
+.emap { height: 100px; }
+.eticket {  }
+
+/* Capa payment: datos de cobro y tarjeta */
+
+#payment img{
+
+    width: 30px; /*or your image's width*/
+    height: 30px; /*or your image's height*/
+    margin: 0;
+    padding: 0;
+
+}
+
+img.back{ 
+    position: absolute;
+    left: 20px;
+    top: 10px;
+    z-index: 1;
+
+}
+
+#desglose{
+
+    text-align: right;
+    padding: 10px;
+    padding-right: 50px;
+
+}
+
+
+
+/**
+ * STRIPE
+ * 
+ */
+
+#card-form {
+  margin: 20px auto;
+}
+
+.group {
+  background: white;
+  box-shadow: 0 7px 14px 0 rgba(49,49,93,0.10),
+              0 3px 6px 0 rgba(0,0,0,0.08);
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.group.valid { 
+background-color: #e3ffe3;
+}
+
+.group.invalid{
+  background-color: #ffc2c2;
+}
+
+label {
+  position: relative;
+  color: #8898AA;
+  font-weight: 300;
+  height: 40px;
+  line-height: 40px;
+  margin-left: 20px;
+  display: block;
+}
+
+.group label:not(:last-child) {
+  border-bottom: 1px solid #F0F5FA;
+}
+
+label > span {
+  width: 20%;
+  text-align: right;
+  float: left;
+}
+
+.field {
+  background: transparent;
+  font-weight: 300;
+  border: 0;
+  color: #31325F;
+  outline: none;
+  padding-right: 10px;
+  padding-left: 10px;
+  cursor: text;
+  width: 70%;
+  height: 40px;
+  float: right;
+}
+
+.field::-webkit-input-placeholder { color: #CFD7E0; }
+.field::-moz-placeholder { color: #CFD7E0; }
+.field:-ms-input-placeholder { color: #CFD7E0; }
+
+
+
+input[name="card-expMonth"]{ width: 50px; float:  left; font-size: 0.8em;  }
+
+input[name="card-expYear"] { width: 100px; float: left; font-size: 0.8em; }
+
+input[name="card-cvc"] { width: 70px; float: left; font-size: 0.8em; }
+
+button.pbutton {
+  float: left;
+  display: block;
+  background: #666EE8;
+  color: white;
+  box-shadow: 0 7px 14px 0 rgba(49,49,93,0.10),
+              0 3px 6px 0 rgba(0,0,0,0.08);
+  border-radius: 4px;
+  border: 0;
+  margin-top: 20px;
+  font-size: 15px;
+  font-weight: 400;
+  width: 100%;
+  height: 40px;
+  line-height: 38px;
+  outline: none;
+}
+
+button.pbutton:focus {
+  background: #555ABF;
+}
+
+button.pbutton:active {
+  background: #43458B;
+}
+
+.outcome {
+  float: left;
+  width: 100%;
+  padding-top: 8px;
+  min-height: 24px;
+  text-align: center;
+}
+
+.success, .error {
+  display: none;
+  font-size: 13px;
+}
+
+.success.visible, .error.visible {
+  display: inline;
+}
+
+.error {
+  color: #E4584C;
+}
+
+.success {
+  color: #666EE8;
+}
+
+.success .token {
+  font-weight: 500;
+  font-size: 13px;
+}
+
 
 	
 /* Estilo de capa general */ 
@@ -221,8 +436,6 @@ transform: translate3d(0, 0, 0);
     top: 10%;
    
 }
-
-
 
 /* Estilo de capa izquierda */
 
@@ -262,6 +475,13 @@ transform: translate3d(-100%, 0, 0);
 transform: translate3d(100%, 0, 0); 
 }
 
+/* Estilo de capa totalmente abajo */
+
+.page.totaldown { 
+-webkit-transform: translate3d(0, -100%, 0);
+transform: translate3d(0,100%, 0); 
+}
+
 
 
 /* Estilo de animación general */
@@ -272,32 +492,7 @@ transition-duration: .15s;
 }
 
 
-/**
- * STRIPE
- * The CSS shown here will not be introduced in the Quickstart guide, but shows
- * how you can use CSS to style your Element's container.
- */
-.StripeElement {
-  background-color: white;
-  padding: 8px 12px;
-  border-radius: 4px;
-  border: 1px solid transparent;
-  box-shadow: 0 1px 3px 0 #e6ebf1;
-  -webkit-transition: box-shadow 150ms ease;
-  transition: box-shadow 150ms ease;
-}
 
-.StripeElement--focus {
-  box-shadow: 0 1px 3px 0 #cfd7df;
-}
-
-.StripeElement--invalid {
-  border-color: #fa755a;
-}
-
-.StripeElement--webkit-autofill {
-  background-color: #fefde5 !important;
-}
 
 
 

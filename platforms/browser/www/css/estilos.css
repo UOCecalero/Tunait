@@ -1,5 +1,16 @@
 
-	
+@font-face {
+    font-family: "Lazer84";
+    src: url("../fonts/Lazer84.ttf");
+}
+
+@font-face {
+    font-family: "VcrOsdMono";
+    src: url("../fonts/VCR_OSD_MONO_1.001.ttf");
+}
+
+
+
 body {
 	font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
 	height:100%;
@@ -8,14 +19,23 @@ body {
     margin: 0;
     padding: 0;
     font-size: 2.5em;
+
+    
+
 }
 
 
 
-#menu-principal {
-	background-color: #999999;
+#menu-principal, #eventpage, #payment {
+	background-color: #e8e9e7;
    
 	}
+
+ .row.cuerpo{
+
+    background-color:  whitesmoke;
+    border-bottom: 1px solid grey;
+ }
 
 
 #menu-lateral, #settings, #landing {
@@ -24,8 +44,11 @@ body {
 
 #menu-lateral>div>div>div, #settings>div>div>div {
     
-    border-bottom: thin solid grey;
-} 
+    border-bottom: 1px solid grey;
+}
+
+
+
 
 
 /* Barra superior principal */
@@ -43,6 +66,7 @@ body {
 #title>h1{
     margin-top: 0;
     text-align: center;
+    color: #000f;
 
 }
 
@@ -59,35 +83,19 @@ body {
     -webkit-transform: translate3d(200%, 0, 0);
     transform: translate3d(200%, 0, 0);
 }
-/*
-    
-#loginbox{
-    display: block;
-    position: absolute;
-    border: 2px solid #043E95;
-    width: 40%;
-    padding: 20px;
-    margin: 20px 22.5%;
-    background-color: white;
 
-    -moz-border-radius: 5px;
-     -webkit-border-radius: 5px;
-     border-radius: 5px;
-    }
-*/
     
 #pie{
     display: block;
-    position: relative;
+    position: absolute;
     z-index : 10;
-    border-top:2px solid #043E95;
+    border-top:1px solid #0000;
     width:100%;
     height: 100%;
-    top: 90%;
+    top: 95%;
     background-color: white;
+    border-top: 1px solid grey;
     }
-
-
 
 
 #cargando {
@@ -96,15 +104,84 @@ body {
 }
 
 #cargando > div {
-    z-index: 4;
+    z-index: 11;
     position: absolute;
     top: 40%;
-    left: 40%;
+    left: 45%;
     }
+
+/* Pantalla 0 (Timeline) */
+
+#wrapper {
+    position: absolute;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    -webkit-overflow-scrolling: touch;
+}
+
+#scroller, #unordered{
+
+    list-style: none;
+    padding:  0;
+}
+
+.event-class{
+    
+    height: 230px;
+    width: 100%;
+    text-align: left;
+    background-color: white;
+
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+
+    margin-bottom: 10px;
+    color: white;
+
+}
+
+.event-picture{
+
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 180px;
+    background-size: contain;
+    
+
+}
+
+.event-titulo{
+    position: relative;
+    top: -160px;
+    left: 30px;
+    height: 1.2em;
+    text-transform: uppercase;
+    font-family: "Lazer84";
+}
+
+.event-location{
+    position: relative;
+    top: -100px;
+    left: 30px;
+    height: 1.2em;
+    font-size: 0.7em;
+    color: rgb(255, 190, 5);
+}
+
+.event-fecha{
+    position: relative;
+    top: -100px;
+    left: 30px;
+    height: 1.2em;
+    font-size: 0.8em;
+}
+
 
 /* Pantalla1 */ 
 
-#pantalla1, #pantalla2, #pantalla3, #pantalla4{
+#pantalla0, #pantalla1, #pantalla2, #pantalla3, #pantalla4{
     text-align: center;
 }
 
@@ -123,42 +200,230 @@ body {
       margin-top: 5%;
     }
 
-/* Estilos para iscroll-zoom*/
+/* Capa de evento eventpage */
 
-.wrapper {
-	position: inherit;
-	z-index: 1;
-	top: 0px;
-	bottom: 0px;
-	left: 0px;
-	width: 100%;
-	height: 100%;
-	background: #ccc;
-	overflow: hidden;
+#eventpage>div.container{
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+    -webkit-overflow-scrolling: touch;
 }
 
-.scroller {
-	position: absolute;
-	z-index: 3;
-	-webkit-tap-highlight-color: rgba(0,0,0,0);
-	width: 1200px;
-	-webkit-transform: translateZ(0);
-	-moz-transform: translateZ(0);
-	-ms-transform: translateZ(0);
-	-o-transform: translateZ(0);
-	transform: translateZ(0);
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-	-webkit-text-size-adjust: none;
-	-moz-text-size-adjust: none;
-	-ms-text-size-adjust: none;
-	-o-text-size-adjust: none;
-	text-size-adjust: none;
-	background: #fff;
+img.cross{
+    width: 30px; /*or your image's width*/
+    height: 30px; /*or your image's height*/
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    z-index: 1;
+
 }
+
+.etitle{
+
+    font: 1em arial, sans-serif;
+}
+
+.elocation{}
+
+.edate{
+
+    font-size: 0.6em;
+    color: rgb(255, 0, 125);
+}
+
+.eartist{
+
+    font-family: VcrOsdMono;
+    font-size: 0.8em;
+}
+
+.emusic{
+
+    font-size: 0.5em;
+
+}
+
+.edescription{
+
+    font-size:0.7em;
+    color: grey;
+
+
+}
+.emap { height: 100px; }
+.eticket {  }
+
+/* Capa payment: datos de cobro y tarjeta */
+
+#payment img{
+
+    width: 30px; /*or your image's width*/
+    height: 30px; /*or your image's height*/
+    margin: 0;
+    padding: 0;
+
+}
+
+img.back{ 
+    position: absolute;
+    left: 20px;
+    top: 10px;
+    z-index: 1;
+
+}
+
+#desglose{
+
+    text-align: right;
+    padding: 10px;
+    padding-right: 50px;
+
+}
+
+/**
+ * STRIPE
+ * 
+ */
+/* 
+#card-form {
+  margin: 20px auto;
+}
+
+.group {
+  background: white;
+  box-shadow: 0 7px 14px 0 rgba(49,49,93,0.10),
+              0 3px 6px 0 rgba(0,0,0,0.08);
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+label {
+  position: relative;
+  color: #8898AA;
+  font-weight: 300;
+  height: 40px;
+  line-height: 40px;
+  margin-left: 20px;
+  display: block;
+}
+
+.group label:not(:last-child) {
+  border-bottom: 1px solid #F0F5FA;
+}
+
+label > span {
+  width: 20%;
+  text-align: right;
+  float: left;
+}
+
+.field {
+  background: transparent;
+  font-weight: 300;
+  border: 0;
+  color: #31325F;
+  outline: none;
+  padding-right: 10px;
+  padding-left: 10px;
+  cursor: text;
+  width: 70%;
+  height: 40px;
+  float: right;
+}
+
+.field::-webkit-input-placeholder { color: #CFD7E0; }
+.field::-moz-placeholder { color: #CFD7E0; }
+.field:-ms-input-placeholder { color: #CFD7E0; }
+
+button.pbutton {
+  float: left;
+  display: block;
+  background: #666EE8;
+  color: white;
+  box-shadow: 0 7px 14px 0 rgba(49,49,93,0.10),
+              0 3px 6px 0 rgba(0,0,0,0.08);
+  border-radius: 4px;
+  border: 0;
+  margin-top: 20px;
+  font-size: 15px;
+  font-weight: 400;
+  width: 100%;
+  height: 40px;
+  line-height: 38px;
+  outline: none;
+}
+
+button.pbutton:focus {
+  background: #555ABF;
+}
+
+button.pbutton:active {
+  background: #43458B;
+}
+
+.outcome {
+  float: left;
+  width: 100%;
+  padding-top: 8px;
+  min-height: 24px;
+  text-align: center;
+}
+
+.success, .error {
+  display: none;
+  font-size: 13px;
+}
+
+.success.visible, .error.visible {
+  display: inline;
+}
+
+.error {
+  color: #E4584C;
+}
+
+.success {
+  color: #666EE8;
+}
+
+.success .token {
+  font-weight: 500;
+  font-size: 13px;
+} */
+
+
+/**
+ * The CSS shown here will not be introduced in the Quickstart guide, but shows
+ * how you can use CSS to style your Element's container.
+ */
+.StripeElement {
+  background-color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  box-shadow: 0 1px 3px 0 #e6ebf1;
+  -webkit-transition: box-shadow 150ms ease;
+  transition: box-shadow 150ms ease;
+}
+
+.StripeElement--focus {
+  box-shadow: 0 1px 3px 0 #cfd7df;
+}
+
+.StripeElement--invalid {
+  border-color: #fa755a;
+}
+
+.StripeElement--webkit-autofill {
+  background-color: #fefde5 !important;
+}
+
+
+
 
 	
 /* Estilo de capa general */ 
@@ -179,8 +444,6 @@ transform: translate3d(0, 0, 0);
     top: 10%;
    
 }
-
-
 
 /* Estilo de capa izquierda */
 
@@ -220,6 +483,13 @@ transform: translate3d(-100%, 0, 0);
 transform: translate3d(100%, 0, 0); 
 }
 
+/* Estilo de capa totalmente abajo */
+
+.page.totaldown { 
+-webkit-transform: translate3d(0, -100%, 0);
+transform: translate3d(0,100%, 0); 
+}
+
 
 
 /* Estilo de animación general */
@@ -228,6 +498,9 @@ transform: translate3d(100%, 0, 0);
 -webkit-transition-duration: .15s; 
 transition-duration: .15s; 
 }
+
+
+
 
 
 

@@ -53,6 +53,10 @@
           <key>NSExceptionAllowsInsecureHTTPLoads</key>
           <true/>
         </dict>
+        <key>js.stripe.com</key>
+        <dict/>
+        <key>checkout.stripe.com</key>
+        <dict/>
         <key>m.facebook.com</key>
         <dict/>
         <key>graph.facebook.com</key>

@@ -148,13 +148,20 @@ var app = {
         wrapper = document.querySelector('#wrapper');
         scroller = document.querySelector('#scroller');
         template = document.querySelector('#template');
+        eventpage = document.querySelector('#eventpage')
+        unordered = document.querySelector('#unordered');
+        payment = document.querySelector('#payment');
+        ntickets = document.querySelector("#num-tickets");
+        payform = document.querySelector('#card-form');
+
     
 
 
         // Inicializamos variables
         // url = 'http://localhost:8000/';
-        url = 'http://192.168.1.3:60000/'
+        url = 'http://192.168.1.4:60000/'
         estado = "menuprincipal";
+
         
 
         
@@ -196,9 +203,10 @@ var app = {
         document.querySelector("#menu1").addEventListener('click', function(){app.muestra('#pantalla1');});
         document.querySelector("#menu2").addEventListener('click', function(){app.muestra('#pantalla2');});
         document.querySelector("#menu3").addEventListener('click', app.launchWikitude, false);
-        document.querySelector("#menu4").addEventListener('click', function(){app.setPurchase('prueba', 'prueba@gmail.com', 10); app.muestra('#pantalla3');});
+        //document.querySelector("#menu4").addEventListener('click', function(){app.setPurchase('prueba', 'prueba@gmail.com', 10); app.muestra('#pantalla3');});
         document.querySelector("#button1").addEventListener('click', app.geoLocalization, false);
         document.querySelector("#login-button").addEventListener('click', app.login, false);
+        document.querySelector("#pbtn").addEventListener("click",function(){app.newCustomer();});
 
         //Hace el setup de la aplciación
         app.setup();
@@ -513,7 +521,7 @@ register: function(userObject){
     /*********** Esta función se conecta al servidor y baja los datos del servidor a la aplicación *******************************/
     download: function(tokenObject, db){
 
-
+            app.loading();
 
             //inicializamos variables
             accessToken = tokenObject.access_token;
@@ -539,7 +547,7 @@ register: function(userObject){
                             return app.http(mode, cmd, body, options);
                         })
                                     
-                        .then( function(userObject){ return sql.addUserToDB(userObject, db); })
+                        .then( function(userObject){ userEmail = userObject.email; sql.addUserToDB(userObject, db); })
                         .then( function(resp){ 
 
                             //Bajamos los Datos de la empresa (si hay)
@@ -578,16 +586,18 @@ register: function(userObject){
                         .then( function(bloqueadosObject){ return sql.addBloqueadosToDB(bloqueadosObject, db); })
                         .then( function(resp){
 
-                            //delete accessToken;
-                                
+                            //delete accessToken; el token se debe borrar al borrar la aplicación
+
+
+                            app.loading();
                             return resolve("all");
                         })
                         
-                        .catch(function(e){ reject(e); })
+                        .catch(function(e){ app.loading(); reject(e); return; })
 
                         }
 
-                        catch(e){ reject("JAVASCRIPT ERROR "+e.name+" "+e.message); }
+                        catch(e){ app.loading(); reject("JAVASCRIPT ERROR "+e.name+" "+e.message); }
                     });
 
     },
@@ -696,7 +706,7 @@ setTimeline: function(){
         
         
         
-        app.addLines(25)
+        app.addLines(15)
             .then(function(){
                 wrapper.addEventListener('scroll', function(){
 
@@ -713,7 +723,7 @@ setTimeline: function(){
                     if ( scrollerHeight - wrapperHeight - scrollTop  < 500){
 
                         active = true;
-                        app.addLines(20)
+                        app.addLines(5)
                             .then(function(){
                                 active = false;
                                 return;
@@ -823,10 +833,8 @@ appendBox: function(event){
 
         var cloned = document.createElement("li");
             cloned.setAttribute("class","event-class");
-
-        var clonedID = document.createElement("input");
-            clonedID.setAttribute("type","hidden");
-            clonedID.setAttribute("value",event.id);
+            cloned.setAttribute("id","eventID"+event.id);
+            cloned.setAttribute("data-number", event.id);
             
 
         var clonedTitulo = document.createElement("div");
@@ -839,7 +847,7 @@ appendBox: function(event){
             clonedLocation.setAttribute("class","event-location");
 
         var clonedFecha = document.createElement("div");
-            clonedFecha.innerHTML = event.event_ini;
+            clonedFecha.innerHTML = formatTime(event.event_ini,event.event_fin);
             clonedFecha.setAttribute("class","event-fecha");
 
         var clonedPicture = document.createElement("div");
@@ -856,84 +864,40 @@ appendBox: function(event){
             }
 
 
+        // var clonedArtist = document.createElement("input");
+        //     clonedArtist.setAttribute("type","hidden");
+        //     clonedArtist.setAttribute("class","artists");
+        //     clonedArtist.setAttribute("value", event.artists);
+
+        // var clonedDescription = document.createElement("input");
+        //     clonedDescription.setAttribute("type","hidden");
+        //     clonedDescription.setAttribute("class","description");
+        //     clonedDescription.setAttribute("value", event.description);
+
+        var clonedPosition = document.createElement("input");
+            clonedPosition.setAttribute("type","hidden");
+            clonedPosition.setAttribute("class","map");
+            //clonedPosition.setAttribute("value", event.location);
+            clonedPosition.setAttribute("value", "{lat: "+event.lat+", lng:"+event.lng+"}");
+
+        var clonedPrice = document.createElement("input");
+            clonedPrice.setAttribute("type","hidden");
+            clonedPrice.setAttribute("class","price");
+            clonedPrice.setAttribute("value", event.price);
+
+        
             cloned.appendChild(clonedPicture);
             cloned.appendChild(clonedTitulo);
             cloned.appendChild(clonedLocation);
             cloned.appendChild(clonedFecha);
+            // cloned.appendChild(clonedArtist);
+            // cloned.appendChild(clonedDescription);
+            cloned.appendChild(clonedPosition);
+            cloned.appendChild(clonedPrice);
+            cloned.addEventListener("click", function(){ app.showEvent(this.id);})
 
             document.querySelector('#scroller').appendChild(cloned);
             return;     
-
-},
-
-
-/*************************************** Implementación del módulo de pago *******************************************/
-
-//Esta página se debe generar al intentar hacer una compra ya que hay que pasarle datos como el nombre del evento, precio, etc..
-//Al sali de la página de compra hay que cerrar el 'eventhandler'
-newCustomer: function(nameEvent, userEmail, price){
-
-            //Aqui se debe implementar el código que muestra la pantalla para introducir los datos de la tarjeta
-
-
-            //Create a Stripe client (guardar el key en en la database)
-            var stripe = Stripe('pk_test_raKdshzefW2J3oP7Hk4LqJ8P');
-
-            // Create an instance of Elements
-            var elements = stripe.elements();
-
-            // Custom styling can be passed to options when creating an Element.
-            // (Note that this demo uses a wider set of styles than the guide below.)
-            var style = {
-              base: {
-                color: '#32325d',
-                lineHeight: '24px',
-                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-                fontSmoothing: 'antialiased',
-                fontSize: '16px',
-                '::placeholder': {
-                  color: '#aab7c4'
-                }
-              },
-              invalid: {
-                color: '#fa755a',
-                iconColor: '#fa755a'
-              }
-            };
-
-            // Create an instance of the card Element
-            var card = elements.create('card', {style: style});
-
-            // Add an instance of the card Element into the `card-element` <div>
-            card.mount('#card-element');
-
-            // Handle real-time validation errors from the card Element.
-            card.addEventListener('change', function(event) {
-              var displayError = document.getElementById('card-errors');
-              if (event.error) {
-                displayError.textContent = event.error.message;
-              } else {
-                displayError.textContent = '';
-              }
-            });
-
-            // Handle form submission
-            var form = document.getElementById('payment-form');
-            form.addEventListener('submit', function(event) {
-              event.preventDefault();
-
-              stripe.createToken(card).then(function(result) {
-                if (result.error) {
-                  // Inform the user if there was an error
-                  var errorElement = document.getElementById('card-errors');
-                  errorElement.textContent = result.error.message;
-                } else {
-                  
-                    app.http("p", "/customer/{user}", result.token , "auth")
-                }
-              });
-
-            });
 
 },
 
@@ -966,6 +930,344 @@ newCustomer: function(nameEvent, userEmail, price){
 
     },
 
+/*************************************** Entramos en el evento ****************************************************/
+
+    showEvent: function(eventid){
+
+        var event = document.getElementById(eventid);
+        var clonedevent = event.cloneNode(true);
+        
+        
+
+        //Con esta opción pedimos los datos del evento concreto para rellenar las pantallas de evento y pago
+        //Hay una opción B que és extraer los datos de los inserts guardados al crear cada evento en el Timeline pero esto hace que se tengan que guardar mas datos en cada evento y carguen mucho mas lento.
+            var mode = "g";
+            var cmd = "api/evento/"+event.dataset.number;
+            var options = "auth"
+            var body = undefined;
+
+                app.http(mode, cmd, body, options)
+                    .then(function(eventObject){
+
+                    var eventObj = JSON.parse(eventObject);
+
+                            //Relleno de la página de evento
+                                document.querySelector("#event-data-name").innerHTML = eventObj.nombre;
+                                document.querySelector("#event-data-location").innerHTML = eventObj.location_name;
+                                document.querySelector("#event-data-date").innerHTML = formatTime(eventObj.event_ini, eventObj.event_fin); 
+
+                                // document.querySelector("#event-artist").innerHTML = eventObj. ;
+                                // document.querySelector("#event-music").innerHTML = eventObj. ;
+                                // document.querySelector("#event-description").innerHTML = eventObj. ;
+                                
+                                //Función de generación del mapa
+                                //var crds = { lat: eventObj.lat , lng: eventObj.lng } ;
+                                //app.initMap(document.querySelector("#event-map"), crds, eventObj.nombre);
+                            //var imagen = document.createElement("img");
+                            var imagen = document.querySelector("#fix-map");
+                                imagen.src = "https://maps.googleapis.com/maps/api/staticmap?center="+eventObj.lat+","+eventObj.lng+"&zoom=13&size=400x150&markers=color:purple%7C"+eventObj.lat+","+eventObj.lng+"&key=AIzaSyA3o6URXiCtskFXGHIVWyPycpOi5snO5KE"
+                                //var bloque = document.querySelector("#event-map");
+                                // bloque.appendChild(imagen);
+                            var rutabtn = document.querySelector("#path-btn");
+                            //iOS
+                                rutabtn.href = "http://maps.apple.com/maps?saddr=Current%20Location&daddr="+eventObj.lat+","+eventObj.lng;
+                            //android
+                            //    ruta.btn.href="geo:"+eventObj.lat+","+eventObj.lng;
+
+
+                                document.querySelector("#event-ticket").innerHTML = eventObj.price+ " €" ;
+
+                            //Relleno de la pagina de pago
+                            var tdescrip = document.querySelector("#ticket-description");
+                                tdescrip.children[0].innerHTML = "Ticket prueba";
+                                tdescrip.children[1].innerHTML = "Ticket description prueba";
+
+                                var eventprice = Number(eventObj.price);
+                                var comision = 1.01;
+                                var result = eventprice + comision;
+                                    document.querySelector("#price").innerHTML = eventprice+" €" ;
+                                    document.querySelector("#gastos").innerHTML = comision+" €";
+                                    document.querySelector("#total-price").innerHTML = result +" €";
+
+
+                                ntickets.value = 1;
+                                ntickets.onchange = function(){
+
+                                    result = (eventprice + comision)  * ntickets.value;
+                                    document.querySelector("#price").innerHTML = (eventprice * ntickets.value)+" €" ;
+                                    document.querySelector("#gastos").innerHTML = comision+" €";
+                                    document.querySelector("#total-price").innerHTML = result +" €";
+                                    //Aqui debería de setear el valor que va a cobrar el form de Stripe
+
+                                };
+
+                                document.querySelector("#minus").addEventListener("click",function(){ app.numtickets('-'); ntickets.onchange();});
+                                document.querySelector("#plus").addEventListener("click",function(){ app.numtickets('+'); ntickets.onchange();});
+
+                                
+                                    
+                                    
+
+
+                                //Cuando haya varias modalidades de entrada/ticket, se deberán generar varios botones con varios eventListeners. Uno para cada tipo de entrada
+                                //De momento trabajaremos con un botón ya generado
+
+                                
+                            
+
+                                
+                                //purchasebtn.addEventListener("click",function(){app.newCustomer(this.eventObj.nombre, userEmail, this.eventObj.price);})
+                                
+                                eventpage.className= 'page transition center';
+
+
+                    unordered.appendChild(clonedevent);
+
+                    })
+                    .catch(function(error){
+
+                        alert(" Hay un problema de connexión con el servidor ");
+                    })
+
+
+        
+      
+    },
+
+    hideWindow: function(v){
+
+        switch(v){
+
+            case 1:
+                var nested = unordered.children[0];
+                nested.remove();
+                // var bloque = document.querySelector("#event-map");
+                // var imagen = bloque.children[0];
+                // imagen.remove();
+
+                eventpage.className= 'page transition totaldown';
+
+            break;
+
+            case 2:
+                payment.className= 'page transition totalright';
+
+            break;
+
+        }
+
+        
+
+    },
+
+
+/*************************************** Implementación del módulo de pago *******************************************/
+
+//Esta página se debe generar al intentar hacer una compra ya que hay que pasarle datos como el nombre del evento, precio, etc..
+//Al sali de la página de compra hay que cerrar el 'eventhandler'
+newCustomer: function(nameEvent, price, ticketType){
+
+
+            //Create a Stripe client (guardar el key en en la database)
+            // var stripe = Stripe('pk_test_raKdshzefW2J3oP7Hk4LqJ8P');
+
+            // // Create an instance of Elements
+            // var elements = stripe.elements();
+
+            // var card = elements.create('card', {
+            //       style: {
+            //         base: {
+            //           iconColor: '#666EE8',
+            //           color: '#31325F',
+            //           lineHeight: '40px',
+            //           fontWeight: 300,
+            //           fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+            //           fontSize: '15px',
+
+            //           '::placeholder': {
+            //             color: '#CFD7E0',
+            //           },
+            //         },
+            //       }
+            //     });
+            
+            // card.mount('#card-element');
+
+            // card.addEventListener('change', function(event) {
+              
+            //   var errorElement = document.querySelector('.error');
+            //   successElement.classList.remove('visible');
+            //   errorElement.classList.remove('visible');
+
+            //   if (event.error) {
+            //     errorElement.textContent = event.error.message;
+            //     errorElement.classList.add('visible');
+            //   } else {
+            //     errorElement.textContent = " ";
+            //     errorElement.classList.add('visible');
+
+            //   }
+
+            // });
+
+            // payform.addEventListener('submit', function(e) {
+            //     e.preventDefault();
+            //         var form = document.querySelector('#card-form');
+
+            //         var extraDetails = {
+            //         name: form.querySelector('input[name=cardholder-name]').value,
+            //         };
+
+            //   stripe.createToken(card, extraDetails)
+            //     .then( function(result){ 
+            //         var successElement = document.querySelector('.success');
+            //         var errorElement = document.querySelector('.error');
+            //         successElement.classList.remove('visible');
+            //         errorElement.classList.remove('visible');
+
+            //             if (result.token) {
+            //             // Use the token to create a charge or a customer
+            //             // Se debe pasar el precio, y el numero de entradas ya que el email ya se puede obtener en el servidor
+            //             //app.http("p", "/customer/{user}", result.token , "auth");
+
+            //                 successElement.querySelector('.token').textContent = result.token.id;
+            //                 successElement.classList.add('visible');
+
+            //             } else if (result.error) {
+                        
+            //                 errorElement.textContent = result.error.message;
+            //                 errorElement.classList.add('visible');
+            //             }
+
+            //         });
+            // });
+
+    valid = [false, false, false]; // valid[0] = fecha válida, valid[1] =  tarjeta válida, valid[2] = ????
+
+    payform.onsubmit = function(event){
+
+                        event.preventDefault();
+                        
+                        var long = document.querySelector("input[name=card-number]").value.length;
+
+                        if (long > 12 && valid[0] && valid[1] ){
+
+                                cordova.plugins.stripe.setPublishableKey('pk_test_raKdshzefW2J3oP7Hk4LqJ8P')
+
+                    var card = {
+                                  name: payform.querySelector('input[name=cardholder-name]').value,
+                                  number: payform.querySelector('input[name=card-number]').value, 
+                                  expMonth: payform.querySelector('input[name=card-expMonth]').value, 
+                                  expYear: payform.querySelector('input[name=card-expYear]').value, 
+                                  cvc: payform.querySelector('input[name=card-cvc]').value, 
+                                  currency: "eur",
+                                    
+                                };
+
+                                cordova.plugins.stripe.createCardToken(card, function(tokenId){ alert("Token success: "+JSON.stringify(tokenId)); }, function(e){console.log(e);});
+
+
+                        }  //else {  "El numero de tarjeta es demasiado corto"}
+
+                    };
+
+    document.querySelector("input[name=card-number]").oninput = function(){ 
+
+        var isValid = validate(this.value);
+            if (isValid == 0) {
+                valid[1] = false;
+            } else { valid[1] = true; }
+
+            app.colorize(isValid);
+
+        }
+
+    document.querySelectorAll("input[name=card-expMonth] input[name=card-expYear]").oninput = function(){
+
+                        //Comprobamos que esta bien la fecha de caducidad                      
+                        var currentdate = new Date();
+                        var currentmonth = currentdate.getMonth();
+                          currentmonth = currentmonth + 1;
+                          currentyear = currentdate.getFullYear();
+
+                        var expyear = document.querySelector("#ccey");
+                        var expmonth = document.querySelector("#ccem");
+
+                          if (expyear > currentyear ) { valid[0] = true; }
+                          else if (expyear == currentyear) { 
+
+                              if (currentmonth < expmonth) { valid[0] = true; }
+                                else { valid[0] = false; }
+                          }
+                            else { valid[0] = false; }
+
+                        app.colorize();
+
+    } 
+
+    //Aqui se debe implementar el código que muestra la pantalla para introducir los datos de la tarjeta
+    payment.className = 'page transition center';
+
+},
+
+colorize: function(type){
+
+    var cf = payform.children[0];
+
+    if (valid[0]) { 
+
+                    // document.querySelectorAll("input[name=card-expMonth] input[name=card-expYear]").className = "valid"
+                    cf.className = "group valid"
+                    
+                
+                } else { 
+
+                    // document.querySelectorAll("input[name=card-expMonth] input[name=card-expYear]").className = "invalid"
+                    cf.className = "group invalid" 
+                
+                }
+
+    if (valid[1]) { 
+
+                    // document.querySelector("input[name=card-number]").className = "valid";
+                    cf.className = "group valid"
+                
+                    //Esto hay que mirar exactamente como lo hace
+                    if(type){ document.querySelector("div.outcome").innerHTML = type; }  
+
+                } else {
+
+                    // document.querySelector("input[name=card-number]").className = "invalid";
+                    cf.className = "group invalid"
+                
+                 }
+
+
+
+},
+
+// validnumber: function(type){
+
+
+               
+//                     document.querySelector("input[name=card-number]").className = "valid";
+//                     //Esto hay que mirar exactamente como lo hace
+//                     if(type){ document.querySelector("div.outcome").innerHTML = type; }   
+                    
+                    
+
+//                 },
+
+// invalidnumber: function(){
+
+//                   document.querySelector("input[name=card-number]").className = "invalid";                
+                  
+//                },
+
+
+
+
+
 /*************************************** Bucle de carga **********************************/
 
     //Esta función quita/pone el bucle de carga en función de si esta puesto o quitado
@@ -984,6 +1286,9 @@ newCustomer: function(nameEvent, userEmail, price){
             console.log('Error con el bucle de cargado');
         }
     },
+
+
+
 
 /************************************* Set up y settings de el plugin de la cámara ************************************/
 
@@ -1024,13 +1329,23 @@ newCustomer: function(nameEvent, userEmail, price){
 
     /************************************* Set up y settings de el plugin de posicionamiento ************************************/
 
-    initMap: function() {
+    initMap: function(node, coords, title) {
 
+         //coords = {lat: 41.4103908, lng: 2.1941609}
 
-            map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: 41.4103908, lng: 2.1941609},
+        var map = new google.maps.Map( node, {
+            center: coords,
             zoom: 8 
             });
+
+            //centra el mapa en la posicion marcada
+            map.panTo(coords);
+
+        var marker = new google.maps.Marker({
+            position: coords,
+            map: map,
+            title: title
+          });
 
         
         }, 
@@ -1043,6 +1358,9 @@ newCustomer: function(nameEvent, userEmail, price){
          navigator.geolocation.getCurrentPosition(
              function geolocationSuccess(position){
 
+                var coords = {lat: position.coords.latitude, lng: position.coords.longitude};
+                return coords;
+
             
     //           var resultado =  
     //           'Latitude: '          + position.coords.latitude          + '\n' +
@@ -1054,29 +1372,35 @@ newCustomer: function(nameEvent, userEmail, price){
     //           'Speed: '             + position.coords.speed             + '\n' +
     //           'Timestamp: '         + position.timestamp                + '\n';
 
-            
-
-        var myLatLng = {lat: position.coords.latitude, lng: position.coords.longitude};
-
-        map.panTo(myLatLng);
-
-        var marker = new google.maps.Marker({
-            position: myLatLng,
-            map: map,
-            title: '¡Esamos aqui!'
-          });
-
 
 
         },
            function geolocationError(error){
                 console.log("GeoLocalization error: " + error.code + " " + error.message + "\n" );
+                return 0;
 
 
         });
 
 
     },
+
+
+    numtickets: function(value){
+
+        switch (value){
+
+            case "-": if(ntickets.value > 1){ ntickets.value --;  }
+
+            break;
+
+            case "+": if(ntickets.value < 10) {ntickets.value ++; }
+            break;
+        }
+
+
+
+    }
 
 
 }

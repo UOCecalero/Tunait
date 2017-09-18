@@ -11,6 +11,9 @@
     <plugin name="cordova-plugin-whitelist" spec="1" />
     <access origin="*" />
     <allow-navigation href="http://maps.google.com" />
+    <allow-navigation href="https://maps.google.com" />
+    <allow-navigation href="https://js.stripe.com/" />
+    <allow-navigation href="https://checkout.stripe.com/checkout.js" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
     <allow-intent href="tel:*" />

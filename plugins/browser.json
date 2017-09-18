@@ -32,6 +32,9 @@
         },
         "cordova-sqlite-storage": {
             "PACKAGE_NAME": "com.linxtech.linxapp"
+        },
+        "cordova-plugin-stripe": {
+            "PACKAGE_NAME": "com.linxtech.linxapp"
         }
     },
     "dependent_plugins": {
