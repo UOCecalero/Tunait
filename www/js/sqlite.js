@@ -55,9 +55,10 @@ initDatabase: function(db){
         
     
 
-        tx.executeSql('CREATE TABLE IF NOT EXISTS Eventos (id UNSIGNED BIGINT NOT NULL UNIQUE, created_at TIMESTAMP NOT NULL, updated_at TIMESTAMP NOT NULL, creator UNSIGNED BIGINT NOT NULL, name VARCHAR NOT NULL, photo BLOB NULL, event_ini NOT NULL, event_fin NOT NULL, price DECIMAL(5,2), aforo UNISGNED MEDIUMINT, destacado_ini TIMESTAMP, destacado_fin TIMESTAMP, location POINT )');
+         tx.executeSql('CREATE TABLE IF NOT EXISTS Eventos (ticket_id UNSIGNED BIGINT NOT NULL UNIQUE, evento_id UNSIGNED BIGINT NOT NULL, created_at TIMESTAMP NOT NULL, updated_at TIMESTAMP NOT NULL, creator UNSIGNED BIGINT NOT NULL, name VARCHAR NOT NULL, photo BLOB NULL, event_ini NOT NULL, event_fin NOT NULL, aforo UNISGNED MEDIUMINT, destacado_ini TIMESTAMP, destacado_fin TIMESTAMP, location_name VARCHAR, lat DECIMAL(10,6), lng DECIMAL(10,6), type VARCHAR NOT NULL, description VARCHAR, price DECIMAL(5,2), qr BLOB NOT NULL )');
 
-                    //                                         id UNSIGNED BIGINT NOT NULL UNIQUE,
+                    //                                         ticket_id UNSIGNED BIGINT NOT NULL UNIQUE,
+                    //                                         evento_id UNSIGNED BIGINT NOT NULL,
                     //                                         created_at TIMESTAMP NOT NULL,
                     //                                         updated_at TIMESTAMP NOT NULL,
                     //                                         creator UNSIGNED BIGINT NOT NULL,
@@ -65,11 +66,17 @@ initDatabase: function(db){
                     //                                         photo BLOB NULL,
                     //                                         event_ini NOT NULL,
                     //                                         event_fin NOT NULL,
-                    //                                         price DECIMAL(5,2),
+                    //                                         
                     //                                         aforo UNISGNED MEDIUMINT,
                     //                                         destacado_ini TIMESTAMP,
                     //                                         destacado_fin TIMESTAMP,
-                    //                                         location POINT
+                    //                                         location_name VARCHAR,
+                    //                                         lat DECIMAL(10,6),
+                    //                                         lng DECIMAL(10,6),
+                    //                                         type VARCHAR NOT NULL,
+                    //                                         description VARCHAR,
+                    //                                         price DECIMAL(5,2),
+                    //                                         qr BLOB NOT NULL
                                                             
                     //                                  )
 
@@ -267,6 +274,52 @@ addEmpresaToDB: function(object, db){
 },
 
 /************************* Función de relleno de la tabla Eventos en la database local  ***********************************************/
+
+addEventosToDB: function(multiObject, db){
+
+    return new Promise(function(resolve, reject){
+
+        if (multiObject){
+
+            // Transactions needed to add a new user
+            db.transaction(function (tx) {
+
+                multiObject = JSON.parse(multiObject);
+
+                var count = multiObject.length;
+
+                for (i = 0; i < count; i++) { 
+
+                var object = multiObject[i];
+
+                tx.executeSql('INSERT INTO Eventos VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+                 [object.tid,object.id,object.created_at,object.updated_at,object.creator,object.nombre,object.photo,object.event_ini,object.event_fin,object.aforo,object.destacado_ini,object.destacado_fin,object.location_name,object.lat,object.lng,object.name,object.description,object.precio,object.qr], 
+
+                 function(tx, res) {
+                    console.log("insertId: " + res.insertId );
+                    console.log("rowsAffected: " + res.rowsAffected);
+                },
+
+                function(tx, error) {
+                    console.log('INSERT error: ' + error.message);
+                });
+
+                }
+
+            }, function(error) {
+                console.log('transaction error: ' + error.message);
+                reject();
+
+            }, function() {
+                console.log('transaction ok');
+                resolve();
+            });
+
+        } else { resolve();}
+    })
+},
+
+/************************* Función de relleno de la tabla Tickets en la database local  ***********************************************/
 
 addEventosToDB: function(multiObject, db){
 
@@ -710,23 +763,32 @@ extractEventosFromDB: function(db){
             for(var x = 0; x < rs.rows.length; x++) {
 
                 var eventosObject = new Object();
+                    eventosObject.ticket_id =  rs.rows.item(x).ticket_id;
+                    eventosObject.evento_id = rs.rows.item(x).evento_id;
                     eventosObject.created_at = rs.rows.item(x).created_at;
                     eventosObject.updated_at = rs.rows.item(x).updated_at;
                     eventosObject.creator = rs.rows.item(x).creator;
+                    eventosObject.name = rs.rows.item(x).name;
                     eventosObject.photo = rs.rows.item(x).photo;
                     eventosObject.event_ini = rs.rows.item(x).event_ini;
                     eventosObject.event_fin = rs.rows.item(x).event_fin;
-                    eventosObject.price = rs.rows.item(x).price;
                     eventosObject.aforo = rs.rows.item(x).aforo;
                     eventosObject.destacado_ini = rs.rows.item(x).destacado_ini;
                     eventosObject.destacado_fin = rs.rows.item(x).destacado_fin;
-                    eventosObject.location = rs.rows.item(x).location;
+                    eventosObject.location_name = rs.rows.item(x).location_name;
+                    eventosObject.lat = rs.rows.item(x).lat;
+                    eventosObject.lng = rs.rows.item(x).lng;
+                    eventosObject.type = rs.rows.item(x).type;
+                    eventosObject.description = rs.rows.item(x).description;
+                    eventosObject.price = rs.rows.item(x).price;
+                    eventosObject.qr = rs.rows.item(x).qr;
 
-                    return eventosObject;
 
-                    empresasArray[x] = empresaObject;
+                    eventosArray[x] = eventosObject;
                 
             }
+
+            resolve (eventosArray);
         },
         function (tx, error) {
             console.log('SELECT error: ' + error.message);

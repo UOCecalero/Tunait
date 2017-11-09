@@ -526,6 +526,7 @@ register: function(userObject){
             //inicializamos variables
             accessToken = tokenObject.access_token;
             var userid = tokenObject.id;
+
             var mode = "g";
             var options = "auth";
             var body = "";
@@ -559,8 +560,11 @@ register: function(userObject){
                         .then(function(empresaObject){ return sql.addEmpresaToDB(empresaObject, db);})
                         .then( function(resp){
 
-                            //Bajamos los Eventos de usuario si hay
+                            //Bajamos los Eventos de usuario si hay.
+                            //var cmd = "api/user/"+userid+"/evento";
                             var cmd = "api/user/"+userid+"/evento";
+                            
+
                             return app.http(mode, cmd, body, options);
 
                         })
@@ -638,6 +642,65 @@ register: function(userObject){
 
                 case "all":
 
+                app.refresh("tickets");
+                app.refresh("perfil");
+                app.refresh("timeline");
+
+                break;
+
+                case "tickets":
+
+                    sql.extractEventosFromDB(db)
+                        .then(function(array){
+
+                            for(var i=0;i<array.length;i++){
+
+                                var cloned = document.createElement("li");
+                                    cloned.setAttribute("class","event-class");
+                                    cloned.setAttribute("id","ticketID"+array[i].tikcet_id);
+                                    cloned.setAttribute("data-event_id", "eventID"+array[i].tikcet_id);
+                                    cloned.setAttribute("data-qr", array[i].qr);
+
+                                    
+
+                                var clonedTitulo = document.createElement("div");
+                                    clonedTitulo.innerHTML = array[i].name;
+                                    clonedTitulo.setAttribute("class","event-titulo");
+
+                                var clonedLocation = document.createElement("div");
+                                    clonedLocation.innerHTML = array[i].location_name;
+                                    clonedLocation.setAttribute("class","event-location");
+
+                                var clonedFecha = document.createElement("div");
+                                    clonedFecha.innerHTML = formatTime(array[i].event_ini,array[i].event_fin);
+                                    clonedFecha.setAttribute("class","event-fecha");
+
+                                var clonedPicture = document.createElement("div");
+                                    clonedPicture.setAttribute("class","event-picture");
+
+                                var clonedPrice = document.createElement("div");
+                                    clonedPrice.setAttribute("class","event-price");
+                                    
+                                    if(array[i].photo){
+
+                                        clonedPicture.style.backgroundImage = "url('data:image/png;base64,"+array[i].photo+"')";
+
+                                    } else{
+
+                                        clonedPicture.style.backgroundImage = "url('img/eventdefault.jpg')";
+
+                                    }
+
+                                document.querySelector("#scroller2")appendChild(cloned);
+
+                                return;
+                             }
+
+                        })
+
+                    break;
+
+
 
                 case "perfil": 
 
@@ -649,6 +712,7 @@ register: function(userObject){
                         //document.querySelector("#description").innerHTML+= " "+ result.+" .";
                         document.querySelector("#picture").src=user.photo;
                     })
+                break;
 
                 case "timeline":
 
@@ -1051,6 +1115,14 @@ appendBox: function(event){
 
             case 2:
                 payment.className= 'page transition totalright';
+                //Vaciamos el fromulario
+                payform.querySelector('input[name=cardholder-name]').value = "";
+                number: payform.querySelector('input[name=card-number]').value = "";
+                expMonth: payform.querySelector('input[name=card-expMonth]').value = "";
+                expYear: payform.querySelector('input[name=card-expYear]').value = ""; 
+                cvc: payform.querySelector('input[name=card-cvc]').value = "";
+
+                cf.className = "group";
 
             break;
 
@@ -1147,10 +1219,41 @@ newCustomer: function(nameEvent, price, ticketType){
     payform.onsubmit = function(event){
 
                         event.preventDefault();
+
+                        //Comprobamos si la exp date es válida
+                        var currentdate = new Date();
+                        var currentmonth = currentdate.getMonth();
+                          currentmonth = currentmonth + 1;
+                          currentyear = currentdate.getFullYear();
+
+                        var expyear = document.querySelector("#ccey");
+                        var expmonth = document.querySelector("#ccem");
+ 
+                          if (expyear.value > currentyear ) { valid[0] = true; }
+                          else if (expyear.value == currentyear) { 
+
+                              if (currentmonth < expmonth.value) { valid[0] = true; }
+                                else { valid[0] = false; }
+                          }
+                            else { valid[0] = false; }
+
+                        //Comprobamos si el numero de tarjeta es correcto
+                        var isValid = validate(document.querySelector("input[name=card-number]").value);
+                        if (isValid == 0) {
+                            valid[1] = false;
+                        } else { valid[1] = true; }
+
                         
                         var long = document.querySelector("input[name=card-number]").value.length;
 
                         if (long > 12 && valid[0] && valid[1] ){
+
+                            app.colorize(isValid);
+                            document.querySelector("div.outcome").innerHTML = "PROCESANDO PAGO"
+                            document.querySelector("div.outcome").innerHTML = "PROCESANDO PAGO."
+                            document.querySelector("div.outcome").innerHTML = "PROCESANDO PAGO.."
+                            document.querySelector("div.outcome").innerHTML = "PROCESANDO PAGO..."
+                            app.loading();
 
                                 cordova.plugins.stripe.setPublishableKey('pk_test_raKdshzefW2J3oP7Hk4LqJ8P')
 
@@ -1164,46 +1267,99 @@ newCustomer: function(nameEvent, price, ticketType){
                                     
                                 };
 
-                                cordova.plugins.stripe.createCardToken(card, function(tokenId){ alert("Token success: "+JSON.stringify(tokenId)); }, function(e){console.log(e);});
+                                cordova.plugins.stripe.createCardToken(card, 
+                                        //onSuccess
+                                        function(tokenId){ 
+
+                                            //alert("Token success: "+JSON.stringify(tokenId));
+
+                                            sql.extractUserFromDB(db)
+                                                .then( function(userObject){
 
 
-                        }  //else {  "El numero de tarjeta es demasiado corto"}
+                                                    var mode = "g";
+                                                    var cmd = "/customer/"+user+"/"+type+"/"+num_tickets+"/"+tokenId;
+                                                    var options = "auth";
+                                                    var body = " ";
+                                                    alert(cmd);
+                                                    
+                                                    return app.http(mode, cmd, body, options);
+                                                })
+                                                .then( function(response){
+
+                                                    if (response){
+
+                                                        document.querySelector("div.outcome").innerHTML = "COMPRA FINALIZADA";
+                                                        app.loading();
+
+                                                    }
+
+                                                    else { 
+
+                                                        document.querySelector("div.outcome").innerHTML = "ERROR DE COMPRA";
+                                                        alert("Ha habido un error durante el proceso de compra. Comprueba que la conexión es buena o inténtalo mas tarde. También puedes enviar un correo a nuestra dirección de email: prueba@tunait.com")
+                                                        app.loading();
+
+                                                     }
+
+                                                } )
+                                                .else(function(e){
+
+                                                    document.querySelector("div.outcome").innerHTML = "ERROR DE COMPRA";
+                                                    alert("ERROR: "+e.message+". No se ha completado el proceso de compra. Comprueba que la conexión es buena o inténtalo mas tarde. También puedes enviar un correo a nuestra dirección de email: prueba@tunait.com")
+                                                    app.loading();
+
+                                                })
+
+                                            
+
+
+                                        }, 
+                                        //onError
+                                        function(e){console.log(e);});
+
+
+                        }  else {   if ( !valid[0] ) { document.querySelector("div.outcome").innerHTML = "TARJETA CADUCADA"; }
+                                    else { document.querySelector("div.outcome").innerHTML = "NUM TARJETA INVÁLIDO"; }
+                                    valid = [false, false, false];
+                                    app.colorize();
+                         }
 
                     };
 
-    document.querySelector("input[name=card-number]").oninput = function(){ 
+    // document.querySelector("input[name=card-number]").oninput = function(){ 
 
-        var isValid = validate(this.value);
-            if (isValid == 0) {
-                valid[1] = false;
-            } else { valid[1] = true; }
+    //     var isValid = validate(this.value);
+    //         if (isValid == 0) {
+    //             valid[1] = false;
+    //         } else { valid[1] = true; }
 
-            app.colorize(isValid);
+    //         app.colorize(isValid);
 
-        }
+    //     }
 
-    document.querySelectorAll("input[name=card-expMonth] input[name=card-expYear]").oninput = function(){
+    // document.querySelectorAll("input[name=card-expMonth], input[name=card-expYear]").oninput = function(){
 
-                        //Comprobamos que esta bien la fecha de caducidad                      
-                        var currentdate = new Date();
-                        var currentmonth = currentdate.getMonth();
-                          currentmonth = currentmonth + 1;
-                          currentyear = currentdate.getFullYear();
+    //                     //Comprobamos que esta bien la fecha de caducidad                      
+    //                     var currentdate = new Date();
+    //                     var currentmonth = currentdate.getMonth();
+    //                       currentmonth = currentmonth + 1;
+    //                       currentyear = currentdate.getFullYear();
 
-                        var expyear = document.querySelector("#ccey");
-                        var expmonth = document.querySelector("#ccem");
+    //                     var expyear = document.querySelector("#ccey");
+    //                     var expmonth = document.querySelector("#ccem");
 
-                          if (expyear > currentyear ) { valid[0] = true; }
-                          else if (expyear == currentyear) { 
+    //                       if (expyear > currentyear ) { valid[0] = true; }
+    //                       else if (expyear == currentyear) { 
 
-                              if (currentmonth < expmonth) { valid[0] = true; }
-                                else { valid[0] = false; }
-                          }
-                            else { valid[0] = false; }
+    //                           if (currentmonth < expmonth) { valid[0] = true; }
+    //                             else { valid[0] = false; }
+    //                       }
+    //                         else { valid[0] = false; }
 
-                        app.colorize();
+    //                     app.colorize();
 
-    } 
+    // } 
 
     //Aqui se debe implementar el código que muestra la pantalla para introducir los datos de la tarjeta
     payment.className = 'page transition center';
