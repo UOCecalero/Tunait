@@ -133,6 +133,8 @@ var app = {
         
     },
 
+    /**************************** Inicilización de algunas variables locales *****************************/
+
 
     initialize: function() {
 
@@ -159,7 +161,7 @@ var app = {
 
         // Inicializamos variables
         // url = 'http://localhost:8000/';
-        url = 'http://192.168.1.4:60000/'
+        url = 'http://192.168.1.2:60000/'
         estado = "menuprincipal";
 
         
@@ -268,7 +270,7 @@ databaseSetup: function(){
 
     onFBFailure: function(error){
 
-            console.log('Login failed: ' + error + "\n"); 
+            console.log('Login failed: ' + error + "\n");
     },
 
 
@@ -326,12 +328,12 @@ databaseSetup: function(){
 
             landing.className= 'page center';
             
-            console.log("Este es usuario no existe en nuestro sistema \n");
+            console.log("Este usuario no existe en nuestro sistema \n");
 
             var requestPath = "me?fields=id,first_name,last_name,gender,picture.height(480),email,birthday";
 
                     //facebookConnectPlugin.api(String requestPath, Array permissions, Function success, Function failure)
-                    facebookConnectPlugin.api(requestPath,app.facebookPermissions,function(result){
+                    facebookConnectPlugin.api(requestPath, app.facebookPermissions,function(result){
 
 
                         app.newUser(result)
@@ -426,13 +428,14 @@ databaseSetup: function(){
                                     userObject.birthdate = result.birthday;
                                     userObject.job = null;
                                     userObject.studies = null;
-                                    userObject.ranking = null; //Aqui tiene que haber una función que extraiga el valor medio
+                                    //userObject.ranking = null; //Aqui tiene que haber una función que extraiga el valor medio
                                     userObject.aceptar = 0;
                                     userObject.rechazar = 0;
                                     userObject.saludar = 0;
                                     userObject.destacado_ini = null;
                                     userObject.destacado_fin = null;
-                                    userObject.location = null; //Función que ha de extraer la localización actual.
+                                    userObject.lat = null; //Función que ha de extraer la localización actual.
+                                    userObject.lng = null;
 
                                     //console.log(JSON.stringify(userObject));
                                     console.log(userObject);
@@ -691,7 +694,7 @@ register: function(userObject){
 
                                     }
 
-                                document.querySelector("#scroller2")appendChild(cloned);
+                                document.querySelector("#scroller2").appendChild(cloned);
 
                                 return;
                              }
