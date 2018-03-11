@@ -5,6 +5,8 @@
 
 //Declaración del objecto app
 var app = {
+
+    //Version buena
  
 
     //facebookPermissions: ["public_profile", "email", "user_friends", "user_birthday", "user_likes"],
@@ -12,36 +14,36 @@ var app = {
         
     /*************************************** Función Menu. Mueve las pantallas de la app **************************/
 
-    menu: function(opcion) {
+    // menu: function(opcion) {
             
-            // Si pulsamos en el botón de "menu" entramos en el if
-            if(opcion=="derecha"){
-                if(estado=="menuprincipal"){
-                    menuprincipal.className = "page transition right";
-                    settings.className= "page transition right";
-                    estado="menulateral";
+    //         // Si pulsamos en el botón de "menu" entramos en el if
+    //         if(opcion=="derecha"){
+    //             if(estado=="menuprincipal"){
+    //                 menuprincipal.className = "page transition right";
+    //                 settings.className= "page transition right";
+    //                 estado="menulateral";
 
-                    } else if(estado=="menulateral"){
-                    menuprincipal.className = "page transition center";
-                    settings.className = "page transition center";
-                    estado="menuprincipal";
-                    }
+    //                 } else if(estado=="menulateral"){
+    //                 menuprincipal.className = "page transition center";
+    //                 settings.className = "page transition center";
+    //                 estado="menuprincipal";
+    //                 }
                 
-            } else if(opcion=="izquierda"){
+    //         } else if(opcion=="izquierda"){
 
-                if(estado=="menuprincipal"){
-                    menuprincipal.className= "page transition left";
-                    menulateral.className ="page transition left";
-                    estado="settings"
+    //             if(estado=="menuprincipal"){
+    //                 menuprincipal.className= "page transition left";
+    //                 menulateral.className ="page transition left";
+    //                 estado="settings"
 
-                    } else if(estado=="settings"){
-                    menuprincipal.className ="page transition center";
-                    menulateral.className = "page transition center";
-                    estado="menuprincipal";
-                    }
+    //                 } else if(estado=="settings"){
+    //                 menuprincipal.className ="page transition center";
+    //                 menulateral.className = "page transition center";
+    //                 estado="menuprincipal";
+    //                 }
                 
-            }
-        },
+    //         }
+    //     },
 
 
       /*************************************** Función HttpRequest ***************************************/
@@ -139,38 +141,57 @@ var app = {
     initialize: function() {
 
         //Declaración de variables
-        menuprincipal = document.querySelector('#menu-principal');
-        menulateral = document.querySelector('#menu-lateral');
-        settings = document.querySelector('#settings');
+        //menuprincipal = document.querySelector('#timeline-eventos');
+        matriz = document.querySelector('#matriz');
+        //menulateral = document.querySelector('#menu-lateral');
+        //settings = document.querySelector('#settings');
         cargando = document.querySelector('#cargando');
         pie = document.querySelector('#pie');
         cuerpo = document.querySelector('#cuerpo');
-        loginbox = document.querySelector('#loginbox');
+        //loginbox = document.querySelector('#loginbox');
         landing = document.querySelector('#landing');
-        wrapper = document.querySelector('#wrapper');
-        scroller = document.querySelector('#scroller');
+        wrapper1 = document.querySelector('#wrapper1');
+        wrapper2 = document.querySelector('#wrapper2');
+        wrapper3 = document.querySelector('#wrapper3');
+        wrapper4 = document.querySelector('#wrapper4');
+        wrapper5 = document.querySelector('#wrapper5');
+        wrapper6 = document.querySelector('#wrapper6');
+        scroller1 = document.querySelector('#scroller1');
+        scroller2 = document.querySelector('#scroller2');
+        scroller3 = document.querySelector('#scroller3');
+        scroller4 = document.querySelector('#scroller4');
+        scroller5 = document.querySelector('#scroller5');
+        scroller6 = document.querySelector('#scroller6');
         template = document.querySelector('#template');
         eventpage = document.querySelector('#eventpage')
-        unordered = document.querySelector('#unordered');
-        payment = document.querySelector('#payment');
+        unordered = document.querySelectorAll('.unordered')
+        purchasebtn = document.querySelector("#pbtn");
+        pago = document.querySelector('#pago');
         ntickets = document.querySelector("#num-tickets");
         payform = document.querySelector('#card-form');
+        slidetop = document.querySelector('#topslider');
+        slideback = document.querySelector('#backslider');
+
 
     
 
 
         // Inicializamos variables
-        // url = 'http://localhost:8000/';
-        url = 'http://192.168.1.2:60000/'
+         // url = 'http://localhost:60000/';
+        url = 'http://192.168.1.4:60000/'
+        // url = 'http://10.222.248.22:60000/'
         estado = "menuprincipal";
+        matrizX = 1;
+        matrizY = 1;
 
         
 
         
         //Inicializamos la posición las pantallas
-        settings.className= 'page center';
-        menulateral.className= 'page center';
-        menuprincipal.className= 'page center';
+        //settings.className= 'page center';
+        //menulateral.className= 'page center';
+        matriz.className= 'matriz';
+        //menuprincipal.className= 'page center';
         landing.className= 'page totalleft';
         cargando.className= 'page totalleft';
         //Las pantallas adicionaes de tipo 'option' que se pintan encima de la pricipal se inicializan en el código html
@@ -196,19 +217,35 @@ var app = {
         console.log("Camera plugin working "+ JSON.stringify(navigator.camera));
         console.log("Geolocation plugin working "+ JSON.stringify(navigator.geolocation));
 
+    // addEventListenerList: function(list, event, fn) {
+
+    //         for (var i = 0, len = list.length; i < len; i++) {
+    //           list[i].addEventListener(event, fn, false);
+    //         }
+    //     }
+
         
 
         //Button listeners
-        document.querySelector('.btnder').addEventListener('click', function(){app.menu('izquierda');}, false);
-        document.querySelector('.btniz').addEventListener('click', function(){app.menu('derecha');}, false);
-        document.querySelector('#picture').addEventListener('click', app.openCamera,false );
-        document.querySelector("#menu1").addEventListener('click', function(){app.muestra('#pantalla1');});
-        document.querySelector("#menu2").addEventListener('click', function(){app.muestra('#pantalla2');});
-        document.querySelector("#menu3").addEventListener('click', app.launchWikitude, false);
-        //document.querySelector("#menu4").addEventListener('click', function(){app.setPurchase('prueba', 'prueba@gmail.com', 10); app.muestra('#pantalla3');});
+        //document.querySelector('.btnder').addEventListener('click', function(){app.menu('izquierda');}, false);
+        //document.querySelector('.btniz').addEventListener('click', function(){app.menu('derecha');}, false);
+        document.querySelector('#picture').addEventListener('click', app.openCamera('#picture'),false );
+
+        var elements1 = document.getElementsByClassName("menu1");
+        elements1 = addEventListenerList(elements1, 'click', function(){app.muestra(1,1);}); 
+       
+        var elements2 = document.getElementsByClassName("menu2");
+        elements2 = addEventListenerList(elements2, 'click', function(){app.muestra(1,2);}); 
+
+        var elements3 = document.getElementsByClassName("menu3");
+        elements3 = addEventListenerList(elements3, 'click', function(){app.setPurchase('prueba', 'prueba@gmail.com', 10); app.muestra(1,3);}); 
+
+        var elements4 = document.getElementsByClassName("menu4");
+        elements4 = addEventListenerList(elements4, 'click', function(){app.muestra(1,4);}); 
+        
         document.querySelector("#button1").addEventListener('click', app.geoLocalization, false);
         document.querySelector("#login-button").addEventListener('click', app.login, false);
-        document.querySelector("#pbtn").addEventListener("click",function(){app.newCustomer();});
+        // document.querySelector("#pbtn").addEventListener("click",function(){app.newCustomer();});
 
         //Hace el setup de la aplciación
         app.setup();
@@ -271,6 +308,7 @@ databaseSetup: function(){
     onFBFailure: function(error){
 
             console.log('Login failed: ' + error + "\n");
+            alert('Facebook login failed: ' + error );
     },
 
 
@@ -302,7 +340,7 @@ databaseSetup: function(){
                                 app.requestTokens(result.email, result.id)
                                     .then( function(tokens){ return sql.saveTokens( result.id, usersCounter, tokens, db); })
                                     .then( function(tokens){ return app.download( tokens, db); })
-                                    .then( function(option){ app.refresh(option); app.muestra("#pantalla0"); return; })
+                                    .then( function(option){ app.refresh(option); app.muestra(1,1); return; })
                                     
                                     .catch( function(e){ console.log(e); })
 
@@ -318,8 +356,8 @@ databaseSetup: function(){
 
                     })
 
-                ifok.then( function(token){ return app.download(token, db); }) //Devuelve una promesa que se pasa al then siguiente
-                    .then( function(option){ app.refresh(option); app.muestra("#pantalla0"); return; })
+                ifok.then( function(tokens){ return app.download(tokens, db); }) //Devuelve una promesa que se pasa al then siguiente
+                    .then( function(option){ app.refresh(option); app.muestra(0,0); return; })
                     .catch(function(e){ console.log(e);})
             }
 
@@ -346,7 +384,7 @@ databaseSetup: function(){
 
                                 .then(function([userObject, tokens]){ return sql.saveTokens(userObject.FBid, userObject.id, tokens, db) })
                                 .then(function(tokens){ return app.download(tokens, db) })
-                                .then( function(option){ app.refresh(option); app.muestra("#pantalla0"); return; })
+                                .then( function(option){ app.refresh(option); app.muestra(1,1); return; })
     
                             })
 
@@ -407,10 +445,11 @@ databaseSetup: function(){
 
                 console.log("Creating new user... ");
 
-                var datetime = new Date();
-                datetime.getSeconds();
-                datetime.getMinutes();
-                datetime.getHours();
+                // Permitir cambiar la fecha de creación externamente genera problemas de seguridad
+                // var datetime = new Date();
+                // datetime.getSeconds();
+                // datetime.getMinutes();
+                // datetime.getHours();
 
                 var userObject = new Object();
 
@@ -425,17 +464,19 @@ databaseSetup: function(){
                                     //userObject.created_at =  datetime;
                                     //userObject.updated_at = datetime;
                                     userObject.photo = result.picture.data.url;  //ATENCIÓN QUE ESTAMOS PASANDO LA URL 
-                                    userObject.birthdate = result.birthday;
+                                    //userObject.birthdate = result.birthday;
                                     userObject.job = null;
-                                    userObject.studies = null;
-                                    //userObject.ranking = null; //Aqui tiene que haber una función que extraiga el valor medio
-                                    userObject.aceptar = 0;
-                                    userObject.rechazar = 0;
-                                    userObject.saludar = 0;
+                                    userObject.studies = null; 
+                                    // userObject.aceptar = 0;
+                                    // userObject.rechazar = 0;
+                                    // userObject.saludar = 0;
                                     userObject.destacado_ini = null;
                                     userObject.destacado_fin = null;
                                     userObject.lat = null; //Función que ha de extraer la localización actual.
                                     userObject.lng = null;
+                                    if (result.gender == 'male') { userObject.genderpreference = 'female' } else { userObject.genderpreference = 'male' };
+                                    userObject.inagepreference = 18;
+                                    userObject.outagepreference = 99;
 
                                     //console.log(JSON.stringify(userObject));
                                     console.log(userObject);
@@ -540,7 +581,7 @@ register: function(userObject){
                     try{
 
                     //Vaciamos las tablas locales de la database
-                    app.setTimeline()
+                    app.setTimeline(userid)
                         .then(function(){return sql.delTablesDB(db);})
                         .then( function(){
                             
@@ -572,7 +613,7 @@ register: function(userObject){
 
                         })
                         
-                        .then( function(eventosObject){ return sql.addEventosToDB(eventosObject, db); })
+                        .then( function(eventosObject){ return sql.addEventosToDB(eventosObject,db); })
                         .then( function(resp){
 
                             //Bajamos los Matches (si hay)
@@ -582,15 +623,17 @@ register: function(userObject){
                         })
                             
                         .then( function(matchesObject){ return sql.addMatchesToDB(matchesObject, db); })
-                        .then(function(resp){
-                                        
-                            //Bajamos los Bloqueados (si hay)
-                            var cmd = "api/user/"+userid+"/bloqueado";
-                            return app.http(mode, cmd, body, options);
-
-                        })
                         
-                        .then( function(bloqueadosObject){ return sql.addBloqueadosToDB(bloqueadosObject, db); })
+                        //Almacenar los bloqueados no tiene sentido. Es un tema que hay que gestionar en el servidor
+                        // .then(function(resp){
+                                        
+                        //     //Bajamos los Bloqueados (si hay)
+                        //     var cmd = "api/user/"+userid+"/bloqueados";
+                        //     return app.http(mode, cmd, body, options);
+
+                        // })
+                        
+                        // .then( function(bloqueadosObject){ return sql.addBloqueadosToDB(bloqueadosObject, db); })
                         .then( function(resp){
 
                             //delete accessToken; el token se debe borrar al borrar la aplicación
@@ -647,61 +690,22 @@ register: function(userObject){
 
                 app.refresh("tickets");
                 app.refresh("perfil");
+                app.refresh("chat");
+                app.refresh("avisos");
                 app.refresh("timeline");
 
                 break;
 
                 case "tickets":
 
-                    sql.extractEventosFromDB(db)
-                        .then(function(array){
+                    sql.extractUserFromDB(db)
+                        .then(function(user){
 
-                            for(var i=0;i<array.length;i++){
-
-                                var cloned = document.createElement("li");
-                                    cloned.setAttribute("class","event-class");
-                                    cloned.setAttribute("id","ticketID"+array[i].tikcet_id);
-                                    cloned.setAttribute("data-event_id", "eventID"+array[i].tikcet_id);
-                                    cloned.setAttribute("data-qr", array[i].qr);
-
-                                    
-
-                                var clonedTitulo = document.createElement("div");
-                                    clonedTitulo.innerHTML = array[i].name;
-                                    clonedTitulo.setAttribute("class","event-titulo");
-
-                                var clonedLocation = document.createElement("div");
-                                    clonedLocation.innerHTML = array[i].location_name;
-                                    clonedLocation.setAttribute("class","event-location");
-
-                                var clonedFecha = document.createElement("div");
-                                    clonedFecha.innerHTML = formatTime(array[i].event_ini,array[i].event_fin);
-                                    clonedFecha.setAttribute("class","event-fecha");
-
-                                var clonedPicture = document.createElement("div");
-                                    clonedPicture.setAttribute("class","event-picture");
-
-                                var clonedPrice = document.createElement("div");
-                                    clonedPrice.setAttribute("class","event-price");
-                                    
-                                    if(array[i].photo){
-
-                                        clonedPicture.style.backgroundImage = "url('data:image/png;base64,"+array[i].photo+"')";
-
-                                    } else{
-
-                                        clonedPicture.style.backgroundImage = "url('img/eventdefault.jpg')";
-
-                                    }
-
-                                document.querySelector("#scroller2").appendChild(cloned);
-
-                                return;
-                             }
-
+                                app.setTickets(user);
                         })
+                        .catch(function(e){console.log("ERROR al recuperar los tickets: "+ e ); })
 
-                    break;
+                break;
 
 
 
@@ -715,6 +719,15 @@ register: function(userObject){
                         //document.querySelector("#description").innerHTML+= " "+ result.+" .";
                         document.querySelector("#picture").src=user.photo;
                     })
+                        .catch(function(e){console.log("ERROR al recuperar los datos de usuario: "+ e ); })
+                break;
+
+                case "chat":
+
+                break;
+
+                case "avisos":
+
                 break;
 
                 case "timeline":
@@ -764,41 +777,40 @@ register: function(userObject){
   
 /*************************************** Seteo del timeline  *********************************************************/
 
-setTimeline: function(){
+setTimeline: function(userid){
 
     return new Promise(function(resolve, reject){
 
         linesAdded = 0;
-        active = false;
+        active = false; //Esta variable sirve para saber si esta añadiendo lineas (ejecutando addLines). Mientras esta añadiendo no trata de añadir mas.
         
         
         
-        app.addLines(15)
+        app.addLines(userid,15)
             .then(function(){
-                wrapper.addEventListener('scroll', function(){
+                wrapper1.addEventListener('scroll', function(){
 
-                    var scrollTop = wrapper.scrollTop;
-                    var scrollerHeight = scroller.style.height;
-                    var wrapperHeight = wrapper.style.height;
+                    var scrollTop = wrapper1.scrollTop;
+                    var scroller1Height = scroller1.style.height;
+                    var wrapper1Height = wrapper1.style.height;
 
-                    if (active) return;
+                    //El active lo que hace es evitar que se intenten cargar mas lineas hasta que no haya terminado la operacion de caga
+                    if (active) { return; }
 
 
-                    //Si restamos al total del scroller, lo que ya hemos pasado (scrollTop) mas lo que estamos viendo (wrapperHeight)
+                    //Si restamos al total del scroller1, lo que ya hemos pasado (scrollTop) mas lo que estamos viendo (wrapper1Height)
                     //Y lo que sobra por debajo (el margen inferior) no es mayor de 100 (por poner una cifra prudencial en píxeles) hacemos:
 
-                    if ( scrollerHeight - wrapperHeight - scrollTop  < 500){
+                    if ( scroller1Height - wrapper1Height - scrollTop  < 500){
 
                         active = true;
-                        app.addLines(5)
+                        app.addLines(userid,5)
                             .then(function(){
                                 active = false;
                                 return;
                             })
-                            .catch(function(error){console.log(error);})
+                            .catch(function(error){ active = false; console.log(error);})
                     }
-
-                    //El active lo que hace es evitar que se intenten cargar mas lineas hasta que no haya terminado la operacion de caga
 
 
                 });
@@ -806,6 +818,7 @@ setTimeline: function(){
                 resolve();
 
             })
+            .catch(function(e){console.log("ERROR al cargar el timeline: "+ e ); })
 
         
 
@@ -814,7 +827,7 @@ setTimeline: function(){
 
 /*************************************** Añade x lineas al timeline  *********************************************************/
 
-addLines: function(toAdd){
+addLines: function(userid,toAdd){
 
     return new Promise(function(resolve,reject){
 
@@ -823,13 +836,14 @@ addLines: function(toAdd){
         for (var i=0;i<toAdd;i++) {
 
         linesAdded++;
+        var distance = 25;
 
         var promise = new Promise (function(resolve,reject){
 
 
 
             var call = new XMLHttpRequest;
-            call.open("GET", url+"/api/evento/"+linesAdded, true);
+            call.open("GET", url+"/api/user/"+userid+"/timeline/"+linesAdded+"/"+distance, true);
             call.setRequestHeader("Accept", "Application/json");
             call.setRequestHeader("Content-Type", "Application/json; charset=UTF-8");
             call.setRequestHeader("Authorization", "Bearer "+accessToken);
@@ -842,8 +856,12 @@ addLines: function(toAdd){
                                     if (call.status == 200){
 
                                     console.log('HTTP Response '+call.status+' '+call.statusText+' '+call.responseText+' \n');
+                                    if(call.responseText){
                                     app.appendBox(call.responseText);
-                                    resolve();
+                                    resolve(1);
+                                    return;
+                                    }
+                                    resolve(0);
                                     return;
 
                                     
@@ -852,15 +870,12 @@ addLines: function(toAdd){
 
 
                                         console.log('HTTP Error '+call.status+' '+call.statusText+' '+call.responseText+' \n'); 
-                                        resolve();
+                                        resolve(0);
                                         return;
 
                                     }
                             }   
                     }
-
-
-
 
                 //Se manda la petición del recurso a través del objeto req.
                 call.send();
@@ -895,6 +910,7 @@ addLines: function(toAdd){
 
 
 appendBox: function(event){
+
 
         event = JSON.parse(event);
 
@@ -963,37 +979,300 @@ appendBox: function(event){
             cloned.appendChild(clonedPrice);
             cloned.addEventListener("click", function(){ app.showEvent(this.id);})
 
-            document.querySelector('#scroller').appendChild(cloned);
+            document.querySelector('#scroller1').appendChild(cloned);
             return;     
 
 },
+/*************************************** Seteo de tickets ****************************************************/
 
+setTickets: function(user){
+
+    sql.extractEventosFromDB(db)
+        .then(function(array){
+
+
+            for (var i=0; i<array.length; i++){
+
+                var cloned = document.createElement("li");
+                    cloned.setAttribute("class","event-class");
+                    cloned.setAttribute("id","ticketID" + array[i].ticket_id);
+                    cloned.setAttribute("data-evento_id", "eventID"+array[i].evento_id);
+
+                    
+
+                var clonedTitulo = document.createElement("div");
+                    clonedTitulo.innerHTML = array[i].evento_nombre;
+                    
+                    clonedTitulo.setAttribute("class","event-titulo");
+
+                var clonedLocation = document.createElement("div");
+                    clonedLocation.innerHTML = array[i].location_name;
+                    
+                    clonedLocation.setAttribute("class","event-location");
+
+                var clonedFecha = document.createElement("div");
+                    var ftime = formatTime(array[i].event_ini, array[i].event_fin);
+                    clonedFecha.innerHTML = ftime;
+                    clonedFecha.setAttribute("class","event-fecha");
+
+                var clonedPicture = document.createElement("div");
+                    clonedPicture.setAttribute("class","event-picture");
+
+                var clonedPrice = document.createElement("div");
+                    clonedPrice.setAttribute("class","event-price");
+                    clonedPrice.setAttribute("value", array[i].price);
+                    
+                    if(array[i].photo){
+
+                        clonedPicture.style.backgroundImage = "url('data:image/png;base64,"+array[i].photo+"')";
+
+                    } else{
+
+                        clonedPicture.style.backgroundImage = "url('img/eventdefault.jpg')";
+
+                    }
+
+                var clonedAbutton = document.createElement("button");
+                    clonedAbutton.setAttribute("class","Abutton-class");
+                    clonedAbutton.innerHTML = "ENTRADA";
+                    clonedAbutton.setAttribute("data-evento_nombre", array[i].evento_nombre);
+                    clonedAbutton.setAttribute("data-location_name", array[i].location_name);
+                    clonedAbutton.setAttribute("data-ftime", ftime);
+                    clonedAbutton.setAttribute("data-lat", array[i].lat);
+                    clonedAbutton.setAttribute("data-lng", array[i].lng);
+                    clonedAbutton.setAttribute("data-ticket_type", array[i].type);
+                    clonedAbutton.setAttribute("data-description", array[i].description);
+                    clonedAbutton.setAttribute("data-precio", array[i].price);
+                    clonedAbutton.setAttribute("data-qr", array[i].qr);
+                    clonedAbutton.addEventListener("click", function(){ app.showQR( this.dataset.evento_nombre, this.dataset.location_name, this.dataset.ftime, this.dataset.lat, this.dataset.lng, this.dataset.ticket_type, this.dataset.description, this.dataset.precio, this.dataset.qr);})
+
+                var clonedBbutton = document.createElement("button");
+                    clonedBbutton.setAttribute("class","Bbutton-class");
+                    clonedBbutton.innerHTML = "MATCH";
+                    clonedBbutton.setAttribute("data-ticket_id",array[i].ticket_id);
+                    clonedBbutton.addEventListener("click", function(){ app.match(user.id, this.dataset.ticket_id); app.muestra(2,3); }) //Esta funcion llamará a /user/{user}/ticket/{ticket}/{position} por tanto necesita usuario, ticket, y posición.
+
+                    
+
+                    cloned.appendChild(clonedPicture);
+                    cloned.appendChild(clonedTitulo);
+                    cloned.appendChild(clonedLocation);
+                    cloned.appendChild(clonedFecha);
+                    // cloned.appendChild(clonedArtist);
+                    // cloned.appendChild(clonedDescription);
+                    // cloned.appendChild(clonedPosition);
+                    cloned.appendChild(clonedPrice);
+                    cloned.appendChild(clonedAbutton);
+                    cloned.appendChild(clonedBbutton);
+
+
+                document.querySelector("#scroller2").appendChild(cloned);
+
+                
+             } return;
+
+        })
+        .catch(function(e){console.log(e); alert("Error al cargar los tickets"); return; })
+},
+
+/*************************************** Entramos en el Ticket ****************************************************/
+
+    showQR: function(nombre, location, ftime, lat, lng, ticket_type, description, precio, qr){
+
+    // var event = document.getElementById(eventid);
+    // var clonedevent = event.cloneNode(true); //clona el nodo (true-> y sus nodos hijo [children])
+        
+
+    //Relleno de la página de ticket
+    document.querySelector("#ticket-data-name").innerHTML = nombre;
+    document.querySelector("#ticket-data-location").innerHTML = location;
+    document.querySelector("#ticket-data-date").innerHTML = ftime;
+
+    var ticketImagen = document.querySelector("#ticket-fix-map");
+        ticketImagen.src = "https://maps.googleapis.com/maps/api/staticmap?center="+lat+","+lng+"&zoom=13&size=400x150&markers=color:purple%7C"+lat+","+lng+"&key=AIzaSyA3o6URXiCtskFXGHIVWyPycpOi5snO5KE"
+    var ticketRutabtn = document.querySelector("#ticket-path-btn");
+    
+    //iOS
+        ticketRutabtn.href = "http://maps.apple.com/maps?saddr=Current%20Location&daddr="+lat+","+lng;
+    //android
+    //    ticket-ruta.btn.href="geo:"+lat+","+lng;
+
+        document.querySelector("#ticket-ticket_type").innerHTML = ticket_type ;
+        document.querySelector("#ticket-description").innerHTML = description ;
+        document.querySelector("#ticket-precio").innerHTML = precio+ " €" ;
+
+        //Método alternativo para incluir el QR: Creamos un div con el QR como innerHTML y luego copiamos todas sus propiedades
+        var div = document.createElement('div');
+        div.innerHTML = qr;
+        while (div.children.length > 0) {
+            document.querySelector("#ticket-qr").appendChild(div.children[0]);
+          }
+
+
+        
+
+    app.muestra(2,2);
+      
+    },
+
+/*************************************** Iniciamos el Matching ****************************************************/
+
+    match: function(userid, ticketid){
+
+        var mode = "g";
+        var cmd = "api/user/"+userid+"/ticket/"+ticketid;
+        var options = "auth"
+        var body = undefined;
+
+                app.http(mode, cmd, body, options)
+                    .then(function(collectResponse){
+                        var array = JSON.parse(collectResponse);
+
+                        slidetop.children[0].
+                        slidetop.children[1].innerHTML = collectResponse[0].name;
+                        var topage = getAge(collectResponse[0].birthdate);
+                        slidetop.children[2].innerHTML = collectResponse[0].topage;
+                        slidetop.children[3].onclick = function(){ app.next(1, userid, collectResponse[0].id, ticketid);}
+                        slidetop.children[4].onclick = function(){ app.next(0, userid, collectResponse[0].id, ticketid);}
+
+                        slideback.children[0].
+                        slideback.children[1].innerHTML = collectResponse[1].name;
+                        var backage = getAge(collectResponse[1].birthdate);
+                        slideback.children[2].innerHTML = collectResponse[1].backage;
+
+                        return;
+
+
+
+                    })
+                    .catch(function(e){console.log(e); return;})
+
+    
+    },
+
+/**************************** Función que evalúa en función de si hay o no usuarios **********************************/
+
+    next: function (aceptado, userid, user2id, ticketid){
+
+        // app.animación(aceptado);
+
+        var mode = "g";
+
+        var cmd = "/user/"+userid+"/ticket/"+ticketid+"/match/"+user2id+"/"+aceptado;
+        var options = "auth"
+        var body = undefined;
+
+        app.http(mode, cmd, body, options)
+
+            .then(function(){
+
+                app.match(userid,ticketid);
+                return resolve();
+
+            })
+            .catch(function(e){console.log(e); return reject();})
+
+    },
 
 
 /*************************************** Implementación de movimientos de las capas **********************************/
 
     //Esta función muestra opciones (DEL MENÚ DE LA IZQUIERDA) en la pantalla principal.
-    muestra: function(opcion){
+    // muestra: function(opcion){
 
 
-        var child = document.querySelector(opcion);
-        child.className = 'option page center';
+    //     var child = document.querySelector(opcion);
+    //     child.className = 'option page center';
 
-        //Si tiene un pantalla insertado lo quita
-        if (menuprincipal.getElementsByClassName('row cuerpo')[0].children.length){
+    //     //Si tiene un pantalla insertado lo quita
+    //     if (menuprincipal.getElementsByClassName('row cuerpo')[0].children.length){
             
-            var oldchild = menuprincipal.getElementsByClassName('row cuerpo')[0].firstChild;
+    //         var oldchild = menuprincipal.getElementsByClassName('row cuerpo')[0].firstChild;
 
-            document.body.appendChild(oldchild);
-            if (child != oldchild){
-            oldchild.className = "option page totalleft";
+    //         document.body.appendChild(oldchild);
+    //         if (child != oldchild){
+    //         oldchild.className = "option page totalleft";
+    //         }
+    //     }
+    //     menuprincipal.getElementsByClassName('row cuerpo')[0].appendChild(child);
+
+    //     //De momento solo esta pensado para botones del menu (no settings)
+    //     if(opcion === "#pantalla1" | opcion === "#pantalla2" | opcion === "#pantalla3" | opcion === "#pantalla4" )
+    //     { app.menu('derecha'); }
+
+    // },
+
+    muestra: function(x,y){
+
+        //Le pasamos el punto de abcisas y ordenadas sobre el plano "matriz" que queremos mostrar
+
+        //Primero calculamos si el movimiento de las ordenadas (x) es de 1 pantalla
+
+        
+
+            switch(y){
+
+                case 2: matriz.className = "matriz y2";
+                        matrizY = 2;
+                break;
+
+                case 3: matriz.className = "matriz y3";
+                        matrizY = 3;
+                break;
+
+                case 4: matriz.className = "matriz y4";
+                        matrizY = 4;
+                break;
+
+                default: matriz.className = "matriz";
+                        matrizY = 1;
+                break;
             }
-        }
-        menuprincipal.getElementsByClassName('row cuerpo')[0].appendChild(child);
+                var mov = matrizX - x;
 
-        //De momento solo esta pensado para botones del menu (no settings)
-        if(opcion === "#pantalla1" | opcion === "#pantalla2" | opcion === "#pantalla3" | opcion === "#pantalla4" )
-        { app.menu('derecha'); }
+                if (Math.abs(mov) === 1){
+
+                    matriz.className += " transition";
+
+                // switch(mov){
+
+                //     case 1: matriz.className += " transition";
+                //             // matrizX ++;
+                //     break;
+
+                //     case -1: matriz.className += " transition";
+                //             // matrizX --;
+                //     break;
+
+                // }
+            }
+
+            switch(x){
+ 
+                case 2: matriz.className += " x2";
+                        matrizX = 2;
+                break;
+
+                case 3: matriz.className += " x3";
+                        matrizX = 3;
+                break;
+
+                case 4: matriz.className += " x4";
+                        matrizX = 4;
+                break;
+
+                default: matrizX = 1;
+                        
+                break;
+
+
+            }
+
+
+        
+        
+
+        return;      
 
     },
 
@@ -1002,7 +1281,7 @@ appendBox: function(event){
     showEvent: function(eventid){
 
         var event = document.getElementById(eventid);
-        var clonedevent = event.cloneNode(true);
+        var clonedevent = event.cloneNode(true); //clona el nodo (true-> y sus nodos hijo [children])
         
         
 
@@ -1083,12 +1362,13 @@ appendBox: function(event){
                             
 
                                 
-                                //purchasebtn.addEventListener("click",function(){app.newCustomer(this.eventObj.nombre, userEmail, this.eventObj.price);})
+                                purchasebtn.addEventListener("click",function(){
+                                                                        app.muestra(3,1);
+                                                                        app.newCustomer(this.eventObj.nombre, userEmail, this.eventObj.price);
+                                                                    });
                                 
-                                eventpage.className= 'page transition center';
-
-
-                    unordered.appendChild(clonedevent);
+                    unordered[0].appendChild(clonedevent); 
+                    app.muestra(2,1);
 
                     })
                     .catch(function(error){
@@ -1106,18 +1386,18 @@ appendBox: function(event){
         switch(v){
 
             case 1:
-                var nested = unordered.children[0];
+                var nested = unordered[0].children[0];
                 nested.remove();
                 // var bloque = document.querySelector("#event-map");
                 // var imagen = bloque.children[0];
                 // imagen.remove();
 
-                eventpage.className= 'page transition totaldown';
+                app.muestra(1,1);
 
             break;
 
             case 2:
-                payment.className= 'page transition totalright';
+                app.muestra(2,1);
                 //Vaciamos el fromulario
                 payform.querySelector('input[name=cardholder-name]').value = "";
                 number: payform.querySelector('input[name=card-number]').value = "";
@@ -1129,9 +1409,14 @@ appendBox: function(event){
 
             break;
 
-        }
+            case 3:
+                //Eliminamos el qr que haya primero
+                document.querySelector("#ticket-qr").innerHTML= " ";
+                app.muestra(1,2);
 
-        
+            break
+
+        }    
 
     },
 
@@ -1293,7 +1578,9 @@ newCustomer: function(nameEvent, price, ticketType){
                                                     if (response){
 
                                                         document.querySelector("div.outcome").innerHTML = "COMPRA FINALIZADA";
+                                                        app.muestra(1,1);
                                                         app.loading();
+                                                        
 
                                                     }
 
@@ -1365,7 +1652,7 @@ newCustomer: function(nameEvent, price, ticketType){
     // } 
 
     //Aqui se debe implementar el código que muestra la pantalla para introducir los datos de la tarjeta
-    payment.className = 'page transition center';
+    
 
 },
 
@@ -1451,36 +1738,94 @@ colorize: function(type){
 
 /************************************* Set up y settings de el plugin de la cámara ************************************/
 
-    setOptions: function(srcType) {
+    // setOptions: function(qual,destType, srcType) {
     
-    var options = {
-            // Some common settings are 20, 50, and 100
-            quality: 50,
-            destinationType: Camera.DestinationType.FILE_URI,
-            // In this app, dynamically set the picture source, Camera or photo gallery
-            sourceType: srcType,
-            encodingType: Camera.EncodingType.JPEG,
-            mediaType: Camera.MediaType.PICTURE,
-            allowEdit: true,
-            correctOrientation: true  //Corrects Android orientation quirks
-        }
-        return options;
-    },
+    // var options = {
+    //         // Some common settings are 20, 50, and 100
+    //         quality: qual,
+    //         destinationType: Camera.DestinationType.DATA_URL,
+    //         // In this app, dynamically set the picture source, Camera or photo gallery
+    //         sourceType: srcType,
+    //         encodingType: Camera.EncodingType.JPEG,
+    //         mediaType: Camera.MediaType.PICTURE,
+    //         allowEdit: true,
+    //         correctOrientation: true  //Corrects Android orientation quirks
+    //     }
+    //     return options;
+    // },
 
     openCamera: function(selection) {
 
+        //Se seleccionan unas opciones o otras en función del evento que lo dispare
+        switch(selection){
+            case '#picture':
+
+            var options = {
+
+                // Some common settings are 20, 50, and 100
+                quality: qual,
+                destinationType: Camera.DestinationType.FILE_URI,
+                sourceType: Camera.PictureSourceType.CAMERA,
+                encodingType: Camera.EncodingType.JPEG,
+                mediaType: Camera.MediaType.PICTURE,
+                allowEdit: true,
+                correctOrientation: true,  //Corrects Android orientation quirks
+                cameraDirection: FRONT
+
+            }    
+
+            break;
+            case '#albumButton':
+            var options = {
+
+                // Some common settings are 20, 50, and 100
+                quality: qual,
+                destinationType: Camera.DestinationType.FILE_URI,
+                sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                mediaType: Camera.MediaType.PICTURE,
+            }
+
+            break;
+
+        }
+
         console.log(selection.button);
 
-        var srcType = Camera.PictureSourceType.CAMERA;
-        var options = app.setOptions(srcType);
+        //var options = app.setOptions(srcType);
 
-        navigator.camera.getPicture(function cameraSuccess(imageUri) {
+        navigator.camera.getPicture(function cameraSuccess(imageURL) {
 
             console.log('Photolibrary Sucess');
-            document.querySelector('#pantalla1').getElementsByTagName('img')[0].src = imageUri;
+            //document.querySelector('#pantalla1').getElementsByTagName('img')[0].src = imageURL;
+            var options = new FileUploadOptions();
+            options.fileKey = "picture";
+            //options.fileName = fileURL.substr(imageURL.lastIndexOf('/') + 1);
+
+            // var params = {};
+            // params.user = userid;
+            // params.aut = "param";
+
+            options.params = params;
+
+            var headers = {
+
+                "Authorization" : "Bearer "+accessToken
+            }
+
+            options.headers = headers;
+
+            var ft = new FileTransfer();
+            ft.upload(imageURL, encodeURI( url+"/api/upload/"+userid), 
+                function uploadSuccess(objResponse){
+                    console.log('Image UPLOADED. '+objResponse.bytesSent+' bytes. Response: '+objResponse.responseCode+' : '+objResponse.response+'.' );
+                    app.refresh('perfil');
+                },
+                function uploadError(error){
+                    alert('Error al subir la imagen. Intenta de nuevo')
+                }, options);
 
         }, function cameraError(error) {
-            console.log("Unable to obtain picture: " + error, "app");
+            console.log("No se ha podido capturar la imagen: " + error, "app");
 
         }, options);
     },

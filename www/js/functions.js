@@ -1,6 +1,15 @@
 /*  Declaración de funciones
  */
 
+ function addEventListenerList(list, event, fn) {
+
+    for (var i = 0, len = list.length; i < len; i++) {
+      list[i].addEventListener(event, fn, false);
+    } 
+
+    return list;
+}
+
 function toSingle(digit){
                   if(digit > 9){
                       var tmp = digit.toString();
@@ -143,6 +152,17 @@ function t2d(timestamp){
         return new Date(parts[0],parts[1]-1,parts[2],parts[3],parts[4],parts[5]);
 
     }
+
+function getAge(birthdate){
+
+  var today = Date.now();
+  var dob = new Date(birthdate.replace(/(\d{2})-(\d{2})-(\d{4})/, "$3/$1/$2"));
+  var age = today.getFullYear() - birthdate.getFullYear(); 
+
+  return age;
+
+
+}
 
 
 
