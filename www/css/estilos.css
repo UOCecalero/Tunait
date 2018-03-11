@@ -14,28 +14,75 @@
 body {
 	font-family:'HelveticaNeue-Light', 'HelveticaNeue', Helvetica, Arial, sans-serif;
 	height:100%;
-   width:100%;
+  width:100%;
 	position: fixed;
-    margin: 0;
-    padding: 0;
-    font-size: 2.5em;
+  margin: 0;
+  padding: 0;
+  font-size: 2.5em;
 
     
 
 }
 
+/** Buttons **/
+
+img.icon{
+
+    width: 25px; /*or your image's width*/
+    height: 25px; /*or your image's height*/
+    margin: 0;
+    padding: 0;
+    position: absolute;
+
+    z-index: 10;
 
 
-#menu-principal, #eventpage, #payment {
+}
+
+/* Linea sobre los iconos del menu */
+
+#timeline-eventos div.menu1, #timeline-tickets div.menu2, #timeline-chat div.menu3, #timeline-avisos div.menu4 { background-color: blue; }
+
+img.cross{
+
+    right: 20px;
+    top: 10px;
+    /*z-index: 1;*/
+
+}
+
+img.back{ 
+
+    left: 20px;
+    top: 10px;
+    /*z-index: 1;*/
+
+}
+
+
+
+
+/* #timeline-eventos{
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    -webkit-transform: translate3d(0, 0, 0); 
+    transform: translate3d(0, 0, 0); 
+    } */
+
+
+ #evento, #pago {
 	background-color: #e8e9e7;
    
 	}
 
- .row.cuerpo{
+/*  .row.cuerpo{
 
     background-color:  whitesmoke;
     border-bottom: 1px solid grey;
- }
+ } */
 
 
 #menu-lateral, #settings, #landing {
@@ -46,9 +93,7 @@ body {
     
     border-bottom: 1px solid grey;
 }
-#event-map{
-  height: 150px;
-}
+
 
 
 
@@ -56,7 +101,7 @@ body {
 
 /* Barra superior principal */
 
-#settings{
+/* #settings{
     padding-left: 20%;
 }
 
@@ -64,41 +109,61 @@ body {
     padding: 0;
     margin:  0;
     text-align: center;
+} */
+
+.titulo{
+
+  margin-left: 0;
+  margin-right: 0;
+
+
 }
 
-#title>h1{
+.title{
+  position: absolute;
+  width: 100%;
+  /* height: 10%; */
+  background-color: blue;
+  z-index: 3;
+}
+
+.title>h1{
     margin-top: 0;
     text-align: center;
     color: #000f;
 
 }
 
-/* Estilo de capa central */
-
-.classplano.center {
-    -webkit-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-}
-
-/* Estilo de capa derecha */
-
-.classplano.right {
-    -webkit-transform: translate3d(200%, 0, 0);
-    transform: translate3d(200%, 0, 0);
-}
 
     
-#pie{
+.pie{
     display: block;
     position: absolute;
-    z-index : 10;
-    border-top:1px solid #0000;
     width:100%;
-    height: 100%;
+    height: 5%;
     top: 95%;
     background-color: white;
     border-top: 1px solid grey;
+    margin-left: 0;
+    margin-right: 0;
+    z-index: 3;
     }
+
+div.pie>div{
+  padding-top: 2px;
+  padding-left: 10%;
+
+  width: 25%;
+
+}
+
+div.pie>div>img{
+
+  width: 25%;
+  /* margin-top: ;
+  margin-left: ; */
+
+}
 
 
 #cargando {
@@ -113,22 +178,29 @@ body {
     left: 45%;
     }
 
-/* Pantalla 0 (Timeline) */
+/* Timelines */
 
-#wrapper {
+#wrapper1, #wrapper2, #wrapper3, #wrapper4, #wrapper5 {
     position: absolute;
     height: 100%;
     overflow-y: scroll;
     overflow-x: hidden;
+    margin-left: 4%;
+    margin-right: 4%;
+    padding-top: 15%;
+    z-index: 1;
 
     -webkit-overflow-scrolling: touch;
 }
 
-#scroller, #unordered{
+#scroller1, #scroller2, #scroller3, #scroller4, #scroller5, .unordered{
 
     list-style: none;
     padding:  0;
+    z-index: 2;
 }
+
+/*** Clases del timeline de eventos ***/
 
 .event-class{
     
@@ -181,49 +253,27 @@ body {
     font-size: 0.8em;
 }
 
+.event-price{
+    position: relative;
+    top: -200px;
+    left: 30px;
+    height: 1.2em;
+    font-size: 2em;
 
-/* Pantalla1 */ 
-
-#pantalla0, #pantalla1, #pantalla2, #pantalla3, #pantalla4{
-    text-align: center;
 }
+
+
+/* Pantalla perfil */ 
+
 
 #picture{
     width: 160px;
     height: 160px;
 }
 
-/* Pantalla2 */
+/* Pantalla de evento */
 
-#map {
-
-      width: 90%;
-      height: 400px;
-      margin: auto;
-      margin-top: 5%;
-    }
-
-/* Pantalla2 */
-
-
-#wrapper2 {
-    position: absolute;
-    height: 100%;
-    overflow-y: scroll;
-    overflow-x: hidden;
-
-    -webkit-overflow-scrolling: touch;
-}
-
-#scroller2{
-
-    list-style: none;
-    padding:  0;
-}
-
-/* Capa de evento eventpage */
-
-#eventpage>div.container{
+#evento>div.container{
     height: 100%;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -231,17 +281,6 @@ body {
     -webkit-overflow-scrolling: touch;
 }
 
-img.cross{
-    width: 30px; /*or your image's width*/
-    height: 30px; /*or your image's height*/
-    margin: 0;
-    padding: 0;
-    position: absolute;
-    right: 20px;
-    top: 10px;
-    z-index: 1;
-
-}
 
 .etitle{
 
@@ -275,27 +314,11 @@ img.cross{
 
 
 }
-.emap { height: 100px; }
+.emap { height: 150px; }
+
 .eticket {  }
 
 /* Capa payment: datos de cobro y tarjeta */
-
-#payment img{
-
-    width: 30px; /*or your image's width*/
-    height: 30px; /*or your image's height*/
-    margin: 0;
-    padding: 0;
-
-}
-
-img.back{ 
-    position: absolute;
-    left: 20px;
-    top: 10px;
-    z-index: 1;
-
-}
 
 #desglose{
 
@@ -435,25 +458,184 @@ button.pbutton:active {
 }
 
 
-	
-/* Estilo de capa general */ 
+/* Pantalla de ticket y QR */
 
-.page { 
+button.Abutton-class{
 
-position: absolute; 
-top: 0; 
-left: 0; 
-width: 100%; 
-height: 100%;
+  position: relative;
+  top: -56%;
+  left: 5%;
+  display: block;
+  background: #1465e8;
+  color: white;
+  /* box-shadow: 0 7px 14px 0 rgba(49, 49, 93, 0.10), 0 3px 6px 0 rgba(0, 0, 0, 0.08); */
+  border-radius: 20px;
+  border: 0;
+  font-size: 15px;
+  font-weight: 400;
+  width: 40%;
+  height: 40px;
+  line-height: 38px;
+  outline: none;
+  z-index: 10;
 
--webkit-transform: translate3d(0, 0, 0); 
-transform: translate3d(0, 0, 0); 
-} 
+}
 
-.option{
-    top: 10%;
+button.Bbutton-class{
+
+  position: relative;
+  top: -73%;
+  left: 50%;
+  display: block;
+  background: #e81d33;
+  color: white;
+  /* box-shadow: 0 7px 14px 0 rgba(49, 49, 93, 0.10), 0 3px 6px 0 rgba(0, 0, 0, 0.08); */
+  border-radius: 20px;
+  border: 0;
+  font-size: 15px;
+  font-weight: 400;
+  width: 40%;
+  height: 40px;
+  line-height: 38px;
+  outline: none;
+  z-index: 10;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Estilo de celda de a matriz de pantallas */
+
+.pantalla{
+
+    position: absolute;
+    display: block;
+    width:25%;
+    height: 25%;
+    background-color: whitesmoke;
+    /* padding-top: 3%; Este valor debe ser igual al grosor del título del marco */
+    
    
 }
+
+.pantalla.x1 { left: 0; }
+.pantalla.x2 { left:  25%; }
+.pantalla.x3 { left:  50%; }
+.pantalla.x4 { left:  75%; }
+.pantalla.y1 { top:  0; }
+.pantalla.y2 { top: -25%; }
+.pantalla.y3 { top: -50%; }
+.pantalla.y4 { top: -75%; }
+
+
+	
+/* Estilo para la matriz de pantallas */ 
+
+.matriz{
+    display: block;
+    position: absolute;
+    width:400%;
+    height: 400%;
+    top: 0;
+    left: 0;
+    background-color: white;
+
+    -webkit-transform: translate3d(0, 0, 0); 
+    transform: translate3d(0, 0, 0); 
+    }
+
+
+
+/* Estilo de capa x2 */
+
+.matriz.derecha1X {
+-webkit-transform: translate3d(-25%, 0, 0); 
+transform: translate3d(-25%, 0, 0); 
+} 
+
+/* Estilo de capa x3 */ 
+
+.matriz.izquierda1X { 
+-webkit-transform: translate3d(25%, 0, 0); 
+transform: translate3d(25%, 0, 0); 
+}
+
+.matriz.x2 {
+-webkit-transform: translate3d(-25%, 0, 0); 
+transform: translate3d(-25%, 0, 0); 
+} 
+
+/* Estilo de capa x3 */ 
+
+.matriz.x3 { 
+-webkit-transform: translate3d(-50%, 0, 0); 
+transform: translate3d(-50%, 0, 0); 
+}
+
+/* Estilo de capa x4 */ 
+
+.matriz.x4 { 
+-webkit-transform: translate3d(-75%, 0, 0); 
+transform: translate3d(-75%, 0, 0); 
+} 
+
+/* Estilo de capa y2 */ 
+
+.matriz.y2 { 
+/* -webkit-transform: translate3d(0, 25%, 0); 
+transform: translate3d(0, 25%, 0); */ 
+top: 100%;
+}
+
+
+/* Estilo de capa y3 */ 
+
+.matriz.y3 { 
+/* -webkit-transform: translate3d(0, 50%, 0); 
+transform: translate3d(0, 50%, 0); */
+top:  200%;
+}
+
+/* Estilo de capa y4 */ 
+
+.matriz.y4 { 
+/* -webkit-transform: translate3d(0, 75%, 0); 
+transform: translate3d(0, 75%, 0);  */
+top: 300%;
+}
+
+
+
+/* Estilo de animación general */
+
+.matriz.transition { 
+-webkit-transition-duration: .30s; 
+transition-duration: .30s; 
+}
+
+
+
+/* Clases de pantalla completa */
+
+.page{
+    display: block;
+    position: absolute;
+    width:400%;
+    height: 400%;
+    top: 0;
+    left: 0;
+
+    -webkit-transform: translate3d(0, 0, 0); 
+    transform: translate3d(0, 0, 0); 
+    }
 
 /* Estilo de capa izquierda */
 
@@ -475,9 +657,6 @@ transform: translate3d(0, 0, 0);
 -webkit-transform: translate3d(80%, 0, 0); 
 transform: translate3d(80%, 0, 0); 
 } 
-
-
-/* He creado nuevas clases para poder mover capas de forma total y no parcial, es decir se desplazan 100%. Lo usaremos con cargando */
 
 /* Estilo de capa totalmente a la izquierda */
 

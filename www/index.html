@@ -28,7 +28,7 @@
          <link rel="stylesheet" type="text/css" href="css/index.css" />
          -->
          <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" PUTA VIDA href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
         <link rel="stylesheet" type="text/css" href="css/estilos.css" />
         <!--<link rel="stylesheet" type="text/css" href="css/overrides.css" /> -->
@@ -36,108 +36,479 @@
     </head>
         <body>  
 
-        <!-- ************ Settings *********************** -->
 
-        <div id="settings">
-            <div class="container">
-                <div class="row titulo"></div>
-                    <div class="col-xs-12">
-                        <H1>SETTINGS</H1>
-                    </div>
-                <div class="row cuerpo"></div>
-                    <div class="col-xs-12">
-                        <p> Setting 1</p>
-                    </div>
-                    <div class="col-xs-12">
-                        <p>Setting 2</p>
-                    </div>
-                <div class="row pie"></div>
-            </div>
-        </div>
+        <!-- ****** Pantalla Matriz de pantallas ******************* -->
 
+        <div id="matriz">
 
-        <!-- *********** Menú Lateral ******************** -->
+            <!-- ****** Pantalla0 Timeline eventos ****************** -->
 
-        <div id="menu-lateral">
-            <div class="container">
-                <div class="row titulo">
-                    <dic class="col-xs-12">
-                        <h1>MENÚ</h1>
-                    </dic>
-                </div>
-                <div class="row cuerpo">
-                    <div class="col-xs-12" id="menu1"> 
-                        <p>Perfil </p>
-                    </div>
-                    <div class="col-xs-12" id="menu2"> 
-                        <p>Posición</p>
-                    </div>
-                    <div class="col-xs-12" id="menu3"> 
-                        <p>Realidad aumentada</p> 
-                    </div>
-                    <div class="col-xs-12" id="menu4"> 
-                        <p>Compra</p> 
-                    </div>
-                    <div class="col-xs-12" id="menu5"> 
-                        <p>Opción 5</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- ****** Pantalla principal ******************* -->
-
-        <div id="menu-principal">
-            <div class="container">
-                <div class="row titulo"></div>
-                    <div id="btiz" class="col-xs-2">
+            <div id="timeline-eventos" class="pantalla x1 y1">
+            <!-- <div class="container"> -->
+                <div class=" titulo">
+                    <!-- <div id="btiz" class="col-xs-2">
                         <img class="btniz" src="img/menu-1.svg"  alt="menubtn" height="30" width="30">
-                    </div>
-                    <div id="title" class="col-xs-8">
+                    </div> -->
+                    <div class="title col-xs-8">
                         <h1>Tunait</h1>
                     </div>
-                    <div id="btdr" class="col-xs-2">
+                    <!-- <div id="btdr" class="col-xs-2">
                         <img class="btnder" src="img/settings-5.svg"  alt="settingsbtn" height="30" width="30">
+                    </div> -->
+                </div>
+                <div class="row cuerpo">
+                                
+                    <div id="calendar" class="col-xs-12">
+                                    
                     </div>
-                <div class="row cuerpo"></div>
+
+                    <div id=wrapper1 class="col-xs-12"> 
+                                    
+                        <ul id="scroller1">
+                                            
+                                        
+                        </ul>
+
+                    </div>
+                                
+                </div>
 
 
-
-                <div class="row" id="pie">
+                <div class="row pie">
+                    <div class="menu1 col-xs-2">
+                        <img class="icon menu-button" src="img/worldwide.svg" >
+                    </div>
+                    <div class="menu2 col-xs-2">
+                        <img class="icon menu-button" src="img/ticket.svg">
+                    </div>
+                    <div class="menu3 col-xs-2">
+                        <img class="icon menu-button" src="img/paper-plane.svg">
+                    </div>
+                    <div class="menu4 col-xs-2">
+                        <img class="icon menu-button" src="img/alarm.svg">
+                    </div>
 
                     
                 </div>
-            </div>
-        </div>
-
-        <!-- ****** Pantalla0 Timeline eventos +++++++++******************* -->
+            </div> 
         
-        <div class="option page totalleft" id="pantalla0">
         
-            <div class="container">
-                <div class="row">
+            
+            <!-- ****************************************************** -->
 
-                    <div id="calendar" class="col-xs-12">
-                        
+            <!-- ************** Event Page +++++++++******************* -->
+        
+            
+        
+            <div id="evento" class="pantalla x2 y1">
+                <div class="container">
+                    <div class="row">
+                        <img class="icon back" src="img/left-arrow.svg" onclick="app.hideWindow(1);">
+                        </img>
+                        <div class="col-xs-12">
+                            <ul class="unordered"></ul>
+                        </div>
+                        <div class="col-xs-12 etitle" id="event-data-name"> </div>
+                        <div class="col-xs-12 elocation" id="event-data-location"> </div>    
+                        <div class="col-xs-12 edate" id="event-data-date"> </div>
+                        <div class="col-xs-12 eartist" id="event-artist" > </div> 
+                        <div class="col-xs-12 emusic" id="event-music"> </div>
+                        <div class="col-xs-12 edescription"> <p id="event-description"> </p> </div>
+                        <div class="col-xs-12 emap" id="event-map"><a id="path-btn" href="*"><img id="fix-map" src="" alt="Google map"></a>  </div>
+                        <p>Pulsa el mapa para ver la ruta</p>
+                        <div class="col-xs-12 eticket" id="event-ticket"> </div>
+                        <div class="col-xs-12 buy">
+                           <button type="button" class="pbutton" id="pbtn">Compra</button>
+                        </div>
                     </div>
-                    <div id=wrapper class="col-xs-12"> 
+
+                </div>
+            </div>
+
+            <!-- ************************************************************ -->
+
+            <!-- ************** Payment window ********************************** -->
+            
+            <div id="pago" class="pantalla x3 y1">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xs-12 up-margin" >
+                        <img class="icon cross" src="img/cancel.svg" onclick="app.hideWindow(2);"> </img>
+                                
+                        </div>
+                        <div class="col-xs-12">
+
+                            <div class="container">
+
+                                <div class="row" id="ticket-description">
+                                    
+                                    <div class="col-xs-12 etitle"></div>
+                                    <div class="col-xs-12 edescription"></div>
+                                
+                                </div>
+
+                                <div class="row group" id="desglose">
+
+
+                                    <div class="col-xs-12 etitle"> <span> Precio : </span> <span id="price"> </span> </div>
+                                    <div class="col-xs-12 edescription"> <span> Gastos de gestion : </span> <span id="gastos"> </span></div>
+                                    <div class="col-xs-12 style='font-size: 1.2em; font-weight: bold;'"> <span>TOTAL :</span> <span id="total-price"></span></div>
+
+                                </div>
+                                <div class="col-xs-12">
+                                    <span> Entradas: </span>
+                                    <img src="img/minus.svg" class="icon" id="minus" > </img><input type="number" min="1" max="10" value="1" id="num-tickets"> </input><img src="img/plus.svg" class="icon" id="plus" > </img>
+                                </div>
+
+                            </div>
+
+                        </div>
                         
-                            <ul id="scroller">
+                        <div class="col-xs-12">
+
+                            <form id="card-form" action="#">
+                                
+                                    <div class="group">
+
+                                        <label>
+                                          <span>Nombre</span>
+                                          <input name="cardholder-name" class="field"  placeholder="Titular de la tarjeta" required/>
+                                        </label>
+                                        
+                                        <label>
+                                        <span>Card</span>
+                                            <!-- <div id="card-element" class="field"> -->
+                                                <input type="text" name="card-number"  class="field" placeholder="Card number" autocomplete="cc-number" minlength="13" maxlength="16" required />
+                                            <!-- </div> -->
+                                        </label>
+                                        
+                                        <label>
+                                        <div style="position:relative; left:100px; ">
+                                            <span class="expdate" style="width:170px">
+                                                
+                                                <input type="text" name="card-expMonth" class="field" placeholder="MM" minlength="2" maxlength="2" min="1" max="12" autocomplete=cc-exp-month id="ccem" required >
+                                            
+                                                <input type="text" name="card-expYear" class="field" placeholder="YYYY" minlength="4" maxlength="4" min=2017 max="2117" autocomplete="cc-exp-year" id="ccey" required />
+                                                
+                                            </span>
+                                            
+                                            <input type="text" name="card-cvc" class="field" placeholder="CVC" minlength="3" maxlength="3" autocomplete="cc-csc" id="cccsc" required />
+                                        </div>
+                                        </label>
+
+                                    </div>
+
+                                    <div class="outcome">
+                                        <div class="error" role="alert"></div>
+                                        <div class="success">
+                                        Success! Your Stripe token is <span class="token"></span>
+                                        </div>
+                                    </div>
+
+                                    <button class="pbutton" type="submit">Pagar</button>
+
+                            </form>
+
+                            <!-- <div class="down-button">
+                                
+                            </div> -->
                                 
                             
-                            </ul>   
+                        </div>
                     </div>
-                    
-                    
                 </div>
             </div>
+
+            <!-- ****** Pantalla Tickets ****************************** -->
+
+            <div id="timeline-tickets" class="pantalla y2 x1">
+            <!-- <div class="container"> -->
+                <div class=" titulo">
+                    <!-- <div id="btiz" class="col-xs-2">
+                        <img class="btniz" src="img/menu-1.svg"  alt="menubtn" height="30" width="30">
+                    </div> -->
+                    <div class="title col-xs-8">
+                        <h1>Tunait</h1>
+                    </div>
+                    <!-- <div id="btdr" class="col-xs-2">
+                        <img class="btnder" src="img/settings-5.svg"  alt="settingsbtn" height="30" width="30">
+                    </div> -->
+
+                    </div>
+                    
+                    <div class="row cuerpo">
+
+                        <div class="container">
+                        <div class="row">
+                                    
+                                <div id=wrapper2 class="col-xs-12"> 
+                                    
+                                        <ul id="scroller2">
+                                            
+                                        
+                                        </ul>   
+                                </div>
+                            
+                            </div>
+                        </div>
+                    </div>
+
+
+                <div class="row pie">
+                    <div class="menu1 col-xs-2">
+                        <img class="icon menu-button" src="img/worldwide.svg" >
+                    </div>
+                    <div class="menu2 col-xs-2">
+                        <img class="icon menu-button" src="img/ticket.svg">
+                    </div>
+                    <div class="menu3 col-xs-2">
+                        <img class="icon menu-button" src="img/paper-plane.svg">
+                    </div>
+                    <div class="menu4 col-xs-2">
+                        <img class="icon menu-button" src="img/alarm.svg">
+                    </div>
+
+                    
+                </div>
+            
         </div>
+
+                
+
+            <!-- ****************************************************** -->
+
+            <!-- ****** Pantalla Ticket ******************************* -->
+
+            <div id="ticket" class="pantalla y2 x2" >
+                <div class="container">
+                    <div class="row">
+                                
+                            <div id=wrapper3 class="col-xs-12"> 
+                                
+                                    <div id="scroller3" class="container">
+                                        <!-- <div class="container"> -->
+
+                                                <div class="row">
+                                                    <img class="icon back" src="img/left-arrow.svg" onclick="app.hideWindow(3);">
+                                                    </img>
+                                                    <!-- <div class="col-xs-12">
+                                                        <ul class="unordered"></ul>
+                                                    </div> -->
+                                                    <div class="col-xs-12 etitle" id="ticket-data-name"> </div>
+                                                    <div class="col-xs-12 elocation" id="ticket-data-location"> </div>    
+                                                    <div class="col-xs-12 edate" id="ticket-data-date"> </div>
+                                                    <!-- <div class="col-xs-12 eartist" id="ticket-artist" > </div>  -->
+                                                    <!-- <div class="col-xs-12 emusic" id="ticket-music"> </div> -->
+                                                    <div class="col-xs-12 emap" id="ticket-map"><a id="ticket-path-btn" href="*"><img id="ticket-fix-map" src="" alt="Google map"></a>  </div>
+                                                    <p>Pulsa el mapa para ver la ruta</p>
+                                                    <div class="col-xs-12 eticket" id="ticket-precio"> </div>
+                                                    <div class="col-xs-12 ttype" id="ticket-ticket_type"> </div>
+                                                    <div class="col-xs-12 edescription"> <p id="ticket-description"> </p> </div>
+                                                    <div class="col-xs-12 tqr" id="ticket-qr"> </div>
+
+                                                    <!-- <div class="col-xs-12 buy">
+                                                       <button type="button" class="pbutton" id="qrbtn">QR Code</button>
+                                                    </div> -->
+                                                </div>
+
+                                            <!-- </div> -->
+                                   
+                                    </div>   
+                            </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <!-- ****** Pantalla QR *********************************** 
+
+            <div id="qr" class="pantalla y2 x3">
+                <div class="container">
+                    <div class="row">
+                                
+                            
+                        
+                    </div>
+                </div>
+            </div>
+
+             ****************************************************** -->
+
+            <!-- ******* Pantalla Aceptar/Rechazar ***************** -->
+
+            <div id="match" class="pantalla y2 x3" >
+                <div class="container">
+                    <div class="row">
+
+                        <img class="icon back" src="img/left-arrow.svg" onclick="app.hideWindow(3);">
+
+                                
+                        <div id="topslider" class="col-xs-12 slide top">
+                            <img src="" alt="" class="img-rounded">
+                            <div class="match-name"></div>
+                            <div class="match-edad"></div>
+                            <img src="" alt="" class="icon aceptar">
+                            <img src="" alt="" class="icon rechazar">
+                                
+                        </div>
+                        <div id="backslider" class="col-xs-12 slide back">
+                            <img src="" alt="" class="img-rounded">
+                            <div class="match-name"> </div>
+                            <div class="match-edad"></div>
+                            <img src="" alt="" class="icon aceptar">
+                            <img src="" alt="" class="icon rechazar">
+                            
+                                 
+                        </div>
+
+                        
+                    </div>
+                </div>
+            </div>
+
+            <!-- ****************************************************** -->
+
+            <!-- ****** Pantalla Matches ****************************** -->
+
+            <div id="timeline-chat" class="pantalla y3 x1" >
+            <!-- <div class="container"> -->
+                <div class=" titulo">
+                    <!-- <div id="btiz" class="col-xs-2">
+                        <img class="btniz" src="img/menu-1.svg"  alt="menubtn" height="30" width="30">
+                    </div> -->
+                    <div class="title col-xs-8">
+                        <h1>Tunait</h1>
+                    </div>
+                    <!-- <div id="btdr" class="col-xs-2">
+                        <img class="btnder" src="img/settings-5.svg"  alt="settingsbtn" height="30" width="30">
+                    </div> -->
+                </div>
+
+                <div class="row cuerpo">
+
+                    <div class="container">
+                    <div class="row">
+                                
+                            <div id=wrapper4 class="col-xs-12"> 
+                                
+                                    <ul id="scroller4">
+                                        
+                                    
+                                    </ul>   
+                            </div>
+                        
+                    </div>
+                    </div>
+                </div>
+
+
+
+                <div class="row pie">
+                    <div class="menu1 col-xs-2">
+                        <img class="icon menu-button" src="img/worldwide.svg" >
+                    </div>
+                    <div class="menu2 col-xs-2">
+                        <img class="icon menu-button" src="img/ticket.svg">
+                    </div>
+                    <div class="menu3 col-xs-2">
+                        <img class="icon menu-button" src="img/paper-plane.svg">
+                    </div>
+                    <div class="menu4 col-xs-2">
+                        <img class="icon menu-button" src="img/alarm.svg">
+                    </div>
+
+                    
+                </div>
+            <!-- </div> -->
+        </div>
+
+            <!-- ****************************************************** -->
+
+            <!-- ****** Pantalla Match/Chat ********************************* -->
+
+            <div id="match" class="pantalla y3 x2" >
+                <div class="container">
+                    <div class="row">
+                                
+                            <div id=wrapper5 class="col-xs-12"> 
+                                
+                                    <ul id="scroller5">
+                                        
+                                    
+                                    </ul>   
+                            </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+            <!-- ****************************************************** -->
+
+            <!-- ****** Pantalla0 Timeline avisos ****************** -->
+
+            <div id="timeline-avisos" class="pantalla y4 x1">
+            <!-- <div class="container"> -->
+                <div class=" titulo">
+                    <!-- <div id="btiz" class="col-xs-2">
+                        <img class="btniz" src="img/menu-1.svg"  alt="menubtn" height="30" width="30">
+                    </div> -->
+                    <div class="title col-xs-8">
+                        <h1>Tunait</h1>
+                    </div>
+                    <!-- <div id="btdr" class="col-xs-2">
+                        <img class="btnder" src="img/settings-5.svg"  alt="settingsbtn" height="30" width="30">
+                    </div> -->
+                </div>
+                <div class="row cuerpo">
+                                
+                    <div id="calendar" class="col-xs-12">
+                                    
+                    </div>
+
+                    <div id=wrapper6 class="col-xs-12"> 
+                                    
+                        <ul id="scroller6">
+                                            
+                                        
+                        </ul>
+
+                    </div>
+                                
+                </div>
+
+
+                <div class="row pie">
+                    <div class="menu1 col-xs-2">
+                        <img class="icon menu-button" src="img/worldwide.svg" >
+                    </div>
+                    <div class="menu2 col-xs-2">
+                        <img class="icon menu-button" src="img/ticket.svg">
+                    </div>
+                    <div class="menu3 col-xs-2">
+                        <img class="icon menu-button" src="img/paper-plane.svg">
+                    </div>
+                    <div class="menu4 col-xs-2">
+                        <img class="icon menu-button" src="img/alarm.svg">
+                    </div>
+
+                    
+                </div>
+            </div> 
+        
+        
+            
+            <!-- ****************************************************** -->
+
+
+
+        </div>
+
+        
 
 
         <!-- ****** Pantalla1 Perfil +++++++++******************* -->
         
-        <div class="option page totalleft" id="pantalla1">
+        <div class="page totalleft" id="pantalla1">
         
             <div class="container">
                 <div class="row">
@@ -164,7 +535,7 @@
 
          <!-- ****** Pantalla2 Posición +++++++++******************* -->
         
-        <div class="option page totalleft" id="pantalla2">
+        <div class="page totalleft" id="pantalla2">
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12">
@@ -193,29 +564,13 @@
         </div>
 
 
-    <!-- ****** Pantalla3 Tickets +++++++++******************* -->
-
-        <div class="option page totalleft" id="pantalla3">
-            <div class="container">
-                <div class="row">
-                            
-                        <div id=wrapper2 class="col-xs-12"> 
-                            
-                                <ul id="scroller2">
-                                    
-                                
-                                </ul>   
-                        </div>
-                    
-                </div>
-            </div>
-        </div>
+    
         
         
 
     <!-- ****** Pantalla4 xxxxxxxxx +++++++++******************* -->
         
-        <div class="option page totalright" id="pantalla4">
+        <div class="page totalright" id="pantalla4">
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 up-margin" ></div>
@@ -226,7 +581,7 @@
 
     <!-- ****** Pantalla5 xxxxxxxxx +++++++++******************* -->
         
-        <div class="option page totalleft" id="pantalla5">
+        <div class="page totalleft" id="pantalla5">
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 up-margin" ></div>
@@ -254,127 +609,6 @@
                 </div>
             </div>
         </div>
-
-    
-
-
-    <!-- ************** Event Page +++++++++******************* -->
-        
-        <div id="eventpage" class="page totaldown">
-            <div class="container">
-                <div class="row">
-                    <img class="cross" src="img/cancel.svg" onclick="app.hideWindow(1);">
-                    </img>
-                    <div class="col-xs-12">
-                        <ul id="unordered"></ul>
-                    </div>
-                    <div class="col-xs-12 etitle" id="event-data-name"> </div>
-                    <div class="col-xs-12 elocation" id="event-data-location"> </div>    
-                    <div class="col-xs-12 edate" id="event-data-date"> </div>
-                    <div class="col-xs-12 eartist" id="event-artist" > </div> 
-                    <div class="col-xs-12 emusic" id="event-music"> </div>
-                    <div class="col-xs-12 edescription"> <p id="event-description"> </p> </div>
-                    <div class="col-xs-12 emap" id="event-map"><a id="path-btn" href="*"><img id="fix-map" src="" alt="Google map"></a>  </div>
-                    <div class="col-xs-12 eticket" id="event-ticket"> </div>
-                    <div class="col-xs-12 buy">
-                       <button type="button" class="pbutton" id="pbtn">Compra</button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-    <!-- ************** Payment window ********************************** -->
-    
-    <div class="option page totalright" id="payment">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 up-margin" >
-                <img class="back" src="img/left-arrow.svg" onclick="app.hideWindow(2);"> </img>
-                        
-                </div>
-                <div class="col-xs-12">
-
-                    <div class="container">
-
-                        <div class="row" id="ticket-description">
-                            
-                            <div class="col-xs-12 etitle"></div>
-                            <div class="col-xs-12 edescription"></div>
-                        
-                        </div>
-
-                        <div class="row group" id="desglose">
-
-
-                            <div class="col-xs-12 etitle"> <span> Precio : </span> <span id="price"> </span> </div>
-                            <div class="col-xs-12 edescription"> <span> Gastos de gestion : </span> <span id="gastos"> </span></div>
-                            <div class="col-xs-12 style='font-size: 1.2em; font-weight: bold;'"> <span>TOTAL :</span> <span id="total-price"></span></div>
-
-                        </div>
-                        <div class="col-xs-12">
-                            <span> Entradas: </span>
-                            <img src="img/minus.svg" id="minus" > </img><input type="number" min="1" max="10" value="1" id="num-tickets"> </input><img src="img/plus.svg" id="plus" > </img>
-                        </div>
-
-                    </div>
-
-                </div>
-                
-                <div class="col-xs-12">
-
-                    <form id="card-form" action="#">
-                        
-                            <div class="group">
-
-                                <label>
-                                  <span>Nombre</span>
-                                  <input name="cardholder-name" class="field"  placeholder="Titular de la tarjeta" required/>
-                                </label>
-                                <label>
-                                <span>Card</span>
-                                    <!-- <div id="card-element" class="field"> -->
-                                        <input type="text" name="card-number"  class="field" placeholder="Card number" autocomplete="cc-number" minlength="13" maxlength="16" required />
-                                    <!-- </div> -->
-                                </label>
-                                <label>
-
-                                <div style="position:relative; left:100px; ">
-                                    <span class="expdate" style="width:170px">
-                                        
-                                        <input type="text" name="card-expMonth" class="field" placeholder="MM" minlength="2" maxlength="2" min="1" max="12" autocomplete=cc-exp-month id="ccem" required >
-                                    
-                                        <input type="text" name="card-expYear" class="field" placeholder="YYYY" minlength="4" maxlength="4" min=2017 max="2117" autocomplete="cc-exp-year" id="ccey" required />
-                                        
-                                    </span>
-                                    
-                                    <input type="text" name="card-cvc" class="field" placeholder="CVC" minlength="3" maxlength="3" autocomplete="cc-csc" id="cccsc" required />
-                                </div>
-                                
-                                </label>
-                            </div>
-
-                            <div class="outcome">
-                                <div class="error" role="alert"></div>
-                                <div class="success">
-                                Success! Your Stripe token is <span class="token"></span>
-                                </div>
-                            </div>
-
-                            <button class="pbutton" type="submit">Pagar</button>
-
-                    </form>
-
-                    <!-- <div class="down-button">
-                        
-                    </div> -->
-                        
-                    
-                </div>
-            </div>
-        </div>
-    </div>
-    
 
 
     <!-- *********** Cargando *********************** -->
