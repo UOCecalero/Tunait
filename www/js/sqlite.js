@@ -10,7 +10,7 @@ initDatabase: function(db){
         tx.executeSql('CREATE TABLE IF NOT EXISTS Tokens ( type VARCHAR, access_token TINYTEXT PRIMARY KEY, refresh_token TINYTEXT UNIQUE, FBid UNSIGNED BIGINT UNIQUE NOT NULL, id UNISGNED BIGINT UNIQUE NOT NULL)');
         
         // tx.executeSql('CREATE TABLE IF NOT EXISTS User ( id UNSIGNED BIGINT NULL UNIQUE, FBid UNSIGNED BIGINT UNIQUE NOT NULL, name VARCHAR NOT NULL, surnames VARCHAR NOT NULL, gender BOOLEAN NOT NULL, email VARCHAR NOT NULL, password VARCHAR NULL, created_at TIMESTAMP, updated_at TIMESTAMP, photo BLOB NULL, birthday DATE NULL, job VARCHAR(50) NULL, studies VARCHAR(50) NULL, ranking DECIMAL(5,3) NULL, aceptar UNSIGNED BIGINT ZEROFILL NOT NULL, rechazar UNSIGNED BIGINT ZEROFILL NOT NULL, saludar UNSIGNED BIGINT ZEROFILL NOT NULL, destacado_ini TIMESTAMP, destacado_fin TIMESTAMP, location POINT ) ');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS User ( id UNSIGNED BIGINT NULL UNIQUE, FBid UNSIGNED BIGINT UNIQUE NOT NULL, name VARCHAR NOT NULL, surnames VARCHAR NOT NULL, gender VARCHAR(6) NOT NULL, email VARCHAR NOT NULL, updated_at TIMESTAMP, last_connection TIMESTAMP, photo BLOB NULL, job VARCHAR(50) NULL, studies VARCHAR(50) NULL, customer VARCHAR, lat FLOAT(10,6), lng FLOAT(10,6), genderpreference VARCHAR(6), inagepreference  UNSIGNED TINYINT NOT NULL, outagepreference UNSIGNE) ');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS User ( id UNSIGNED BIGINT NULL UNIQUE, FBid UNSIGNED BIGINT UNIQUE NOT NULL, name VARCHAR NOT NULL, surnames VARCHAR NOT NULL, gender VARCHAR(6) NOT NULL, email VARCHAR NOT NULL, updated_at TIMESTAMP, last_connection TIMESTAMP, photo BLOB NULL, job VARCHAR(50) NULL, studies VARCHAR(50) NULL, customer VARCHAR, lat FLOAT(10,6), lng FLOAT(10,6), genderpreference VARCHAR(6), inagepreference  UNSIGNED TINYINT NOT NULL, outagepreference UNSIGNE, eventdistance TINYINT NOT NULL ');
                                                      //        id UNSIGNED BIGINT NULL UNIQUE,
                                                      //        FBid UNSIGNED BIGINT UNIQUE NOT NULL,
                                                      //        name VARCHAR NOT NULL,
@@ -196,8 +196,8 @@ addUserToDB: function(object, db){
                 db.transaction(function (tx) {
 
 
-                    tx.executeSql('INSERT INTO User VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', // Si añadimos birthdate, hay que añadir un interrogante
-                     [object.id,object.FBid,object.name,object.surnames,object.gender,object.email,/*object.password,object.created_at,*/object.updated_at, object.last_connection,object.photo/*,object.birthdate*/,object.job,object.studies,/* object.ranking,object.aceptar,object.rechazar,object.saludar,object.destacado_ini,object.destacado_fin,*/object.customer,object.lat,object.lng,object.genderpreference ,object.inagepreference , object.outagepreference], 
+                    tx.executeSql('INSERT INTO User VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', // Si añadimos birthdate, hay que añadir un interrogante
+                     [object.id,object.FBid,object.name,object.surnames,object.gender,object.email,/*object.password,object.created_at,*/object.updated_at, object.last_connection,object.photo/*,object.birthdate*/,object.job,object.studies,/* object.ranking,object.aceptar,object.rechazar,object.saludar,object.destacado_ini,object.destacado_fin,*/object.customer,object.lat,object.lng,object.genderpreference ,object.inagepreference , object.outagepreference, object.eventdistance], 
 
                      function(tx, res) {
                         console.log("insertId: " + res.insertId );
@@ -389,10 +389,11 @@ addMatchesToDB: function(multiObject, db){
 
                 var object = multiObject[i];
 
+                console.log(object);
 
 
                 tx.executeSql('INSERT INTO Matches VALUES (?,?,?,?,?,?,?,?)', //Si añadimos birthdate, hay que añadir un interrogante
-                 [object.id,object.name,object.surnames,object.photo,/**object.birthdate**/,object.job,object.studies,object.lat,object.lng], 
+                 [object.id,object.name,object.surnames,object.photo/**object.birthdate**/,object.job,object.studies,object.lat,object.lng], 
 
                  function(tx, res) {
                     console.log("insertId: " + res.insertId );
@@ -683,7 +684,9 @@ extractUserFromDB: function(db){
                         userObject.lng = rs.rows.item(0).lng;
                         userObject.genderpreference = rs.rows.item(0).genderpreference;
                         userObject.inagepreference = rs.rows.item(0).inagepreference;
-                        //userObject.outagepreference = rs.rows.item(0).outagepreference;
+                        userObject.outagepreference = rs.rows.item(0).outagepreference;
+                        userObject.eventdistance = rs.rows.item(0).eventdistance;
+
                         
                         resolve(userObject);
 

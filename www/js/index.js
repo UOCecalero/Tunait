@@ -6,11 +6,10 @@
 //Declaración del objecto app
 var app = {
 
-    //Version buena
  
 
     //facebookPermissions: ["public_profile", "email", "user_friends", "user_birthday", "user_likes"],
-    facebookPermissions: ["public_profile","email","user_friends"],
+    //facebookPermissions: ["public_profile","email","user_friends"],
         
     /*************************************** Función Menu. Mueve las pantallas de la app **************************/
 
@@ -54,75 +53,80 @@ var app = {
 
             try{
 
-                req = new XMLHttpRequest();
+                    req = new XMLHttpRequest();
 
-                switch(mode){
+                    switch(mode){
 
-                    case "g": mode = "GET";
-                    break;
+                        case "g": mode = "GET";
+                        break;
 
-                    case "p": mode = "POST";
-                    break;
+                        case "p": mode = "POST";
+                        break;
 
-                    case "u": mode = "UPLOAD";
-                    break;
+                        case "u": mode = "UPLOAD";
+                        break;
 
-                    case "d": mode = "DELETE";
-                    break;
+                        case "d": mode = "DELETE";
+                        break;
 
-                    default: console.log ("No se ha definido correctamente el modo GET/POST/UPLOAD/DELETE \n");
-
-
-                }
-                
-                req.open(mode, url+cmd, true);
-                req.setRequestHeader("Accept", "Application/json");
-                req.setRequestHeader("Content-Type", "Application/json; charset=UTF-8");
-
-                switch(options){
-
-                    case "auth":
-                        req.setRequestHeader("Authorization", "Bearer "+accessToken);
-                    break;
-
-                    default: console.log ("No se han definido opciones \n");
+                        default: console.log ("No se ha definido correctamente el modo GET/POST/UPLOAD/DELETE \n");
 
 
-                }
+                    }
+                    
+                    req.open(mode, url+cmd, true);
+                    req.setRequestHeader("Accept", "Application/json");
+                    req.setRequestHeader("Content-Type", "Application/json; charset=UTF-8");
 
-                console.log('HTTP '+ mode +' '+ cmd +' '+ body );
-                console.log("Esperando respuesta HTTP... \n");
+                    switch(options){
 
+                        case "auth":
+                            req.setRequestHeader("Authorization", "Bearer "+accessToken);
+                        break;
 
-                req.onreadystatechange = function(){
-
-                            
-
-                                if (req.readyState == 4){
-
-                                    if (req.status == 200){
-
-                                    console.log('HTTP Response '+req.status+' '+req.statusText+' '+req.responseText+' \n');
-                                    resolve(req.responseText);
-                                    return;
-
-                                    } else{
+                        default: console.log ("No se han definido opciones \n");
 
 
-                                        //reject('HTTP Error '+req.status+' '+req.statusText+' '+req.responseText+' \n');
-                                         
-                                        reject(req.responseText);
-                                        return;
-
-                                    }
-                            }   
                     }
 
+                    console.log('HTTP '+ mode +' '+ cmd +' '+ body );
+                    console.log("Esperando respuesta HTTP... \n");
 
 
+                    req.onreadystatechange = function(){
 
-                //Se manda la petición del recurso a través del objeto req.
-                req.send(body);
+                                
+
+                                    if (req.readyState == 4){
+
+                                        if (req.status == 200){
+
+                                        console.log('HTTP Response '+req.status+' '+req.statusText+' '+req.responseText+' \n');
+                                        resolve(req.responseText);
+                                        return;
+
+                                        } else{
+
+                                            if (req.status == 0){ 
+
+                                                    console.log('Servidor inaccesible \n');
+                                                    alert('Servidor en mantenimiento. Rogamos disculpas. Intenta en unos minutos');
+
+                                            } else {
+
+                                                //reject('HTTP Error '+req.status+' '+req.statusText+' '+req.responseText+' \n');
+                                                console.log('HTTP Response '+req.status+' '+req.statusText+' '+req.responseText+' \n');
+                                                reject(req);
+                                                return;
+
+                                            }
+
+                                        }
+                                }   
+                        }
+
+                    //Se manda la petición del recurso a través del objeto req.
+                    req.send(body);
 
             }
 
@@ -177,8 +181,8 @@ var app = {
 
 
         // Inicializamos variables
-         // url = 'http://localhost:60000/';
-        url = 'http://192.168.1.4:60000/'
+         url = 'http://178.62.243.177:60000/';
+        //url = 'http://192.168.1.4:60000/'
         // url = 'http://10.222.248.22:60000/'
         estado = "menuprincipal";
         matrizX = 1;
@@ -229,7 +233,7 @@ var app = {
         //Button listeners
         //document.querySelector('.btnder').addEventListener('click', function(){app.menu('izquierda');}, false);
         //document.querySelector('.btniz').addEventListener('click', function(){app.menu('derecha');}, false);
-        document.querySelector('#picture').addEventListener('click', app.openCamera('#picture'),false );
+       // document.querySelector('#picture').addEventListener('click', app.openCamera('#picture'),false );
 
         var elements1 = document.getElementsByClassName("menu1");
         elements1 = addEventListenerList(elements1, 'click', function(){app.muestra(1,1);}); 
@@ -314,262 +318,307 @@ databaseSetup: function(){
 
     onConnected: function(response){
                 
-    //Comprueba si el usuario existe. Si existe devuelve el email sinó devuelve un 0.
-    app.userExists(response.authResponse)
-        .then(function(usersCounter){
+    //Envía el Access Token para que el servidor haga las comprovaciones necesarias
+    app.sendAccessToken(response.authResponse)
+        .then( function(token){ accessToken = token; return app.download(db); return; })
+        .then( function(option){ app.refresh(option); app.muestra(1,1); return; }) 
+        .catch(function(e){ console.log(e); alert(e); })
+
+
+    // //Comprueba si el usuario existe. Si existe devuelve el email sinó devuelve un 0.
+    // app.userExists(response.authResponse)
+    //     .then(function(usersCounter){
         
-            //Si existe el usuario
-            if (usersCounter > 0){
+    //         //Si existe el usuario
+    //         if (usersCounter > 0){
                 
-                console.log('User exists!'+'\n');
+    //             console.log('User exists!'+'\n');
 
-                var ifok = sql.checkTokens(response.authResponse.userID, db)
+    //             var ifok = sql.checkTokens(response.authResponse.userID, db)
                     
-                    .catch(function(error){
+    //                 .catch(function(error){
 
-                        console.log('Error. No se ha podido recuperar el token: '+ error + '\n' );
+    //                     console.log('Error. No se ha podido recuperar el token: '+ error + '\n' );
 
-                        var requestPath = "me?fields=id,first_name,last_name,gender,picture.height(480),email,birthday";
+    //                     var requestPath = "me?fields=id,first_name,last_name,gender,picture.height(480),email,birthday";
 
-                        facebookConnectPlugin.api( requestPath, app.facebookPermissions,
+    //                     facebookConnectPlugin.api( requestPath, app.facebookPermissions,
 
-                        //Si funciona facebookConnectPlugin
-                        function(result){
+    //                     //Si funciona facebookConnectPlugin
+    //                     function(result){
 
 
-                                app.requestTokens(result.email, result.id)
-                                    .then( function(tokens){ return sql.saveTokens( result.id, usersCounter, tokens, db); })
-                                    .then( function(tokens){ return app.download( tokens, db); })
-                                    .then( function(option){ app.refresh(option); app.muestra(1,1); return; })
+    //                             app.requestTokens(result.email, result.id)
+    //                                 .then( function(tokens){ return sql.saveTokens( result.id, usersCounter, tokens, db); })
+    //                                 .then( function(tokens){ return app.download( tokens, db); })
+    //                                 .then( function(option){ app.refresh(option); app.muestra(1,1); return; })
                                     
-                                    .catch( function(e){ console.log(e); })
+    //                                 .catch( function(e){ console.log(e); })
 
-                                    },
+    //                                 },
 
-                            //Si falla facebookConnectPlugin
-                            function(error){
+    //                         //Si falla facebookConnectPlugin
+    //                         function(error){
 
-                                console.log("Error al recuperar datos de Facebook: ", error);
+    //                             console.log("Error al recuperar datos de Facebook: ", error);
 
-                            });
+    //                         });
 
 
-                    })
+    //                 })
 
-                ifok.then( function(tokens){ return app.download(tokens, db); }) //Devuelve una promesa que se pasa al then siguiente
-                    .then( function(option){ app.refresh(option); app.muestra(0,0); return; })
-                    .catch(function(e){ console.log(e);})
-            }
+    //             ifok.then( function(tokens){ return app.download(tokens, db); }) //Devuelve una promesa que se pasa al then siguiente
+    //                 .then( function(option){ app.refresh(option); app.muestra(0,0); return; })
+    //                 .catch(function(e){ console.log(e);})
+    //         }
 
-            //Si no existe usuario damos de alta un usuario nuevo desde 0.
-            else {
+    //         //Si no existe usuario damos de alta un usuario nuevo desde 0.
+    //         else {
 
-            landing.className= 'page center';
+    //         landing.className= 'page center';
             
-            console.log("Este usuario no existe en nuestro sistema \n");
+    //         console.log("Este usuario no existe en nuestro sistema \n");
 
-            var requestPath = "me?fields=id,first_name,last_name,gender,picture.height(480),email,birthday";
+    //         var requestPath = "me?fields=id,first_name,last_name,gender,picture.height(480),email,birthday";
 
-                    //facebookConnectPlugin.api(String requestPath, Array permissions, Function success, Function failure)
-                    facebookConnectPlugin.api(requestPath, app.facebookPermissions,function(result){
+    //                 //facebookConnectPlugin.api(String requestPath, Array permissions, Function success, Function failure)
+    //                 facebookConnectPlugin.api(requestPath, app.facebookPermissions,function(result){
 
 
-                        app.newUser(result)
-                            .then(function(newUserObject){ return app.register(newUserObject) }) //newUserObject aún no tiene id
-                            .then(function(userObject){ return sql.addUserToDB(userObject, db) })
-                            // .then(function(user){ return app.register(user) })
-                            .then(function(userObject){ 
+    //                     app.newUser(result)
+    //                         .then(function(newUserObject){ return app.register(newUserObject) }) //newUserObject aún no tiene id
+    //                         .then(function(userObject){ return sql.addUserToDB(userObject, db) })
+    //                         // .then(function(user){ return app.register(user) })
+    //                         .then(function(userObject){ 
 
-                                Promise.all([userObject, app.requestTokens(userObject.email, userObject.FBid)]) 
+    //                             Promise.all([userObject, app.requestTokens(userObject.email, userObject.FBid)]) 
 
-                                .then(function([userObject, tokens]){ return sql.saveTokens(userObject.FBid, userObject.id, tokens, db) })
-                                .then(function(tokens){ return app.download(tokens, db) })
-                                .then( function(option){ app.refresh(option); app.muestra(1,1); return; })
+    //                             .then(function([userObject, tokens]){ return sql.saveTokens(userObject.FBid, userObject.id, tokens, db) })
+    //                             .then(function(tokens){ return app.download(tokens, db) })
+    //                             .then( function(option){ app.refresh(option); app.muestra(1,1); return; })
     
-                            })
+    //                         })
 
-                            .catch(function(error){
+    //                         .catch(function(error){
 
-                                console.log("Error: ", error);
-                                app.FBlogin();
+    //                             console.log("Error: ", error);
+    //                             app.FBlogin();
 
 
-                            })
+    //                         })
                 
-                    });
-            }
-        })
-        .catch(function(e){ console.log(e); })
+    //                 });
+    //         }
+    //     })
+    //     .catch(function(e){ console.log(e); })
 
     },
 
     onNotAutorized: function(response){
 
+        alert('ERROR: Necesitamos que nos des permisos para abrir tu cuenta');
         app.FBlogin();
     },
 
+/******************************* Manda el Access token de FB al servidor *********************************************/
 
-
-/******************************* Comprueba si el usuario existe en el sistema. Si existe devuelve 1 sino devuleve un 0 *********************************************/
-
-    userExists: function(authResponse){
+    sendAccessToken: function(authResp){
 
         return new Promise(function(resolve, reject){
 
             try{
 
-                console.log("Checking if user exists...");
+                console.log("Checking Tokens...");
 
                 var mode = "g";
-                var cmd = "api/users/exists/"+authResponse.userID;
+                var cmd = "api/token/"+authResp.accessToken;
                 var options = 0;
                 var body = undefined;
 
                 app.http(mode, cmd, body, options)
                     .then (function(response){ resolve(response); })
-                    .catch(function(req){ reject('userExists HTTP Error '+req.status+' '+req.statusText+' '+req.responseText+' \n'); })
+                    .catch(function(error){ reject('HTTP Error '+error.status+' '+error.statusText+' \n'); })
                 }
 
                 catch(e){ console.log("JAVASCRIPT ERROR "+e.name+" "+e.message); }
+
+
+
+
+
         });
+
+
+
     },
+/******************************* Comprueba si el usuario existe en el sistema. Si existe devuelve 1 sino devuleve un 0 *********************************************/
+
+    // userExists: function(authResponse){
+
+    //     return new Promise(function(resolve, reject){
+
+    //         try{
+
+    //             console.log("Checking if user exists...");
+
+    //             var mode = "g";
+    //             var cmd = "api/users/exists/"+authResponse.userID;
+    //             var options = 0;
+    //             var body = undefined;
+
+    //             app.http(mode, cmd, body, options)
+    //                 .then (function(response){ resolve(response); })
+    //                 .catch(function(req){ reject('userExists HTTP Error '+req.status+' '+req.statusText+' '+req.responseText+' \n'); })
+    //             }
+
+    //             catch(e){ console.log("JAVASCRIPT ERROR "+e.name+" "+e.message); }
+    //     });
+    // },
 
 
 /******* Crea un objeto usuario a partir del objeto extraído de los datos de Facebook. Lo saca por el Callback ******/
 
-    newUser: function(result){
+    // newUser: function(result){
 
-        return new Promise( function(resolve, reject){
+    //     return new Promise( function(resolve, reject){
 
-            try{
+    //         try{
 
-                console.log("Creating new user... ");
+    //             console.log("Creating new user... ");
 
-                // Permitir cambiar la fecha de creación externamente genera problemas de seguridad
-                // var datetime = new Date();
-                // datetime.getSeconds();
-                // datetime.getMinutes();
-                // datetime.getHours();
+    //             // Permitir cambiar la fecha de creación externamente genera problemas de seguridad
+    //             // var datetime = new Date();
+    //             // datetime.getSeconds();
+    //             // datetime.getMinutes();
+    //             // datetime.getHours();
 
-                var userObject = new Object();
+    //             var userObject = new Object();
 
-                                    //userObject.id = null;
-                                    userObject.FBid = result.id;
-                                    userObject.name = result.first_name;
-                                    userObject.surnames = result.last_name;
-                                    userObject.gender = result.gender;
-                                    userObject.email = result.email;
-                                    //userObject.password = app.newPWD(); //Esta función pide password.
-                                    userObject.password = result.id;
-                                    //userObject.created_at =  datetime;
-                                    //userObject.updated_at = datetime;
-                                    userObject.photo = result.picture.data.url;  //ATENCIÓN QUE ESTAMOS PASANDO LA URL 
-                                    //userObject.birthdate = result.birthday;
-                                    userObject.job = null;
-                                    userObject.studies = null; 
-                                    // userObject.aceptar = 0;
-                                    // userObject.rechazar = 0;
-                                    // userObject.saludar = 0;
-                                    userObject.destacado_ini = null;
-                                    userObject.destacado_fin = null;
-                                    userObject.lat = null; //Función que ha de extraer la localización actual.
-                                    userObject.lng = null;
-                                    if (result.gender == 'male') { userObject.genderpreference = 'female' } else { userObject.genderpreference = 'male' };
-                                    userObject.inagepreference = 18;
-                                    userObject.outagepreference = 99;
+    //                                 //userObject.id = null;
+    //                                 userObject.FBid = result.id;
+    //                                 userObject.name = result.first_name;
+    //                                 userObject.surnames = result.last_name;
+    //                                 userObject.gender = result.gender;
+    //                                 userObject.email = result.email;
+    //                                 //userObject.password = app.newPWD(); //Esta función pide password.
+    //                                 userObject.password = result.id;
+    //                                 //userObject.created_at =  datetime;
+    //                                 //userObject.updated_at = datetime;
+    //                                 userObject.photo = result.picture.data.url;  //ATENCIÓN QUE ESTAMOS PASANDO LA URL 
+    //                                 //userObject.birthdate = result.birthday;
+    //                                 userObject.job = null;
+    //                                 userObject.studies = null; 
+    //                                 // userObject.r = 0;
+    //                                 // userObject.rechazar = 0;
+    //                                 // userObject.saludar = 0;
+    //                                 userObject.destacado_ini = null;
+    //                                 userObject.destacado_fin = null;
+    //                                 userObject.lat = null; //Función que ha de extraer la localización actual.
+    //                                 userObject.lng = null;
+    //                                 if (result.gender == 'male') { userObject.genderpreference = 'female' } else { userObject.genderpreference = 'male' };
+    //                                 userObject.inagepreference = 18;
+    //                                 userObject.outagepreference = 99;
 
-                                    //console.log(JSON.stringify(userObject));
-                                    console.log(userObject);
-                                    resolve(userObject);
+    //                                 //console.log(JSON.stringify(userObject));
+    //                                 console.log(userObject);
+    //                                 resolve(userObject);
 
 
-        }
+    //     }
 
-        catch(e){ reject("JAVASCRIPT ERROR "+e.name+" "+e.message); }
+    //     catch(e){ reject("JAVASCRIPT ERROR "+e.name+" "+e.message); }
 
-        });
+    //     });
 
         
-    },
+    // },
 
 
 /******************************* Da de alta el usuario en el sistema  *************************************************/
 
-register: function(userObject){
+// register: function(userObject){
 
-    return new Promise(function(resolve,reject) {
+//     return new Promise(function(resolve,reject) {
 
-        try{
+//         try{
 
-            console.log("Registering user...");
+//             console.log("Registering user...");
 
-                var mode = "p";
-                var cmd = "api/register/";
-                var options = 0;
-                var body = JSON.stringify(userObject);
+//                 var mode = "p";
+//                 var cmd = "api/register/";
+//                 var options = 0;
+//                 var body = JSON.stringify(userObject);
                 
-                app.http(mode, cmd, body, options)
+//                 app.http(mode, cmd, body, options)
 
-                    .then( function(response){ resolve(response); })  
-                    .catch(function(req){ reject('HTTP Error '+req.status+' '+req.statusText+' '+req.responseText+' \n') })
+//                     .then( function(response){ resolve(response); })  
+//                     .catch(function(req){ reject('HTTP Error '+req.status+' '+req.statusText+' '+req.responseText+' \n') })
 
-        }
+//         }
 
-        catch(e){ reject("JAVASCRIPT ERROR "+e.name+" "+e.message); }
-    });
+//         catch(e){ reject("JAVASCRIPT ERROR "+e.name+" "+e.message); }
+//     });
 
 
                 
 
     
-    },
+//     },
 
 
 /******************************* Pide los tokens  *****************************************************************************/
 
-    requestTokens: function(grantuser, grantpassword){
+    // requestTokens: function(grantuser, grantpassword){
 
-        return new Promise(function(resolve, reject){
+    //     return new Promise(function(resolve, reject){
 
-            try{
+    //         try{
 
-                console.log("Requesting tokens...");
+    //             console.log("Requesting tokens...");
 
-                var mode = "p";
-                var cmd = "oauth/token/";
-                var options = 0;
-                var request = new Object();
-                    request.grant_type = "password";
-                    request.client_id = 1;
-                    request.client_secret = "u5MBHqf6fV04R0xuCKbzYTgUn8b2PkQBq8otzulo";
-                    request.username = grantuser;
-                    request.password = grantpassword;
-                    request.scope = "*";
-                    request = JSON.stringify(request);
+    //             var mode = "p";
+    //             var cmd = "oauth/token/";
+    //             var options = 0;
+    //             var request = new Object();
+    //                 request.grant_type = "password";
+    //                 request.client_id = 1;
+    //                 request.client_secret = "u5MBHqf6fV04R0xuCKbzYTgUn8b2PkQBq8otzulo";
+    //                 request.username = grantuser;
+    //                 request.password = grantpassword;
+    //                 request.scope = "*";
+    //                 request = JSON.stringify(request);
 
-                    app.http(mode, cmd, request, options)
+    //                 app.http(mode, cmd, request, options)
                         
-                        .then(function(response){ resolve(response); })
-                        .catch( function(req){ reject('HTTP Error '+req.status+' '+req.statusText+' '+req.responseText+' \n')})
+    //                     .then(function(response){ resolve(response); })
+    //                     .catch( function(req){ reject('HTTP Error '+req.status+' '+req.statusText+' '+req.responseText+' \n')})
 
-            }
+    //         }
 
-            catch(e){ reject("JAVASCRIPT ERROR "+e.name+" "+e.message); }
+    //         catch(e){ reject("JAVASCRIPT ERROR "+e.name+" "+e.message); }
 
-        });
+    //     });
 
-    },
+    // },
 
 
 
     /*********** Esta función se conecta al servidor y baja los datos del servidor a la aplicación *******************************/
-    download: function(tokenObject, db){
+    download: function(/*tokenObject, */ db){
 
             app.loading();
 
             //inicializamos variables
-            accessToken = tokenObject.access_token;
-            var userid = tokenObject.id;
+            // accessToken = tokenObject.access_token;
+            // var userid = tokenObject.id;
+
+            // {
+            // "token_type”:
+            //     "Bearer”,
+            //     "expires_in":3155673600,
+            //     "access_token":"eyJ0eXAiOiJKV1QiL....”,
+            //     "refresh_token":"XslU/K6lFZShiGxF1dPyC4ztIXBx9W1g…”
+            // }
 
             var mode = "g";
             var options = "auth";
@@ -581,22 +630,22 @@ register: function(userObject){
                     try{
 
                     //Vaciamos las tablas locales de la database
-                    app.setTimeline(userid)
+                    app.setTimeline()
                         .then(function(){return sql.delTablesDB(db);})
                         .then( function(){
                             
                             console.log("Downloading data from server database... ");
                             
                             //Bajamos los datos del usuario
-                            var cmd = "api/user/"+userid;
+                            var cmd = "api/me";
                             return app.http(mode, cmd, body, options);
                         })
                                     
-                        .then( function(userObject){ userEmail = userObject.email; sql.addUserToDB(userObject, db); })
+                        .then( function(userObject){ userEmail = userObject.email; distance = userObject.eventdistance; sql.addUserToDB(userObject, db); })
                         .then( function(resp){ 
 
                             //Bajamos los Datos de la empresa (si hay)
-                            var cmd = "api/user/"+userid+"/empresa";
+                            var cmd = "api/me/empresa";
                             return app.http(mode, cmd, body, options);
 
                         })
@@ -606,7 +655,7 @@ register: function(userObject){
 
                             //Bajamos los Eventos de usuario si hay.
                             //var cmd = "api/user/"+userid+"/evento";
-                            var cmd = "api/user/"+userid+"/evento";
+                            var cmd = "api/me/evento";
                             
 
                             return app.http(mode, cmd, body, options);
@@ -617,7 +666,7 @@ register: function(userObject){
                         .then( function(resp){
 
                             //Bajamos los Matches (si hay)
-                            var cmd = "api/user/"+userid+"/match";
+                            var cmd = "api/me/match";
                             return app.http(mode, cmd, body, options);
 
                         })
@@ -634,7 +683,7 @@ register: function(userObject){
                         // })
                         
                         // .then( function(bloqueadosObject){ return sql.addBloqueadosToDB(bloqueadosObject, db); })
-                        .then( function(resp){
+                        .then( function(){
 
                             //delete accessToken; el token se debe borrar al borrar la aplicación
 
@@ -643,7 +692,13 @@ register: function(userObject){
                             return resolve("all");
                         })
                         
-                        .catch(function(e){ app.loading(); reject(e); return; })
+                        .catch(function(error){ 
+                                                app.loading();
+                                                console.log(error);
+                                                reject();
+                                                //reject('HTTP Error '+error.status+' '+error.statusText+' \n');
+                                                return; 
+                                            })
 
                         }
 
@@ -777,7 +832,7 @@ register: function(userObject){
   
 /*************************************** Seteo del timeline  *********************************************************/
 
-setTimeline: function(userid){
+setTimeline: function(){
 
     return new Promise(function(resolve, reject){
 
@@ -786,7 +841,7 @@ setTimeline: function(userid){
         
         
         
-        app.addLines(userid,15)
+        app.addLines(15)
             .then(function(){
                 wrapper1.addEventListener('scroll', function(){
 
@@ -804,7 +859,7 @@ setTimeline: function(userid){
                     if ( scroller1Height - wrapper1Height - scrollTop  < 500){
 
                         active = true;
-                        app.addLines(userid,5)
+                        app.addLines(5)
                             .then(function(){
                                 active = false;
                                 return;
@@ -827,7 +882,7 @@ setTimeline: function(userid){
 
 /*************************************** Añade x lineas al timeline  *********************************************************/
 
-addLines: function(userid,toAdd){
+addLines: function(toAdd){
 
     return new Promise(function(resolve,reject){
 
@@ -835,15 +890,14 @@ addLines: function(userid,toAdd){
 
         for (var i=0;i<toAdd;i++) {
 
-        linesAdded++;
-        var distance = 25;
+        linesAdded++; 
 
         var promise = new Promise (function(resolve,reject){
 
 
 
             var call = new XMLHttpRequest;
-            call.open("GET", url+"/api/user/"+userid+"/timeline/"+linesAdded+"/"+distance, true);
+            call.open("GET", url+"api/me/timeline/"+linesAdded+"/"+distance, true);
             call.setRequestHeader("Accept", "Application/json");
             call.setRequestHeader("Content-Type", "Application/json; charset=UTF-8");
             call.setRequestHeader("Authorization", "Bearer "+accessToken);
@@ -1117,10 +1171,10 @@ setTickets: function(user){
 
 /*************************************** Iniciamos el Matching ****************************************************/
 
-    match: function(userid, ticketid){
+    match: function(ticketid){
 
         var mode = "g";
-        var cmd = "api/user/"+userid+"/ticket/"+ticketid;
+        var cmd = "api/me/ticket/"+ticketid;
         var options = "auth"
         var body = undefined;
 
@@ -1754,81 +1808,81 @@ colorize: function(type){
     //     return options;
     // },
 
-    openCamera: function(selection) {
+    // openCamera: function(selection) {
 
-        //Se seleccionan unas opciones o otras en función del evento que lo dispare
-        switch(selection){
-            case '#picture':
+    //     //Se seleccionan unas opciones o otras en función del evento que lo dispare
+    //     switch(selection){
+    //         case '#picture':
 
-            var options = {
+    //         var options = {
 
-                // Some common settings are 20, 50, and 100
-                quality: qual,
-                destinationType: Camera.DestinationType.FILE_URI,
-                sourceType: Camera.PictureSourceType.CAMERA,
-                encodingType: Camera.EncodingType.JPEG,
-                mediaType: Camera.MediaType.PICTURE,
-                allowEdit: true,
-                correctOrientation: true,  //Corrects Android orientation quirks
-                cameraDirection: FRONT
+    //             // Some common settings are 20, 50, and 100
+    //             //quality: qual,
+    //             destinationType: Camera.DestinationType.FILE_URI,
+    //             sourceType: Camera.PictureSourceType.CAMERA,
+    //             encodingType: Camera.EncodingType.JPEG,
+    //             mediaType: Camera.MediaType.PICTURE,
+    //             allowEdit: true,
+    //             correctOrientation: true,  //Corrects Android orientation quirks
+    //             cameraDirection: FRONT
 
-            }    
+    //         }    
 
-            break;
-            case '#albumButton':
-            var options = {
+    //         break;
+    //         case '#albumButton':
+    //         var options = {
 
-                // Some common settings are 20, 50, and 100
-                quality: qual,
-                destinationType: Camera.DestinationType.FILE_URI,
-                sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-                mediaType: Camera.MediaType.PICTURE,
-            }
+    //             // Some common settings are 20, 50, and 100
+    //             quality: qual,
+    //             destinationType: Camera.DestinationType.FILE_URI,
+    //             sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+    //             mediaType: Camera.MediaType.PICTURE,
+    //         }
 
-            break;
+    //         break;
 
-        }
+    //     }
 
-        console.log(selection.button);
+    //     console.log(selection.button);
 
-        //var options = app.setOptions(srcType);
+    //     //var options = app.setOptions(srcType);
 
-        navigator.camera.getPicture(function cameraSuccess(imageURL) {
+    //     navigator.camera.getPicture(function cameraSuccess(imageURL) {
 
-            console.log('Photolibrary Sucess');
-            //document.querySelector('#pantalla1').getElementsByTagName('img')[0].src = imageURL;
-            var options = new FileUploadOptions();
-            options.fileKey = "picture";
-            //options.fileName = fileURL.substr(imageURL.lastIndexOf('/') + 1);
+    //         console.log('Photolibrary Sucess');
+    //         //document.querySelector('#pantalla1').getElementsByTagName('img')[0].src = imageURL;
+    //         var options = new FileUploadOptions();
+    //         options.fileKey = "picture";
+    //         //options.fileName = fileURL.substr(imageURL.lastIndexOf('/') + 1);
 
-            // var params = {};
-            // params.user = userid;
-            // params.aut = "param";
+    //         // var params = {};
+    //         // params.user = userid;
+    //         // params.aut = "param";
 
-            options.params = params;
+    //         options.params = params;
 
-            var headers = {
+    //         var headers = {
 
-                "Authorization" : "Bearer "+accessToken
-            }
+    //             "Authorization" : "Bearer "+accessToken
+    //         }
 
-            options.headers = headers;
+    //         options.headers = headers;
 
-            var ft = new FileTransfer();
-            ft.upload(imageURL, encodeURI( url+"/api/upload/"+userid), 
-                function uploadSuccess(objResponse){
-                    console.log('Image UPLOADED. '+objResponse.bytesSent+' bytes. Response: '+objResponse.responseCode+' : '+objResponse.response+'.' );
-                    app.refresh('perfil');
-                },
-                function uploadError(error){
-                    alert('Error al subir la imagen. Intenta de nuevo')
-                }, options);
+    //         var ft = new FileTransfer();
+    //         ft.upload(imageURL, encodeURI( url+"/api/upload/"+userid), 
+    //             function uploadSuccess(objResponse){
+    //                 console.log('Image UPLOADED. '+objResponse.bytesSent+' bytes. Response: '+objResponse.responseCode+' : '+objResponse.response+'.' );
+    //                 app.refresh('perfil');
+    //             },
+    //             function uploadError(error){
+    //                 alert('Error al subir la imagen. Intenta de nuevo')
+    //             }, options);
 
-        }, function cameraError(error) {
-            console.log("No se ha podido capturar la imagen: " + error, "app");
+    //     }, function cameraError(error) {
+    //         console.log("No se ha podido capturar la imagen: " + error, "app");
 
-        }, options);
-    },
+    //     }, options);
+    // },
 
 
     /************************************* Set up y settings de el plugin de posicionamiento ************************************/
