@@ -160,12 +160,16 @@ var app = {
         wrapper4 = document.querySelector('#wrapper4');
         wrapper5 = document.querySelector('#wrapper5');
         wrapper6 = document.querySelector('#wrapper6');
+        wrapper7 = document.querySelector('#wrapper7');
+        wrapper7 = document.querySelector('#wrapper8');
         scroller1 = document.querySelector('#scroller1');
         scroller2 = document.querySelector('#scroller2');
         scroller3 = document.querySelector('#scroller3');
         scroller4 = document.querySelector('#scroller4');
         scroller5 = document.querySelector('#scroller5');
         scroller6 = document.querySelector('#scroller6');
+        scroller7 = document.querySelector('#scroller7');
+        scroller7 = document.querySelector('#scroller8');
         template = document.querySelector('#template');
         eventpage = document.querySelector('#eventpage')
         unordered = document.querySelectorAll('.unordered')
@@ -175,13 +179,16 @@ var app = {
         payform = document.querySelector('#card-form');
         slidetop = document.querySelector('#topslider');
         slideback = document.querySelector('#backslider');
+        sendbtn= document.querySelector("img.send-button");
+        textmessagebtn = document.querySelector("#text-message");
+
 
 
     
 
 
         // Inicializamos variables
-         url = 'http://178.62.243.177:60000/';
+         url = 'http://tunait-app.com:60000/';
         //url = 'http://192.168.1.4:60000/'
         // url = 'http://10.222.248.22:60000/'
         estado = "menuprincipal";
@@ -220,6 +227,8 @@ var app = {
         //Plugins
         console.log("Camera plugin working "+ JSON.stringify(navigator.camera));
         console.log("Geolocation plugin working "+ JSON.stringify(navigator.geolocation));
+        console.log(FileTransfer);
+
 
     // addEventListenerList: function(list, event, fn) {
 
@@ -233,7 +242,7 @@ var app = {
         //Button listeners
         //document.querySelector('.btnder').addEventListener('click', function(){app.menu('izquierda');}, false);
         //document.querySelector('.btniz').addEventListener('click', function(){app.menu('derecha');}, false);
-       // document.querySelector('#picture').addEventListener('click', app.openCamera('#picture'),false );
+        document.querySelector('#picture').addEventListener('click', app.upAvatar,false );
 
         var elements1 = document.getElementsByClassName("menu1");
         elements1 = addEventListenerList(elements1, 'click', function(){app.muestra(1,1);}); 
@@ -242,14 +251,20 @@ var app = {
         elements2 = addEventListenerList(elements2, 'click', function(){app.muestra(1,2);}); 
 
         var elements3 = document.getElementsByClassName("menu3");
-        elements3 = addEventListenerList(elements3, 'click', function(){app.setPurchase('prueba', 'prueba@gmail.com', 10); app.muestra(1,3);}); 
+        elements3 = addEventListenerList(elements3, 'click', function(){app.muestra(1,3);}); 
 
         var elements4 = document.getElementsByClassName("menu4");
-        elements4 = addEventListenerList(elements4, 'click', function(){app.muestra(1,4);}); 
+        elements4 = addEventListenerList(elements4, 'click', function(){app.muestra(1,4);});
+
+        var elements5 = document.getElementsByClassName("menu5");
+        elements5 = addEventListenerList(elements5, 'click', function(){app.muestra(1,5);});
         
         document.querySelector("#button1").addEventListener('click', app.geoLocalization, false);
         document.querySelector("#login-button").addEventListener('click', app.login, false);
         // document.querySelector("#pbtn").addEventListener("click",function(){app.newCustomer();});
+
+        document.querySelector("#wrapper5").addEventListener('click',function(){ Keyboard.hide();});
+        textmessagebtn.addEventListener('click',function(){ textmessagebtn.focus(); });
 
         //Hace el setup de la aplciación
         app.setup();
@@ -269,6 +284,38 @@ databaseSetup: function(){
 
         //sql.closeDatabase(db);
 },
+
+/************************* Función inicialización de socket *****************************/
+
+socketSetup: function(userObject){
+
+    return new Promise( function(resolve,reject){
+
+        try{
+      
+            socket = io('http://tunait-app.com:61000/');
+            socket.emit('clientConnected',userObject.id);
+            socket.on('messageReceived', function(data){
+
+                // var data = {
+
+                // data.emisor: userID,
+                // data.receptor: userID,
+                // data.time: timestamp,
+                // data.texto: text,
+                // data.checked: bool
+
+                // };
+            });
+
+            resolve(userObject);
+
+        } catch(e){ console.log("SOCKET CONNECTION ERROR: "+e.name+" "+e.message); reject();}
+
+    });
+    
+},
+
 
 /************************************* Facebok Login *************************************************************/
 
@@ -630,8 +677,7 @@ databaseSetup: function(){
                     try{
 
                     //Vaciamos las tablas locales de la database
-                    app.setTimeline()
-                        .then(function(){return sql.delTablesDB(db);})
+                    sql.delTablesDB(db)
                         .then( function(){
                             
                             console.log("Downloading data from server database... ");
@@ -641,8 +687,11 @@ databaseSetup: function(){
                             return app.http(mode, cmd, body, options);
                         })
                                     
-                        .then( function(userObject){ userEmail = userObject.email; distance = userObject.eventdistance; sql.addUserToDB(userObject, db); })
-                        .then( function(resp){ 
+                        .then( function(userObject){ eventdistance = JSON.parse(userObject).eventdistance; return sql.addUserToDB(userObject, db); })
+                        //.then( function(userObject){ app.}
+                        .then(function(userObject){ return app.socketSetup(userObject); })
+                        .then( function(userObject){ return app.setTimeline(); })
+                        .then( function(){ 
 
                             //Bajamos los Datos de la empresa (si hay)
                             var cmd = "api/me/empresa";
@@ -672,7 +721,14 @@ databaseSetup: function(){
                         })
                             
                         .then( function(matchesObject){ return sql.addMatchesToDB(matchesObject, db); })
-                        
+                        // .then(function(resp){
+                                        
+                        //     var cmd = "api/me/messages";
+                        //     return app.http(mode, cmd, body, options);
+
+                        // })
+
+
                         //Almacenar los bloqueados no tiene sentido. Es un tema que hay que gestionar en el servidor
                         // .then(function(resp){
                                         
@@ -745,6 +801,7 @@ databaseSetup: function(){
 
                 app.refresh("tickets");
                 app.refresh("perfil");
+                app.refresh("match");
                 app.refresh("chat");
                 app.refresh("avisos");
                 app.refresh("timeline");
@@ -777,7 +834,16 @@ databaseSetup: function(){
                         .catch(function(e){console.log("ERROR al recuperar los datos de usuario: "+ e ); })
                 break;
 
+                case "match":
+
+                    app.setChatTimeline();
+
+                break;
+
                 case "chat":
+
+                    // sql.extractMessagesFromDB(db)
+                    //     .then(function(messages){ return app.insertMessages(messages); })
 
                 break;
 
@@ -786,6 +852,7 @@ databaseSetup: function(){
                 break;
 
                 case "timeline":
+
 
                 break;
                 
@@ -890,14 +957,15 @@ addLines: function(toAdd){
 
         for (var i=0;i<toAdd;i++) {
 
-        linesAdded++; 
+        linesAdded++;
+
+
 
         var promise = new Promise (function(resolve,reject){
 
 
-
             var call = new XMLHttpRequest;
-            call.open("GET", url+"api/me/timeline/"+linesAdded+"/"+distance, true);
+            call.open("GET", url+"api/me/timeline/"+linesAdded+"/"+eventdistance, true);
             call.setRequestHeader("Accept", "Application/json");
             call.setRequestHeader("Content-Type", "Application/json; charset=UTF-8");
             call.setRequestHeader("Authorization", "Bearer "+accessToken);
@@ -1049,19 +1117,16 @@ setTickets: function(user){
 
                 var cloned = document.createElement("li");
                     cloned.setAttribute("class","event-class");
-                    cloned.setAttribute("id","ticketID" + array[i].ticket_id);
-                    cloned.setAttribute("data-evento_id", "eventID"+array[i].evento_id);
-
+                    cloned.setAttribute("data-evento_id" , "eventID"+array[i].evento_id );
+                    cloned.setAttribute("id", "ticketID" + array[i].ticket_id);
                     
 
                 var clonedTitulo = document.createElement("div");
-                    clonedTitulo.innerHTML = array[i].evento_nombre;
-                    
+                    clonedTitulo.innerHTML = array[i].evento_nombre; 
                     clonedTitulo.setAttribute("class","event-titulo");
 
                 var clonedLocation = document.createElement("div");
-                    clonedLocation.innerHTML = array[i].location_name;
-                    
+                    clonedLocation.innerHTML = array[i].location_name;   
                     clonedLocation.setAttribute("class","event-location");
 
                 var clonedFecha = document.createElement("div");
@@ -1072,10 +1137,6 @@ setTickets: function(user){
                 var clonedPicture = document.createElement("div");
                     clonedPicture.setAttribute("class","event-picture");
 
-                var clonedPrice = document.createElement("div");
-                    clonedPrice.setAttribute("class","event-price");
-                    clonedPrice.setAttribute("value", array[i].price);
-                    
                     if(array[i].photo){
 
                         clonedPicture.style.backgroundImage = "url('data:image/png;base64,"+array[i].photo+"')";
@@ -1086,6 +1147,11 @@ setTickets: function(user){
 
                     }
 
+                var clonedPrice = document.createElement("div");
+                    clonedPrice.setAttribute("class","event-price");
+                    clonedPrice.setAttribute("value", array[i].price);
+                    
+                    
                 var clonedAbutton = document.createElement("button");
                     clonedAbutton.setAttribute("class","Abutton-class");
                     clonedAbutton.innerHTML = "ENTRADA";
@@ -1104,7 +1170,7 @@ setTickets: function(user){
                     clonedBbutton.setAttribute("class","Bbutton-class");
                     clonedBbutton.innerHTML = "MATCH";
                     clonedBbutton.setAttribute("data-ticket_id",array[i].ticket_id);
-                    clonedBbutton.addEventListener("click", function(){ app.match(user.id, this.dataset.ticket_id); app.muestra(2,3); }) //Esta funcion llamará a /user/{user}/ticket/{ticket}/{position} por tanto necesita usuario, ticket, y posición.
+                    clonedBbutton.addEventListener("click", function(){ app.match(this.dataset.ticket_id); app.muestra(3,2); }) //Esta funcion llamará a /user/{user}/ticket/{ticket}/{position} por tanto necesita usuario, ticket, y posición.
 
                     
 
@@ -1175,24 +1241,45 @@ setTickets: function(user){
 
         var mode = "g";
         var cmd = "api/me/ticket/"+ticketid;
-        var options = "auth"
+        var options = "auth";
         var body = undefined;
 
                 app.http(mode, cmd, body, options)
                     .then(function(collectResponse){
-                        var array = JSON.parse(collectResponse);
+                        var collectResponse = JSON.parse(collectResponse);
 
-                        slidetop.children[0].
-                        slidetop.children[1].innerHTML = collectResponse[0].name;
-                        var topage = getAge(collectResponse[0].birthdate);
-                        slidetop.children[2].innerHTML = collectResponse[0].topage;
-                        slidetop.children[3].onclick = function(){ app.next(1, userid, collectResponse[0].id, ticketid);}
-                        slidetop.children[4].onclick = function(){ app.next(0, userid, collectResponse[0].id, ticketid);}
+                        var toRemove = document.getElementsByClassName("img-slidetop");
+                            
+                            while (toRemove[0]) {
+                                                    toRemove[0].parentNode.removeChild(toRemove[0]);
+                                                }
 
-                        slideback.children[0].
-                        slideback.children[1].innerHTML = collectResponse[1].name;
-                        var backage = getAge(collectResponse[1].birthdate);
-                        slideback.children[2].innerHTML = collectResponse[1].backage;
+
+                        for (var i = 0; i < collectResponse[0].archives.length; i++) {
+                            
+                            var imagenPerfil = document.createElement("img");
+                                imagenPerfil.src = collectResponse[0].archives[i].path;
+                                imagenPerfil.id = "match-img_"+i;
+                                imagenPerfil.setAttribute("class","match-img img-slidetop");
+                                slidetop.children[0].appendChild(imagenPerfil);
+                        }
+
+                        app.imagenMostrada(0);
+                        
+                        slidetop.children[0].children[0].innerHTML = collectResponse[0].name;
+                        // var topage = getAge(collectResponse[0].birthdate);
+                        // slidetop.children[0].children[1].innerHTML = topage;
+                        slidetop.children[1].setAttribute("data-user2id", collectResponse[0].id);
+                        slidetop.children[1].setAttribute("data-ticket", ticketid);
+                        slidetop.children[1].onclick = function(){ app.next(0, this.dataset.user2id, this.dataset.ticket);}
+                        slidetop.children[2].setAttribute("data-user2id", collectResponse[0].id);
+                        slidetop.children[2].setAttribute("data-ticket", ticketid);
+                        slidetop.children[2].onclick = function(){ app.next(1, this.dataset.user2id, this.dataset.ticket);}
+
+                        slideback.children[0].children[2].src = collectResponse[1].archives[0].path;
+                        slideback.children[0].children[0].innerHTML = collectResponse[1].name;
+                        // var backage = getAge(collectResponse[1].birthdate);
+                        // slideback.children[0]children[1].innerHTML = backage;
 
                         return;
 
@@ -1204,29 +1291,288 @@ setTickets: function(user){
     
     },
 
+
+    imagenMostrada: function(n){
+
+        var imgProfile = document.getElementsByClassName("img-slidetop");
+
+        for (var i = 0; i < imgProfile.length; i++) {
+            if ( i == n ) { imgProfile[i].style.display = 'block'; }
+            else { imgProfile[i].style.display = 'none'; }
+        }
+
+        return;
+
+    },
+
+
 /**************************** Función que evalúa en función de si hay o no usuarios **********************************/
 
-    next: function (aceptado, userid, user2id, ticketid){
+    next: function (aceptado, user2id, ticket){
 
-        // app.animación(aceptado);
+        if (aceptado){
+
+            alert("ACEPTADO");
+
+            // app.animación(aceptado);
+            
+        } else {
+
+            alert("RECHAZADO");
+
+            // app.animación(rechazado);
+
+        }
+        
 
         var mode = "g";
-
-        var cmd = "/user/"+userid+"/ticket/"+ticketid+"/match/"+user2id+"/"+aceptado;
-        var options = "auth"
+        var cmd = "/api/me/ticket/"+ticket+"/match/"+user2id+"/"+aceptado; 
+        var options = "auth";
         var body = undefined;
 
         app.http(mode, cmd, body, options)
 
-            .then(function(){
-
-                app.match(userid,ticketid);
-                return resolve();
+            .then(function(response){
+                if (response > 1){ alert("Match recíproco");  } // Aqui deberia de ir una animación o algo
+                app.match(ticket);
+                return;
 
             })
-            .catch(function(e){console.log(e); return reject();})
+            .catch(function(e){console.log(e); alert("ERROR: Algo va mal. Prueba mas tarde"); return;})
 
     },
+
+
+/****************** Seteo de timeline de maches (usarios con los que se puede chatear) ***************/
+
+
+    animación: function(aceptado){
+
+        if (aceptado){
+
+
+
+        } else {
+
+
+
+        }
+
+
+    },
+
+/****************** Seteo de timeline de maches (usarios con los que se puede chatear) ***************/
+
+setChatTimeline: function(){
+
+    sql.extractMatchesFromDB(db)
+        .then(function(array){
+
+
+            for (var i=0; i<array.length; i++){
+
+                var cloned = document.createElement("li");
+                    cloned.setAttribute("class","chat-class");
+                    cloned.setAttribute("id","chatID" + array[i].id);
+                    cloned.setAttribute("data-chat_id", array[i].id);
+                    cloned.setAttribute("data-chat_name", array[i].name+" "+array[i].surnames);
+
+                    
+
+                var clonedNombre = document.createElement("div");
+                    clonedNombre.innerHTML = array[i].name+" "+array[i].surnames;
+                    clonedNombre.setAttribute("class","chat-nombre");
+
+
+                var clonedConnection = document.createElement("div");
+                    clonedConnection.innerHTML = array[i].last_connection;
+                    clonedConnection.setAttribute("class","chat-last_connection");
+                    
+                var clonedPicture = document.createElement("img");
+                    clonedPicture.setAttribute("class","chat-img img-circle");
+
+                    if(array[i].photo){
+
+                        clonedPicture.src = array[i].photo;
+                        cloned.setAttribute("data-chat_photo", array[i].photo);
+
+                    } else{
+
+                        clonedPicture.src = "img/user.svg";
+                        cloned.setAttribute("data-chat_photo", "img/user.svg");
+
+                    }
+
+
+
+                    cloned.addEventListener("click", function(){ app.showConversation(this.dataset.chat_id, this.dataset.chat_photo, this.dataset.chat_name);})
+
+                    // clonedPicture.setAttribute("data-id", array[i].id);
+                    // clonedPicture.addEventListener("click", function(){ app.showProfile( this.dataset.id);})
+
+                    
+
+                    cloned.appendChild(clonedNombre);
+                    cloned.appendChild(clonedConnection);
+                    cloned.appendChild(clonedPicture);
+
+
+                document.querySelector("#scroller4").appendChild(cloned);
+
+                
+             } return;
+
+        })
+        .catch(function(e){console.log(e); alert("Error al cargar el chat timeline"); return; })
+},
+
+/*************************************** Muestra una conversación ***************************************************/
+showConversation: function(id, photourl, name){
+
+    //Modificamos el comportamiento del keyboard para dar un aspecto mas nativo
+    Keyboard.hideFormAccessoryBar(true);
+    
+    
+
+    //Damos formato a la pantalla poniendo la foto y el nombre
+    document.querySelector("#chat-titulo").innerHTML = name;
+    document.querySelector("img#chat-photo").src = photourl;
+
+
+    app.refreshConversation(id);
+    app.muestra(2,3);
+    
+
+},
+
+refreshConversation: function(receptorid){
+
+    var mode = "g";
+    var cmd = "api/me/message/"+receptorid;
+    var options = "auth";
+    var body = undefined;
+    //var sendto = receptorid; (si todo funciona, se puede borrar)
+
+            app.http(mode, cmd, body, options)
+                .then(function(collectResponse){
+                    var array = JSON.parse(collectResponse);
+
+                    for (var i=0; i<array.length; i++){
+
+                        var cloned = document.createElement("li");
+
+                        var clonedTime = document.createElement("div");
+                            clonedTime.setAttribute("class","hora-class");
+                            clonedTime.innerHTML = array[i].time;
+                            cloned.appendChild(clonedTime);
+
+                        var clonedFrase = document.createElement("div");
+                            clonedFrase.setAttribute("class","frase-class")
+                            clonedFrase.innerHTML = array[i].texto;
+                            cloned.appendChild(clonedFrase);
+
+                        //Si somos el emisor del mensaje muestra el checked y da un formato especial
+                        if (array[i].whois == "emisor"){ 
+
+                            cloned.setAttribute("class","emisor-class");
+                             var clonedChecked = document.createElement("img");
+                                 clonedChecked.setAttribute("class","check-class")
+                                 if (array[i].checked) { clonedChecked.src = "img/checked-green.svg" }
+                                     else {  clonedChecked.src = "img/checked.svg"  }
+                                 cloned.appendChild(clonedChecked);
+                        }
+                        if (array[i].whois == "receptor"){ cloned.setAttribute("class","receptor-class"); }
+
+
+                    scroller5.appendChild(cloned);
+                    app.scrollDown();
+
+                }
+
+
+                    sendbtn.onmousedown = function(e){
+                                return false;
+                               };
+
+
+                    sendbtn.onclick = function(e){ 
+
+                                     app.sendText(receptorid); //Si todo va bien escribe el mensaje en pantalla
+                                     app.limpiaChat();
+                                     app.refreshConversation(receptorid); //Hay que refrescar la pantalla con nuestro mensaje
+                                     //Hacer un sonidito
+
+                                };
+
+    })
+        .catch(function(e){console.log(e); alert("Error al cargar los mensajes"); })
+
+},
+
+limpiaChat: function(){
+
+    //Eliminamos todos los nodos hijo. (vaciar conversación)
+    var myNode = document.querySelector("#scroller5");
+        while (myNode.firstChild) {
+            myNode.removeChild(myNode.firstChild);
+        }
+
+},
+
+scrollDown: function(){
+
+    //Baja hasta el final de la conversación. Multiplica por dos porque de este modo nos aseguramos que no nos quedamos cortos
+    wrapper5.scrollTop = (scroller5.offsetHeight - wrapper5.offsetHeight) * 2 ;
+},
+
+/*************************************** Envía un mensaje de chat ************************************************/
+sendText: function(destinoid){
+
+    var data = {};
+    data['texto'] = document.querySelector("#text-message").value;
+
+    var xhr = new XMLHttpRequest();
+        xhr.open('POST', url+"api/message/"+destinoid, false);
+        xhr.setRequestHeader("Accept", "Application/json");
+        xhr.setRequestHeader("Content-Type", "Application/json; charset=UTF-8");
+        xhr.setRequestHeader("Authorization", "Bearer "+accessToken);
+        xhr.send(JSON.stringify(data));
+
+
+        if (xhr.status == 200){
+
+                    console.log('HTTP Response '+xhr.status+' '+xhr.statusText+' '+xhr.responseText+' \n');
+                    document.querySelector("#text-message").value = " ";
+
+        } else{
+
+            if (xhr.status == 0){ 
+
+            console.log('Servidor inaccesible \n');
+            alert('Servidor inaccesible. Comprueba tu conexión');
+
+            } else {
+
+            console.log('HTTP ERROR mensaje '+xhr.status+' '+xhr.statusText+' '+xhr.responseText+' \n');
+            alert('ERROR: '+xhr.statusText);
+                    
+            }
+
+        }  
+
+},
+
+
+/*************************************** Muestra un perfil de usuario ************************************************/
+showProfile: function(id){
+
+    
+
+
+
+
+},
+
 
 
 /*************************************** Implementación de movimientos de las capas **********************************/
@@ -1278,6 +1624,10 @@ setTickets: function(user){
                         matrizY = 4;
                 break;
 
+                case 5: matriz.className = "matriz y5";
+                        matrizY = 4;
+                break;
+
                 default: matriz.className = "matriz";
                         matrizY = 1;
                 break;
@@ -1322,10 +1672,6 @@ setTickets: function(user){
 
             }
 
-
-        
-        
-
         return;      
 
     },
@@ -1343,7 +1689,7 @@ setTickets: function(user){
         //Hay una opción B que és extraer los datos de los inserts guardados al crear cada evento en el Timeline pero esto hace que se tengan que guardar mas datos en cada evento y carguen mucho mas lento.
             var mode = "g";
             var cmd = "api/evento/"+event.dataset.number;
-            var options = "auth"
+            var options = "auth";
             var body = undefined;
 
                 app.http(mode, cmd, body, options)
@@ -1378,7 +1724,7 @@ setTickets: function(user){
                                 document.querySelector("#event-ticket").innerHTML = eventObj.price+ " €" ;
 
                             //Relleno de la pagina de pago
-                            var tdescrip = document.querySelector("#ticket-description");
+                            var tdescrip = document.querySelector("#payment-ticket-description");
                                 tdescrip.children[0].innerHTML = "Ticket prueba";
                                 tdescrip.children[1].innerHTML = "Ticket description prueba";
 
@@ -1464,8 +1810,31 @@ setTickets: function(user){
             break;
 
             case 3:
+
+                app.muestra(1,2);
+
                 //Eliminamos el qr que haya primero
                 document.querySelector("#ticket-qr").innerHTML= " ";
+
+            break
+
+            case 4:
+
+                app.muestra(1,3);
+                app.limpiaChat();
+
+                //Devolvemos el funcionamiento del teclado a su forma normal
+                Keyboard.hideFormAccessoryBar(false);
+                
+
+
+
+                document.querySelector("#text-message").value = " ";
+
+            break
+
+            case 5:
+
                 app.muestra(1,2);
 
             break
@@ -1790,99 +2159,112 @@ colorize: function(type){
 
 
 
-/************************************* Set up y settings de el plugin de la cámara ************************************/
+/********************** Set up y funciones relacionadas con la Cámara *************************/
 
-    // setOptions: function(qual,destType, srcType) {
+    upAvatar: function(){
+
+    photoURL = app.openCamera('#picture');
+
+    var options = new FileUploadOptions();
+            options.fileKey = "avatar";
+            //options.fileName = fileURL.substr(imageURL.lastIndexOf('/') + 1);
+
+            // var params = {};
+            // params.user = userid;
+            // params.aut = "param";
+
+            options.params = params;
+
+            var headers = {
+
+                "Authorization" : "Bearer "+accessToken
+            }
+
+            options.headers = headers;
+
+            var ft = new FileTransfer();
+            ft.upload(photoURL, encodeURI( url+"/api/uploadavatar"), 
+                function uploadSuccess(objResponse){
+                    console.log('Image UPLOADED. '+objResponse.bytesSent+' bytes. Response: '+objResponse.responseCode+' : '+objResponse.response+'.' );
+                    app.refresh('perfil');
+                },
+                function uploadError(error){
+                    alert('Ha habido un problema al subir la imagen');
+                }, options);
+
+    },
+
+
+    /*****************/
+
+    setOptions: function(qual,destType, srcType) {
     
-    // var options = {
-    //         // Some common settings are 20, 50, and 100
-    //         quality: qual,
-    //         destinationType: Camera.DestinationType.DATA_URL,
-    //         // In this app, dynamically set the picture source, Camera or photo gallery
-    //         sourceType: srcType,
-    //         encodingType: Camera.EncodingType.JPEG,
-    //         mediaType: Camera.MediaType.PICTURE,
-    //         allowEdit: true,
-    //         correctOrientation: true  //Corrects Android orientation quirks
-    //     }
-    //     return options;
-    // },
+    var options = {
+            // Some common settings are 20, 50, and 100
+            quality: qual,
+            destinationType: Camera.DestinationType.DATA_URL,
+            // In this app, dynamically set the picture source, Camera or photo gallery
+            sourceType: srcType,
+            encodingType: Camera.EncodingType.JPEG,
+            mediaType: Camera.MediaType.PICTURE,
+            allowEdit: true,
+            correctOrientation: true  //Corrects Android orientation quirks
+        }
+        return options;
+    },
 
-    // openCamera: function(selection) {
+    /*****************/
 
-    //     //Se seleccionan unas opciones o otras en función del evento que lo dispare
-    //     switch(selection){
-    //         case '#picture':
+    openCamera: function(selection) {
 
-    //         var options = {
+        //Se seleccionan unas opciones o otras en función del evento que lo dispare
+        switch(selection){
+            case '#picture':
 
-    //             // Some common settings are 20, 50, and 100
-    //             //quality: qual,
-    //             destinationType: Camera.DestinationType.FILE_URI,
-    //             sourceType: Camera.PictureSourceType.CAMERA,
-    //             encodingType: Camera.EncodingType.JPEG,
-    //             mediaType: Camera.MediaType.PICTURE,
-    //             allowEdit: true,
-    //             correctOrientation: true,  //Corrects Android orientation quirks
-    //             cameraDirection: FRONT
+            var options = {
 
-    //         }    
+                // Some common settings are 20, 50, and 100
+                //quality: qual,
+                destinationType: Camera.DestinationType.FILE_URI,
+                sourceType: Camera.PictureSourceType.CAMERA,
+                encodingType: Camera.EncodingType.JPEG,
+                mediaType: Camera.MediaType.PICTURE,
+                allowEdit: true,
+                correctOrientation: true,  //Corrects Android orientation quirks
+                cameraDirection: FRONT
 
-    //         break;
-    //         case '#albumButton':
-    //         var options = {
+            }    
 
-    //             // Some common settings are 20, 50, and 100
-    //             quality: qual,
-    //             destinationType: Camera.DestinationType.FILE_URI,
-    //             sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-    //             mediaType: Camera.MediaType.PICTURE,
-    //         }
+            break;
+            case '#albumButton':
+            var options = {
 
-    //         break;
+                // Some common settings are 20, 50, and 100
+                quality: qual,
+                destinationType: Camera.DestinationType.FILE_URI,
+                sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                mediaType: Camera.MediaType.PICTURE,
+            }
 
-    //     }
+            break;
 
-    //     console.log(selection.button);
+        }
 
-    //     //var options = app.setOptions(srcType);
+        console.log(selection);
 
-    //     navigator.camera.getPicture(function cameraSuccess(imageURL) {
+        //var options = app.setOptions(srcType);
 
-    //         console.log('Photolibrary Sucess');
-    //         //document.querySelector('#pantalla1').getElementsByTagName('img')[0].src = imageURL;
-    //         var options = new FileUploadOptions();
-    //         options.fileKey = "picture";
-    //         //options.fileName = fileURL.substr(imageURL.lastIndexOf('/') + 1);
+        navigator.camera.getPicture(function cameraSuccess(imageURL) {
 
-    //         // var params = {};
-    //         // params.user = userid;
-    //         // params.aut = "param";
+            console.log('getPicture Sucess');
+            return imageURL;
+            
 
-    //         options.params = params;
+        }, function cameraError(error) {
+            console.log("No se ha podido capturar la imagen: " + error, "app");
 
-    //         var headers = {
-
-    //             "Authorization" : "Bearer "+accessToken
-    //         }
-
-    //         options.headers = headers;
-
-    //         var ft = new FileTransfer();
-    //         ft.upload(imageURL, encodeURI( url+"/api/upload/"+userid), 
-    //             function uploadSuccess(objResponse){
-    //                 console.log('Image UPLOADED. '+objResponse.bytesSent+' bytes. Response: '+objResponse.responseCode+' : '+objResponse.response+'.' );
-    //                 app.refresh('perfil');
-    //             },
-    //             function uploadError(error){
-    //                 alert('Error al subir la imagen. Intenta de nuevo')
-    //             }, options);
-
-    //     }, function cameraError(error) {
-    //         console.log("No se ha podido capturar la imagen: " + error, "app");
-
-    //     }, options);
-    // },
+        }, options);
+    },
 
 
     /************************************* Set up y settings de el plugin de posicionamiento ************************************/

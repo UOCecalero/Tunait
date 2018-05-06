@@ -43,7 +43,7 @@
 
             <!-- ****** Pantalla0 Timeline eventos ****************** -->
 
-            <div id="timeline-eventos" class="pantalla x1 y1">
+            <div id="timeline-eventos" class="pantalla y1 x1">
             <!-- <div class="container"> -->
                 <div class=" titulo">
                     <!-- <div id="btiz" class="col-xs-2">
@@ -87,6 +87,9 @@
                     <div class="menu4 col-xs-2">
                         <img class="icon menu-button" src="img/alarm.svg">
                     </div>
+                    <div class="menu5 col-xs-2">
+                        <img class="icon menu-button" src="img/profile.svg">
+                    </div>
 
                     
                 </div>
@@ -100,7 +103,7 @@
         
             
         
-            <div id="evento" class="pantalla x2 y1">
+            <div id="evento" class="pantalla y1 x2">
                 <div class="container">
                     <div class="row">
                         <img class="icon back" src="img/left-arrow.svg" onclick="app.hideWindow(1);">
@@ -129,7 +132,7 @@
 
             <!-- ************** Payment window ********************************** -->
             
-            <div id="pago" class="pantalla x3 y1">
+            <div id="pago" class="pantalla y1 x3">
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12 up-margin" >
@@ -140,7 +143,7 @@
 
                             <div class="container">
 
-                                <div class="row" id="ticket-description">
+                                <div class="row" id="payment-ticket-description">
                                     
                                     <div class="col-xs-12 etitle"></div>
                                     <div class="col-xs-12 edescription"></div>
@@ -234,24 +237,24 @@
                         <img class="btnder" src="img/settings-5.svg"  alt="settingsbtn" height="30" width="30">
                     </div> -->
 
-                    </div>
+                </div>
                     
-                    <div class="row cuerpo">
+                <div class="row cuerpo">
 
-                        <div class="container">
-                        <div class="row">
-                                    
-                                <div id=wrapper2 class="col-xs-12"> 
-                                    
-                                        <ul id="scroller2">
-                                            
+                    <div class="container">
+                    <div class="row">
+                                
+                            <div id=wrapper2 class="col-xs-12"> 
+                                
+                                    <ul id="scroller2">
                                         
-                                        </ul>   
-                                </div>
-                            
+                                    
+                                    </ul>   
                             </div>
+                        
                         </div>
                     </div>
+                </div>
 
 
                 <div class="row pie">
@@ -267,11 +270,14 @@
                     <div class="menu4 col-xs-2">
                         <img class="icon menu-button" src="img/alarm.svg">
                     </div>
+                    <div class="menu5 col-xs-2">
+                        <img class="icon menu-button" src="img/profile.svg">
+                    </div>
 
                     
                 </div>
             
-        </div>
+            </div>
 
                 
 
@@ -311,7 +317,7 @@
                                                     </div> -->
                                                 </div>
 
-                                            <!-- </div> -->
+                                        <!-- </div> -->
                                    
                                     </div>   
                             </div>
@@ -340,25 +346,33 @@
                 <div class="container">
                     <div class="row">
 
-                        <img class="icon back" src="img/left-arrow.svg" onclick="app.hideWindow(3);">
+                        <img class="icon back" src="img/left-arrow.svg" onclick="app.hideWindow(5);">
+
+                        <div id="backslider" class="col-xs-12 slide back">
+                            <div class="match-img-div">
+
+                                <div class="match-name"></div>
+                                <div class="match-edad"></div>
+                                <div class="match-img"></div>
+
+                            </div>
+                            <!-- <img src="img/accept.svg" class="icon aceptar">
+                            <img src="img/refuse.svg"  class="icon rechazar"> -->
+                                                           
+                        </div>
 
                                 
                         <div id="topslider" class="col-xs-12 slide top">
-                            <img src="" alt="" class="img-rounded">
-                            <div class="match-name"></div>
-                            <div class="match-edad"></div>
-                            <img src="" alt="" class="icon aceptar">
-                            <img src="" alt="" class="icon rechazar">
-                                
-                        </div>
-                        <div id="backslider" class="col-xs-12 slide back">
-                            <img src="" alt="" class="img-rounded">
-                            <div class="match-name"> </div>
-                            <div class="match-edad"></div>
-                            <img src="" alt="" class="icon aceptar">
-                            <img src="" alt="" class="icon rechazar">
+                            <div class="match-img-div">
+
+                                <div class="match-name"></div>
+                                <div class="match-edad"></div>
+
+                            </div>
                             
-                                 
+                            <img src="img/refuse.svg" class="match-button rechazar">
+                            <img src="img/accept.svg" class="match-button aceptar">
+                                
                         </div>
 
                         
@@ -416,35 +430,54 @@
                     <div class="menu4 col-xs-2">
                         <img class="icon menu-button" src="img/alarm.svg">
                     </div>
+                    <div class="menu5 col-xs-2">
+                        <img class="icon menu-button" src="img/profile.svg">
+                    </div>
 
                     
                 </div>
             <!-- </div> -->
-        </div>
+            </div>
 
             <!-- ****************************************************** -->
 
-            <!-- ****** Pantalla Match/Chat ********************************* -->
+            <!-- ****** Pantalla Chat ********************************* -->
 
-            <div id="match" class="pantalla y3 x2" >
-                <div class="container">
-                    <div class="row">
-                                
-                            <div id=wrapper5 class="col-xs-12"> 
-                                
-                                    <ul id="scroller5">
-                                        
+            <div id="chat" class="pantalla y3 x2" >
+                <div class="titulo col-xs-12">
+
+                    <div class="title"> <h1 id="chat-titulo" > </h1> </div>
+
+                    <img id="chat-photo" class="img-circle" >
+                    
+                    <img class="icon back" src="img/left-arrow.svg" onclick="app.hideWindow(4);">
+
+                </div>
+
+
+                <div class="row">
+                            
+                        <div id=wrapper5 class="col-xs-12"> 
+                            
+                                <ul id="scroller5">
                                     
-                                    </ul>   
-                            </div>
-                        
-                    </div>
+                                
+                                </ul>   
+                        </div>
+                    
+                </div>
+                <div class="row pie">
+                        <div class="col-xs-2" id="escribe">
+                            <input type="textarea" alt="Escribe algo..." id="text-message"> 
+                        </div>
+                            
+                        <img class="send-button" src="img/paper-plane.svg";>
                 </div>
             </div>
 
             <!-- ****************************************************** -->
 
-            <!-- ****** Pantalla0 Timeline avisos ****************** -->
+            <!-- ****** Pantalla Timeline avisos ****************** -->
 
             <div id="timeline-avisos" class="pantalla y4 x1">
             <!-- <div class="container"> -->
@@ -490,25 +523,150 @@
                     <div class="menu4 col-xs-2">
                         <img class="icon menu-button" src="img/alarm.svg">
                     </div>
+                    <div class="menu5 col-xs-2">
+                        <img class="icon menu-button" src="img/profile.svg">
+                    </div>
 
                     
                 </div>
-            </div> 
+
+                    
+            </div>
+            
         
         
             
             <!-- ****************************************************** -->
 
+            <!-- ************* Pantalla Perfil *********************** -->
+        
+            <div id="menu-perfil" class="pantalla y5 x1" >
+                <div class=" titulo">
+                    <!-- <div id="btiz" class="col-xs-2">
+                        <img class="btniz" src="img/menu-1.svg"  alt="menubtn" height="30" width="30">
+                    </div> -->
+                    <div class="title col-xs-8">
+                        <h1>Tunait</h1>
+                    </div>
+                    <!-- <div id="btdr" class="col-xs-2">
+                        <img class="btnder" src="img/settings-5.svg"  alt="settingsbtn" height="30" width="30">
+                    </div> -->
+                </div>
+
+                <div class="row cuerpo">
+
+                    <div class="col-xs-12">
+                        <img src="img/profile.jpg" alt="Profile photo" class="img-circle" id="picture">
+                    </div>
 
 
-        </div>
+
+                    <div class="col-xs-12"> 
+                        <div id="name"> Nombre: </div>
+                    </div>
+
+                    <div class="col-xs-12">
+                        <div id="surname" >Apellidos: </div>
+                    </div>
+                    
+                    <div class="col-xs-12">
+                        <div id="photo-frame"> </div>
+                    </div>
+
+                    <div> <button id="ajusbtn" class="btn btn-primary" onclick="app.muestra(3,5);"> Ajustes </button> </div>
+                    <div> <button id="perfilbtn" class="btn btn-primary" onclick="app.muestra(2,5);"> Editar Perfil </button> </div>
+    
+                                
+                </div> 
+                
+                <div class="row pie">
+                    
+                    <div class="menu1 col-xs-2">
+                        <img class="icon menu-button" src="img/worldwide.svg" >
+                    </div>
+                    <div class="menu2 col-xs-2">
+                        <img class="icon menu-button" src="img/ticket.svg">
+                    </div>
+                    <div class="menu3 col-xs-2">
+                        <img class="icon menu-button" src="img/paper-plane.svg">
+                    </div>
+                    <div class="menu4 col-xs-2">
+                        <img class="icon menu-button" src="img/alarm.svg">
+                    </div>
+                    <div class="menu5 col-xs-2">
+                        <img class="icon menu-button" src="img/profile.svg">
+                    </div>
+                
+                </div>
+
+            </div>
+
+
+        <!-- ************************  Pantalla edita perfil  ************************** -->
+
+        <div id="edita-perfil" class="pantalla y5 x2" >
+                    <div class="container">
+                        <div class="row">
+                                    
+                                <div id=wrapper7 class="col-xs-12"> 
+                                    
+                                        <ul id="scroller7">
+                                            <li class="col-xs-12"></li>
+                                             <li class="col-xs-12"><div>OPCIONES</div></li>
+                                             <li class="col-xs-12"><div>SPBRE MI:</div>
+                                             <div></div></li>
+                                             <li class="col-xs-12"><div>OCUPACIÓN:</div>
+                                             <div>ESTUDIOS: </div></li> 
+                                        </ul>   
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+
+        <!-- **************************** Pantalla Ajustes ******************************* -->
+
+        <div id="ajustes" class="pantalla y5 x3" >
+                    <div class="container">
+                        <div class="row">
+                                    
+                                <div id=wrapper8 class="col-xs-12"> 
+                                    
+                                        <ul id="scroller8">
+                                            <li class="col-xs-12">COMPRAS</li>
+                                            <li class="col-xs-12">AJUSTES DE DESCUBRIMIENTO
+                                                <li class="col-xs-12">RANGO DE EDAD</li>
+                                                <li class="col-xs-12">PREFERECIA SEXO</li>
+                                            </li>
+
+                                            <li class="col-xs-12">DATOS MOSTRADOS</li>
+                                            <li class="col-xs-12">NOTIFICACIONES</li>
+                                            <li class="col-xs-12">AYUDA Y ASISTENCIA</li>
+                                            <li class="col-xs-12">
+                                                <li class="col-xs-12">POLÍTICA DE PRIVACIDAD</li>
+                                                <li class="col-xs-12">TÉRMINOS DEL SERVICIO</li>
+                                                <li class="col-xs-12">LICENCIAS</li>
+                                            </li>
+                                            <li class="col-xs-12">CERRAR SESIÓN</li>
+                                            <li class="col-xs-12">LOGO Y VERSIÓN</li>
+                                            <li class="col-xs-12">BORRRAR CUENTA</li>                                        
+                                        </ul>   
+                                </div>
+                            
+                        </div>
+                    </div>
+                </div>
+        </div> 
+
+        
 
         
 
 
         <!-- ****** Pantalla1 Perfil +++++++++******************* -->
         
-        <div class="page totalleft" id="pantalla1">
+    <!-- <div class="page totalleft" id="pantalla1">
         
             <div class="container">
                 <div class="row">
@@ -530,7 +688,7 @@
                     
                 </div>
             </div>
-        </div>
+        </div> -->
 
 
          <!-- ****** Pantalla2 Posición +++++++++******************* -->
@@ -634,12 +792,7 @@
         <!--<script type="text/javascript" src="js/zepto.min.js"></script> -->
         <!--<script src="js/jquery-3.1.1.min.js"></script> -->
         <script type="text/javascript" src="js/fastclick.js"></script>
-        <!--<script type="text/javascript" src="js/iscroll-zoom.js"></script> -->
-        
-        
-        
-        <!--<script type="text/javascript" src="js/range-touch.min.js"></script>-->
-        <!-- <script src="https://js.stripe.com/v3/"></script> -->
+        <script type="text/javascript" src="js/socket.io.slim.js"></script>
         <script type="text/javascript" src="js/sqlite.js"></script>
         <script type="text/javascript" src="js/functions.js"></script>
         <script type="text/javascript" src="js/index.js"></script>

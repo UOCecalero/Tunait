@@ -10,7 +10,7 @@ initDatabase: function(db){
         tx.executeSql('CREATE TABLE IF NOT EXISTS Tokens ( type VARCHAR, access_token TINYTEXT PRIMARY KEY, refresh_token TINYTEXT UNIQUE, FBid UNSIGNED BIGINT UNIQUE NOT NULL, id UNISGNED BIGINT UNIQUE NOT NULL)');
         
         // tx.executeSql('CREATE TABLE IF NOT EXISTS User ( id UNSIGNED BIGINT NULL UNIQUE, FBid UNSIGNED BIGINT UNIQUE NOT NULL, name VARCHAR NOT NULL, surnames VARCHAR NOT NULL, gender BOOLEAN NOT NULL, email VARCHAR NOT NULL, password VARCHAR NULL, created_at TIMESTAMP, updated_at TIMESTAMP, photo BLOB NULL, birthday DATE NULL, job VARCHAR(50) NULL, studies VARCHAR(50) NULL, ranking DECIMAL(5,3) NULL, aceptar UNSIGNED BIGINT ZEROFILL NOT NULL, rechazar UNSIGNED BIGINT ZEROFILL NOT NULL, saludar UNSIGNED BIGINT ZEROFILL NOT NULL, destacado_ini TIMESTAMP, destacado_fin TIMESTAMP, location POINT ) ');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS User ( id UNSIGNED BIGINT NULL UNIQUE, FBid UNSIGNED BIGINT UNIQUE NOT NULL, name VARCHAR NOT NULL, surnames VARCHAR NOT NULL, gender VARCHAR(6) NOT NULL, email VARCHAR NOT NULL, updated_at TIMESTAMP, last_connection TIMESTAMP, photo BLOB NULL, job VARCHAR(50) NULL, studies VARCHAR(50) NULL, customer VARCHAR, lat FLOAT(10,6), lng FLOAT(10,6), genderpreference VARCHAR(6), inagepreference  UNSIGNED TINYINT NOT NULL, outagepreference UNSIGNE, eventdistance TINYINT NOT NULL ');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS User ( id UNSIGNED BIGINT NULL UNIQUE, FBid UNSIGNED BIGINT UNIQUE NOT NULL, name VARCHAR NOT NULL, surnames VARCHAR NOT NULL, gender VARCHAR(6) NOT NULL, email VARCHAR NOT NULL, updated_at TIMESTAMP, last_connection TIMESTAMP, photo BLOB NULL, job VARCHAR(50) NULL, studies VARCHAR(50) NULL, customer VARCHAR, lat FLOAT(10,6), lng FLOAT(10,6), genderpreference VARCHAR(6), inagepreference  UNSIGNED TINYINT NOT NULL, outagepreference UNSIGNED TINYINT NOT NULL, eventdistance TINYINT NOT NULL )');
                                                      //        id UNSIGNED BIGINT NULL UNIQUE,
                                                      //        FBid UNSIGNED BIGINT UNIQUE NOT NULL,
                                                      //        name VARCHAR NOT NULL,
@@ -90,7 +90,7 @@ initDatabase: function(db){
         
     
 
-        tx.executeSql('CREATE TABLE IF NOT EXISTS Matches (id UNSIGNED BIGINT NOT NULL UNIQUE, name VARCHAR NOT NULL, surnames VARCHAR NOT NULL, photo BLOB NULL, job VARCHAR(50) NULL, studies VARCHAR(50) NULL, lat FLOAT(10,6), lng FLOAT(10,6) )');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS Matches (id UNSIGNED BIGINT NOT NULL UNIQUE, name VARCHAR NOT NULL, surnames VARCHAR NOT NULL, last_connection TIMESTAMP,  photo BLOB NULL, job VARCHAR(50) NULL, studies VARCHAR(50) NULL, lat FLOAT(10,6), lng FLOAT(10,6) )');
         // tx.executeSql('CREATE TABLE IF NOT EXISTS Matches (id UNSIGNED BIGINT NOT NULL UNIQUE, FBid UNSIGNED BIGINT UNIQUE NOT NULL, name VARCHAR NOT NULL, surnames VARCHAR NOT NULL, gender BOOLEAN NOT NULL, email VARCHAR NOT NULL, password VARCHAR NULL, created_at TIMESTAMP, updated_at TIMESTAMP, photo BLOB NULL, birthday DATE NULL, job VARCHAR(50) NULL, studies VARCHAR(50) NULL, ranking DECIMAL(5,3) NULL, aceptar UNSIGNED BIGINT ZEROFILL NOT NULL, rechazar UNSIGNED BIGINT ZEROFILL NOT NULL, saludar UNSIGNED BIGINT ZEROFILL NOT NULL, destacado_ini TIMESTAMP, destacado_fin TIMESTAMP, location POINT )');
 
 
@@ -98,6 +98,7 @@ initDatabase: function(db){
                     //                                         id UNSIGNED BIGINT NOT NULL UNIQUE,
                     //                                         name VARCHAR NOT NULL,
                     //                                         surnames VARCHAR NOT NULL,
+                    //                                         last_connection TIMESTAMP,
                     //                                         photo BLOB NULL,
                     //                                         birthday DATE NULL, (de momento no esta)
                     //                                         job VARCHAR(50) NULL,
@@ -143,7 +144,7 @@ initDatabase: function(db){
 
     function (error) {
     		
-    		console.log('transaction error: ' + error.message);
+    		console.log('Initdatabase transaction error: ' + error.message);
 
 	}, function () {
     
@@ -219,7 +220,7 @@ addUserToDB: function(object, db){
 
                 });
 
-            } else { resolve();}
+            } else { resolve(object);}
 
         } catch(e){ reject(e); }
 
@@ -392,8 +393,8 @@ addMatchesToDB: function(multiObject, db){
                 console.log(object);
 
 
-                tx.executeSql('INSERT INTO Matches VALUES (?,?,?,?,?,?,?,?)', //Si añadimos birthdate, hay que añadir un interrogante
-                 [object.id,object.name,object.surnames,object.photo/**object.birthdate**/,object.job,object.studies,object.lat,object.lng], 
+                tx.executeSql('INSERT INTO Matches VALUES (?,?,?,?,?,?,?,?,?)', //Si añadimos birthdate, hay que añadir un interrogante
+                 [object.id,object.name,object.surnames,object.last_connection, object.photo/**object.birthdate**/,object.job,object.studies,object.lat,object.lng], 
 
                  function(tx, res) {
                     console.log("insertId: " + res.insertId );
@@ -764,53 +765,54 @@ extractEventosFromDB: function(db){
 
     return new Promise(function(resolve, reject){
 
-    console.log("Recuperando tickets... ");
+   
+         console.log("Recuperando matches... ");
 
-        db.transaction(function (tx) {
+                db.transaction(function (tx) {
 
-            var query = "SELECT * FROM Eventos";
+                    var query = "SELECT * FROM Eventos";
 
-            tx.executeSql(query, [], function (tx, rs) {
+                    tx.executeSql(query, [], function (tx, rs) {
 
-                var eventosArray = [];
-                
+                        var eventosArray = [];
+                        
 
-                for (var x = 0; x < rs.rows.length; x++) {
+                        for (var x = 0; x < rs.rows.length; x++) {
 
-                    var eventosObject = new Object();
-                        eventosObject.ticket_id =  rs.rows.item(x).ticket_id;
-                        eventosObject.evento_id = rs.rows.item(x).evento_id;
-                        eventosObject.creator = rs.rows.item(x).creator;
-                        eventosObject.evento_nombre = rs.rows.item(x).event_name;
-                        eventosObject.photo = rs.rows.item(x).photo;
-                        eventosObject.event_ini = rs.rows.item(x).event_ini;
-                        eventosObject.event_fin = rs.rows.item(x).event_fin;
-                        eventosObject.aforo = rs.rows.item(x).aforo;
-                        eventosObject.location_name = rs.rows.item(x).location_name;
-                        eventosObject.lat = rs.rows.item(x).lat;
-                        eventosObject.lng = rs.rows.item(x).lng;
-                        eventosObject.ticket_type = rs.rows.item(x).type;
-                        eventosObject.description = rs.rows.item(x).description;
-                        eventosObject.precio = rs.rows.item(x).price;
-                        eventosObject.qr = rs.rows.item(x).qr;
+                            var eventosObject = new Object();
+                                eventosObject.ticket_id =  rs.rows.item(x).ticket_id;
+                                eventosObject.evento_id = rs.rows.item(x).evento_id;
+                                eventosObject.creator = rs.rows.item(x).creator;
+                                eventosObject.evento_nombre = rs.rows.item(x).event_name;
+                                eventosObject.photo = rs.rows.item(x).photo;
+                                eventosObject.event_ini = rs.rows.item(x).event_ini;
+                                eventosObject.event_fin = rs.rows.item(x).event_fin;
+                                eventosObject.aforo = rs.rows.item(x).aforo;
+                                eventosObject.location_name = rs.rows.item(x).location_name;
+                                eventosObject.lat = rs.rows.item(x).lat;
+                                eventosObject.lng = rs.rows.item(x).lng;
+                                eventosObject.ticket_type = rs.rows.item(x).type;
+                                eventosObject.description = rs.rows.item(x).description;
+                                eventosObject.precio = rs.rows.item(x).price;
+                                eventosObject.qr = rs.rows.item(x).qr;
 
 
-                        eventosArray[x] = eventosObject;
-                    
-                }
+                                eventosArray[x] = eventosObject;
+                            
+                        }
 
-                resolve(eventosArray);
-            },
-            function (tx, error) {
-                console.log('SELECT error: ' + error.message);
-            });
-        }, function (error) {
-            console.log('transaction error: ' + error.message);
-            reject();
+                        resolve(eventosArray);
+                    },
+                    function (tx, error) {
+                        console.log('SELECT error: ' + error.message);
+                    });
+                }, function (error) {
+                    console.log('transaction error: ' + error.message);
+                    reject();
 
-        }, function () {
-            console.log('transaction ok');
-        });
+                }, function () {
+                    console.log('transaction ok');
+                });
 
     });
 
@@ -820,50 +822,48 @@ extractEventosFromDB: function(db){
 /**************************** Función extraer los datos de matches de la memoria local ********************************************/
 extractMatchesFromDB: function(db){
 
-    db.transaction(function (tx) {
+    return new Promise(function(resolve, reject){
 
-        var query = "SELECT * FROM Matches";
+        db.transaction(function (tx) {
 
-        tx.executeSql(query, [], function (tx, rs) {
+            var query = "SELECT * FROM Matches";
 
-            var matchesArray = [];
-            //var empresasArray = new Array();
+            tx.executeSql(query, [], function (tx, rs) {
 
-            for(var x = 0; x < rs.rows.length; x++) {
+                var matchesArray = [];
+                //var empresasArray = new Array();
 
-                var matchesObject = new Object();
-                    matchesObject.name = rs.rows.item(x).name;
-                    matchesObject.surnames = rs.rows.item(x).surnames;
-                    matchesObject.photo = rs.rows.item(x).photo;
-                    //matchesObject.birthday = rs.rows.item(x).birthday;
-                    matchesObject.job = rs.rows.item(x).job;
-                    matchesObject.studies = rs.rows.item(x).studies;
-                    matchesObject.lat = rs.rows.item(x).lat;
-                    matchesObject.lng = rs.rows.item(x).lng;
+                for(var x = 0; x < rs.rows.length; x++) {
+
+                    var matchesObject = new Object();
+                        matchesObject.id = rs.rows.item(x).id;
+                        matchesObject.name = rs.rows.item(x).name;
+                        matchesObject.surnames = rs.rows.item(x).surnames;
+                        matchesObject.last_connection = rs.rows.item(x).last_connection;
+                        matchesObject.photo = rs.rows.item(x).photo;
+                        //matchesObject.birthday = rs.rows.item(x).birthday;
+                        matchesObject.job = rs.rows.item(x).job;
+                        matchesObject.studies = rs.rows.item(x).studies;
+                        matchesObject.lat = rs.rows.item(x).lat;
+                        matchesObject.lng = rs.rows.item(x).lng;
 
 
-                    return matchesObject;
+                        matchesArray[x] = matchesObject;
+                    
+                }
 
-                    empresasArray[x] = empresaObject;
-                
-            }
-        },
-        function (tx, error) {
-            console.log('SELECT error: ' + error.message);
+                resolve(matchesArray);
+            },
+            function (tx, error) {
+                console.log('SELECT error: ' + error.message);
+            });
+        }, function (error) {
+            console.log('transaction error: ' + error.message);
+        }, function () {
+            console.log('transaction ok');d,l
         });
-    }, function (error) {
-        console.log('transaction error: ' + error.message);
-    }, function () {
-        console.log('transaction ok');d,l
+
     });
-
-
-},
-
-/**************************** Función extraer los datos de bloqueados de la memoria local *****************************************/
-extractBloqueadossFromDB: function(db){
-
-
 },
 
 
